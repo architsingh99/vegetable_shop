@@ -43,25 +43,36 @@
 	<div class="header-bot">
 		<div class="header-bot_inner_wthreeinfo_header_mid">
 			<!-- header-bot-->
-			<div class="col-md-4 logo_agile">
-				<h1>
-					<a href="index.html">
-						<span>V</span>egetable
-						<span>S</span>hoppy
-						<img src="{{ asset('images/logo2.png') }}" alt=" ">
+			<div class="col-md-3 logo_agile">
+				
+					<a href="{{url('/')}}">
+						<img style="width: 125px" src="{{ asset('images/logo2.png') }}" alt=" ">
 					</a>
-				</h1>
+				
 			</div>
 			<!-- header-bot -->
-			<div class="col-md-8 header">
+			<div class="col-md-9 header">
 				<!-- header lists -->
 				<ul>
 					<li>
 						<a href="#" data-toggle="modal" data-target="#myModal1">
 							<span class="fa fa-truck" aria-hidden="true"></span>Track Order</a>
 					</li>
+					@if (Auth::user())
 					<li>
-						<span class="fa fa-phone" aria-hidden="true"></span> 001 234 5678
+							<span class="fa fa-user-circle-o" aria-hidden="true"></span>Hi, {{Auth::user()-> name}} </a>
+					</li>
+					<li>
+					<a href="{{url('logout')}}">
+							<span class="fa fa-sign-out" aria-hidden="true"></span>Signout </a>
+					</li>
+					<li>
+					<a href="{{url('account')}}">
+							<span class="fa fa-user" aria-hidden="true"></span>Account </a>
+					</li>
+					@else
+					<li>
+						<span class="fa fa-whatsapp" aria-hidden="true"></span> 9957588417
 					</li>
 					<li>
 						<a href="{{url('login')}}">
@@ -71,6 +82,8 @@
 						<a href="{{url('register')}}">
 							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up </a>
 					</li>
+					
+					@endif
 				</ul>
 				<!-- //header lists -->
 				<!-- search -->

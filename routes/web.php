@@ -20,7 +20,11 @@ Route::post('update_cart', 'VegetableEccomerce@update_cart')->middleware('verifi
 
 Route::get('remove_from_cart/{cart_id}', 'VegetableEccomerce@remove_from_cart')->middleware('verified');
 
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::get('check_pincode/{pincode}', 'VegetableEccomerce@check_pincode');
+
+Route::get('account','HomeController@account')->middleware('verified');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

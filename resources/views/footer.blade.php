@@ -41,19 +41,19 @@
 				</div>
 				<div class="col-xs-4 offer-footer">
 					<div class="col-xs-4 icon-fot">
-						<span class="fa fa-refresh" aria-hidden="true"></span>
+						<span class="fa fa-calendar" aria-hidden="true"></span>
 					</div>
 					<div class="col-xs-8 text-form-footer">
-						<h3>Free & Easy Returns</h3>
+						<h3>Same Day Delivery</h3>
 					</div>
 					<div class="clearfix"></div>
 				</div>
 				<div class="col-xs-4 offer-footer">
 					<div class="col-xs-4 icon-fot">
-						<span class="fa fa-times" aria-hidden="true"></span>
+						<span class="fa fa-star" aria-hidden="true"></span>
 					</div>
 					<div class="col-xs-8 text-form-footer">
-						<h3>Online cancellation </h3>
+						<h3>Premium Quality Product </h3>
 					</div>
 					<div class="clearfix"></div>
 				</div>
@@ -64,7 +64,7 @@
 			<div class="footer-info w3-agileits-info">
 				<!-- footer categories -->
 				<!-- quick links -->
-				<div class="col-sm-5 address-right">
+				<div class="col-sm-8 address-right">
 					<div class="col-xs-6 footer-grids">
 						<h3>Quick Links</h3>
 						<ul>
@@ -78,13 +78,7 @@
 								<a href="help.html">Help</a>
 							</li>
 							<li>
-								<a href="faqs.html">Faqs</a>
-							</li>
-							<li>
-								<a href="terms.html">Terms of use</a>
-							</li>
-							<li>
-								<a href="privacy.html">Privacy Policy</a>
+								<a href="terms.html">Terms and condition</a>
 							</li>
 						</ul>
 					</div>
@@ -92,11 +86,11 @@
 						<h3>Get in Touch</h3>
 						<ul>
 							<li>
-								<i class="fa fa-map-marker"></i> 123 Sebastian, USA.</li>
+								<i class="fa fa-map-marker"></i> Jorhat, Assam, India</li>
 							<li>
-								<i class="fa fa-mobile"></i> 333 222 3333 </li>
+								<i class="fa fa-whatsapp"></i> 9957588417 </li>
 							<li>
-								<i class="fa fa-phone"></i> +222 11 4444 </li>
+								<i class="fa fa-phone"></i> 9957588417 </li>
 							<li>
 								<i class="fa fa-envelope-o"></i>
 								<a href="mailto:example@mail.com"> mail@example.com</a>
@@ -140,8 +134,8 @@
 	<!-- copyright -->
 	<div class="copy-right">
 		<div class="container">
-			<p>© 2020 Bazaar 24x7. All rights reserved | Design by
-				<a href=""> </a>
+			<p>© 2020 Bazaar 24x7. All rights reserved | Developed by 
+				<a target="_blank" href="www.electronmedialab.in"> Electronmedialab</a>
 			</p>
 		</div>
 	</div>

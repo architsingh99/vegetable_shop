@@ -1,9 +1,4 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
+
 html, body{
 	margin:0;
 	font-size: 100%;
@@ -989,7 +984,7 @@ h3.w3l-nut-middle {
     position: absolute;
     right: 30%;
     bottom: 46%;
-    font-size: 35px;
+    font-size: 25px;
     font-weight: 800;
     color: rgba(10, 10, 10, 0.38);
     transform: rotate(-64deg);
@@ -998,7 +993,7 @@ h3.w3l-nut-middle {
 }
 /*-- //nuts --*/
 .ads-grid, footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .banner-bootom-w3-agileits, .privacy {
-    padding: 5em 0;
+    padding: 2em 0;
 }
 /*-- tittle heading --*/
 h3.tittle-w3l {
@@ -1390,7 +1385,7 @@ p.footer-main span {
 /*-- copyright --*/
 .copy-right {
     text-align: center;
-    padding: 15px 0;
+    padding: 5px 0;
     background: #FF5722;
 }
 .copy-right p {
@@ -1672,7 +1667,12 @@ h3.agileits-icons-title {
 	}
 	h3.icon-subheading {
 		font-size: 22px;
-	}
+    }
+    .pincode-field-button,
+    .pincode-field
+    {
+        font-size: 14px!important;
+    }
 }
 @media (max-width:768px){
 	h3.agileits-icons-title {
@@ -2295,14 +2295,15 @@ table.timetable_sub {
 	margin:0 auto;
 }
 .timetable_sub th {
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #8d8d8d;
     font-size: 16px;
-    border-right: 1px solid #ded2d2;
+    font-weight: 600;
+    /* border-right: 1px solid #ded2d2; */
     text-align: center;
     padding: 12px 0;
     letter-spacing: 1px;
-    font-weight: normal;
+    /* font-weight: normal;*/
 }
 .timetable_sub td {
     text-align: center;
@@ -2310,9 +2311,14 @@ table.timetable_sub {
     font-size: 14px;
     color: #212121;
 }
-.timetable_sub td {
+/* .timetable_sub td {
 	border:1px solid #CDCDCD;
-}
+} */
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
 td.invert-image a img {
     width:30%;
     margin: 0 auto;
@@ -2922,6 +2928,10 @@ input[type="radio"], input[type="checkbox"] {
     }
 }
 @media(max-width: 1050px){
+    .cart-img
+{
+    max-width: 60px!important;
+}
     .carousel-caption {
         min-height: 450px;
         padding-top: 5em;
@@ -3976,7 +3986,7 @@ input[type="radio"], input[type="checkbox"] {
         margin-top: 20px;
     }
     .bg-right-nut img {
-        width: 50%;
+        width: 70%;
     }
     h3.w3l-nut-middle {
         right: 12%;
@@ -4875,4 +4885,52 @@ input[type="radio"], input[type="checkbox"] {
     
 }
 
-/*--//responsive--*/
+.cart-img
+{
+    max-width: 120px;
+}
+.text-al-left
+{
+    text-align: left!important;
+}
+.pincode-field{
+    display: inline-block;
+    background: #f5f5f5;
+    border: none;
+    width: 75%;
+    outline: none;
+    padding: 7px;
+    font-size: 15px;
+    color: #000;
+    letter-spacing: 1px;
+}
+.pincode-field-button{
+    outline: none;
+    color: #FFFFFF;
+    padding: 7px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    width: 22%;
+    background: #752929;
+    border: none;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    transition: 0.5s all;
+}
+.pincode-div{
+    background-color: #c7c8c9;
+	margin-top: 2em;
+}
+.pincode-box{
+    padding: 1.5em;
+    position: relative;
+    /* float: right; */
+    width: 100%;
+}
+.welcome-img-banner
+{
+    width: 335px; 
+    padding-left: 10%;
+}
