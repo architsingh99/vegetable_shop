@@ -257,10 +257,10 @@ class VegetableEccomerce extends Controller
             {
                 $product = DB::table('products')->where('id', $value->product_id)->get();
                 $subOrder = new Suborder();
-                $subOrder->item_name = $product[0]->product_name;
+                $subOrder->item_name = $product[0]->name;
                 $subOrder->quantity = $value->quantity;
-                $subOrder->price = $product[0]->price;
-                $subOrder->total = $product[0]->price * $value->quantity;
+                $subOrder->price = $product[0]->price_per_kg;
+                $subOrder->total = $product[0]->price_per_kg * $value->quantity;
                 $subOrder->category = $product[0]->category;
                 $subOrder->item_id = $product[0]->id;
                 $subOrder->user_id = $value->user_id;
@@ -269,7 +269,7 @@ class VegetableEccomerce extends Controller
                 $subOrder->save();
                 Cart::find($value->id)->delete();
             }
-            $this->getUserNumber($order[0]->mobile);
+            // $this->getUserNumber($order[0]->mobile);
                return view('success')->with('transaction_id', $request['payment_id'])->with('order_id', '#'.$request->order_id)->with('delivery_time', $deliverTime);
            } 
          }catch (\Exception $e) {

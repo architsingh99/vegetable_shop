@@ -210,8 +210,19 @@
                                 </h4>
                                 <div class="w3l-pricehkj">
                                     <h6>₹{{$cat->price_per_kg}} per kg</h6>
-                                    <p>Save ₹{{($cat->price_per_kg * 1.2) - $cat->price_per_kg}}</p>
+                                    <img class="offer-image" src="{{ asset('images/offer.png') }}">
+                                    <h3 class="offer-image offer-p">Save <br>&nbsp ₹{{($cat->price_per_kg * 1.2) - $cat->price_per_kg}}</h3>
                                 </div>
+                                <div class="info-product-price">
+                                        <span class="item_price">Quantity <select name="quantity{{$key}}"
+                                                id="quantity{{$key}}">
+                                                @for($i=1;$i<=100;$i++) <option
+                                                    value="{{($cat->minimum_quantity * $i)}}">
+                                                    {{($cat->minimum_quantity * $i) < 1000 ? ($cat->minimum_quantity * $i) . " g" : ($cat->minimum_quantity * $i)/1000 . " kg"}}
+                                                    </option>
+                                                    @endfor
+                                            </select></span>
+                                    </div>
                                 <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
 
 								<input type="hidden" id="product_id{{$key}}" value="{{$cat->id}}" />

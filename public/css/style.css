@@ -4934,3 +4934,21 @@ input[type="radio"], input[type="checkbox"] {
     width: 335px; 
     padding-left: 10%;
 }
+.offer-image
+{
+    width:150px; 
+    position:absolute; 
+    float:right; 
+    z-index:2;
+    margin: -132px 0 0 140px;
+}
+.offer-p{
+    /* width:150px;  */
+    position: relative;
+    float:right; 
+    margin: -95px -56px 0 0;
+    z-index: 3;
+    font-size: 24px;
+    color: rgb(255, 255, 255)!important;
+    font-weight: 600;
+}
