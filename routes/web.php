@@ -24,6 +24,10 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('check_pincode/{pincode}', 'VegetableEccomerce@check_pincode');
 
+Route::post('post_orders', 'VegetableEccomerce@post_orders')->middleware('verified');
+
+Route::get('pay-success/{order_id}', 'VegetableEccomerce@success');
+
 Route::get('account','HomeController@account')->middleware('verified');
 
 Route::group(['prefix' => 'admin'], function () {

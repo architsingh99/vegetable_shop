@@ -10,7 +10,8 @@ use App\Category;
 use App\Product;
 use App\Cart;
 use App\Pincode;
-
+use App\Order;
+use App\Suborder;
 
 use DB;
 use Hash;
@@ -156,4 +157,113 @@ class VegetableEccomerce extends Controller
             //dd($data);
         return $this->sendResponse($data, "Pincode Checked");
     }
+
+    public function post_orders(Request $request)
+    {
+        //dd($request->input('image'));
+        
+        try{
+            $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
+            $order = new Order();
+              $order->user_id = auth()->user()->id;
+              $order->user_email = auth()->user()->email; 
+              $order->name = $request->input('name'); 
+              $order->mobile = $request->input('mobile');  
+              $order->landmark = $request->input('landmark'); 
+              $order->town_city = $request->input('city'); 
+              $order->pincode = $request->input('deliveryPincode');  
+              $order->address_type = $request->input('address_type'); 
+              $order->total_items = DB::table('carts')->where('user_id', auth()->user()->id)->count();  
+              $order->order_id = $order_id; 
+              $order->sub_total = $request->input('subtotalOrder'); 
+              $order->delivery_charge = $request->input('deliveryChargeOrder'); 
+              $order->total_price = $request->input('finalPriceOrder'); 
+              $order->payment_status = 'PENDING'; 
+              $order->save();
+              $this->pay($order);
+    }
+    catch(Exception $e) {
+        print($e);
+    }
+    }
+
+    public function pay($data){
+        // dd(env('IM_API_KEY'));
+         $api = new \Instamojo\Instamojo(
+                config('services.instamojo.api_key'),
+                config('services.instamojo.auth_token'),
+                config('services.instamojo.url')
+            );
+           // dd($api);
+        try {
+         $str1 = substr($data->order_id, 1); 
+            $response = $api->paymentRequestCreate(array(
+                "purpose" => "ORDER ID: $data->order_id",
+                "amount" => (int)$data->total_price,
+                "buyer_name" => "$data->name",
+                "send_email" => true,
+                "email" => "$data->user_email",
+                "phone" => "$data->mobile",
+                "redirect_url" => "http://127.0.0.1:8000/pay-success/".$str1
+                ));
+                 
+                header('Location: ' . $response['longurl']);
+                exit();
+        }catch (Exception $e) {
+            print('Error: ' . $e->getMessage());
+        }
+     }
+
+     public function success(Request $request){
+        try {
+    
+           $api = new \Instamojo\Instamojo(
+               config('services.instamojo.api_key'),
+               config('services.instamojo.auth_token'),
+               config('services.instamojo.url')
+           );
+    
+           $response = $api->paymentRequestStatus(request('payment_request_id'));
+    
+           if( !isset($response['payments'][0]['status']) ) {
+              dd('payment failed');
+           } else if($response['payments'][0]['status'] != 'Credit') {
+                dd('payment failed');
+           }
+           else {
+            DB::table('orders')
+            ->where('order_id', '#'.$request->order_id)
+            ->update(['payment_status' =>'Completed',
+            'transaction_id'=>$request['payment_id']]);
+            $order = DB::table('orders')->where('order_id', '#'.$request->order_id)->get();
+            $cart = DB::table('carts')->where('user_id', $order[0]->user_id)->get();
+            $checkout = DB::table('pincodes')->where('pincode', $order[0]->pincode)->get();
+            $deliverTime = $checkout[0]->delivery_time . " minutes";
+            if($checkout[0]->delivery_time > 60)
+            {
+                $deliverTime =  ($checkout[0]->delivery_time / 60) . " hr and " . ($checkout[0]->delivery_time % 60) . " minutes.";
+            }
+            foreach($cart as $key => $value)
+            {
+                $product = DB::table('products')->where('id', $value->product_id)->get();
+                $subOrder = new Suborder();
+                $subOrder->item_name = $product[0]->product_name;
+                $subOrder->quantity = $value->quantity;
+                $subOrder->price = $product[0]->price;
+                $subOrder->total = $product[0]->price * $value->quantity;
+                $subOrder->category = $product[0]->category;
+                $subOrder->item_id = $product[0]->id;
+                $subOrder->user_id = $value->user_id;
+                $subOrder->order_id = $order[0]->order_id;
+                $subOrder->user_email = $order[0]->user_email;
+                $subOrder->save();
+                Cart::find($value->id)->delete();
+            }
+               return view('success')->with('transaction_id', $request['payment_id'])->with('order_id', '#'.$request->order_id)->with('delivery_time', $deliverTime);
+           } 
+         }catch (\Exception $e) {
+            dd($e);
+        }
+     }
 }

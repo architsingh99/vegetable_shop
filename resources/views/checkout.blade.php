@@ -126,7 +126,8 @@
 
             <button class="pincode-field-button" onclick="checkPincode()" id="verifyPincodeButton">Verify</button>
             <button class="pincode-field-button" onclick="editPincode()" id="editPincodeButton"
-                style="width: 35%; display: none;">Edit Pincode</button>
+                style="display: none;">Edit Pincode</button>
+                <img src="{{asset('images/25.gif')}}" id="preloaderPincode" style="display: none; height: 30px;">
 
             <p style="color: red; display:none;" id="pincodeStatus"></p>
 		</div>
@@ -135,7 +136,8 @@
         <div class="checkout-left" id="addressPayment" style="display: none;">
             <div class="address_form_agile">
                 <h4>Add a new Details</h4>
-                <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                <form action="{{url('post_orders')}}" method="post" class="creditly-card-form agileinfo_form">
+                @csrf
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
                         <div class="information-wrapper">
                             <div class="first-row">
@@ -146,7 +148,7 @@
                                 <div class="w3_agileits_card_number_grids">
                                     <div class="w3_agileits_card_number_grid_left">
                                         <div class="controls">
-                                            <input type="text" placeholder="Mobile Number" name="number" required="">
+                                            <input type="text" placeholder="Mobile Number" name="mobile" required="">
                                         </div>
                                     </div>
                                     <div class="w3_agileits_card_number_grid_right">
@@ -160,24 +162,29 @@
                                     <input type="text" placeholder="Town/City" name="city" required="">
                                 </div>
                                 <div class="controls">
-                                    <select class="option-w3ls">
-                                        <option>Select Address type</option>
-                                        <option>Office</option>
-                                        <option>Home</option>
-                                        <option>Commercial</option>
+                                    <select class="option-w3ls" name="address_type">
+                                        <option default disabled>Select Address type</option>
+                                        <option value="Office">Office</option>
+                                        <option value="Home">Home</option>
+                                        <option value="Commercial">Commercial</option>
 
                                     </select>
                                 </div>
                             </div>
-                            <!-- <button class="submit check_out">Delivery to this Address</button> -->
+                            <input type="hidden" value="" name="deliveryPincode" id="deliveryPincode">
+                            <input type="hidden" id="subtotalOrder" name="subtotalOrder" value="{{$total}}">
+                            <input type="hidden" id="deliveryChargeOrder" name="deliveryChargeOrder" value="0">
+                            <input type="hidden" id="finalPriceOrder" name="finalPriceOrder" value="0">
+                            <button type="submit"class="submit check_out" id="makePaymentButton" onclick="makePaymentHideButton()">Make a Payment <span class="fa fa-hand-o-right" aria-hidden="true"></span></button>
+                            <img src="{{asset('images/25.gif')}}" id="preloadermakePaymentButton" style="display: none; height: 30px;">
                         </div>
                     </div>
                 </form>
-                <div class="checkout-right-basket">
+                <!-- <div class="checkout-right-basket">
                     <a href="payment.html">Make a Payment
                         <span class="fa fa-hand-o-right" aria-hidden="true"></span>
                     </a>
-                </div>
+                </div> -->
             </div>
             <div class="clearfix"> </div>
         </div>
@@ -205,12 +212,15 @@ function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
                 'subtotal').value) - oldprice + newprice);
             document.getElementById('subtotal').value = Number(document.getElementById('subtotal').value) -
                 oldprice + newprice;
+            document.getElementById('subtotalOrder').value =  document.getElementById('subtotal').value;
+                    
             if (Number(document.getElementById('deliveryCharge').value) > 0) {
                 document.getElementById('finalPriceText').innerText = '₹' + ((Number(document
                     .getElementById('subtotal').value)) + (Number(document.getElementById(
                     'deliveryCharge').value)));
                 document.getElementById('finalPrice').value = (Number(document.getElementById('subtotal')
                     .value)) + (Number(document.getElementById('deliveryCharge').value));
+                document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
             }
             document.getElementById(z).innerText = '₹' + newprice;
             // swal({
@@ -225,6 +235,8 @@ function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
 
 function checkPincode() {
     var pin = document.getElementById('pincode').value;
+    document.getElementById('verifyPincodeButton').style.display = 'none';
+    document.getElementById('preloaderPincode').style.display = 'block';
     if (pin == "" || pin == null) {
         swal({
             title: "Warning",
@@ -252,14 +264,24 @@ function checkPincode() {
                         'subtotal').value)) + (Number(document.getElementById('deliveryCharge').value));
                     document.getElementById('addressPayment').style.display = 'block';
                     document.getElementById('pincode').readOnly = true;
-                    document.getElementById('verifyPincodeButton').style.display = 'none';
                     document.getElementById('editPincodeButton').style.display = 'block';
+                    document.getElementById('preloaderPincode').style.display = 'none';
+                    document.getElementById('deliveryPincode').value = pin;
+
+                    document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
+                    document.getElementById('subtotalOrder').value =  document.getElementById('subtotal').value;
+                    document.getElementById('deliveryChargeOrder').value =  response.data.delivery_charge;
                 } else {
                     document.getElementById('deliveryChargeText').innerText = 'Enter Pincode First';
                     document.getElementById('deliveryCharge').value = 0;
                     document.getElementById('finalPriceText').innerText = 'Enter Pincode First';
                     document.getElementById('finalPrice').value = 0;
                     document.getElementById('addressPayment').style.display = 'none';
+                    document.getElementById('verifyPincodeButton').style.display = 'block';
+                    document.getElementById('preloaderPincode').style.display = 'none';
+
+                    document.getElementById('finalPriceOrder').value = 0;
+                    document.getElementById('deliveryChargeOrder').value =  0;
                 }
                 // swal({
                 //     title: response.data.status,
@@ -276,6 +298,12 @@ function editPincode() {
     document.getElementById('verifyPincodeButton').style.display = 'block';
     document.getElementById('editPincodeButton').style.display = 'none';
     document.getElementById('addressPayment').style.display = 'none';
+}
+
+function makePaymentHideButton() {
+    document.getElementById('preloadermakePaymentButton').style.display = 'block';
+    document.getElementById('makePaymentButton').style.display = 'none';
+    return true;
 }
 </script>
 @include('footer')
