@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2020 at 08:02 PM
+-- Generation Time: May 07, 2020 at 01:08 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -141,7 +141,43 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (47, 7, 'delivery_charge', 'number', 'Delivery Charge', 0, 1, 1, 1, 1, 1, '{}', 3),
 (48, 7, 'delivery_time', 'number', 'Approx. Delivery Time In Minutes', 0, 1, 1, 1, 1, 1, '{}', 4),
 (49, 7, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 5),
-(50, 7, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 6);
+(50, 7, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 6),
+(51, 8, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 0),
+(52, 8, 'user_id', 'number', 'User Id', 0, 1, 1, 1, 1, 1, '{}', 4),
+(53, 8, 'user_email', 'text', 'User Email', 0, 1, 1, 1, 1, 1, '{}', 6),
+(54, 8, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '{}', 7),
+(55, 8, 'mobile', 'text', 'Mobile', 0, 1, 1, 1, 1, 1, '{}', 8),
+(56, 8, 'landmark', 'text', 'Landmark', 0, 1, 1, 1, 1, 1, '{}', 9),
+(57, 8, 'town_city', 'text', 'Town City', 0, 1, 1, 1, 1, 1, '{}', 10),
+(58, 8, 'pincode', 'number', 'Pincode', 0, 1, 1, 1, 1, 1, '{}', 11),
+(59, 8, 'address_type', 'text', 'Address Type', 0, 1, 1, 1, 1, 1, '{}', 12),
+(60, 8, 'total_items', 'number', 'Total Items', 0, 1, 1, 1, 1, 1, '{}', 13),
+(61, 8, 'order_id', 'text', 'Order Id', 0, 1, 1, 1, 1, 1, '{}', 2),
+(62, 8, 'total_price', 'number', 'Total Price', 0, 1, 1, 1, 1, 1, '{}', 16),
+(63, 8, 'payment_status', 'text', 'Payment Status', 0, 1, 1, 1, 1, 1, '{}', 17),
+(64, 8, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 18),
+(65, 8, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 19),
+(66, 8, 'order_belongsto_user_relationship', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 3),
+(67, 8, 'order_belongsto_user_relationship_1', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_email\",\"key\":\"email\",\"label\":\"email\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 5),
+(68, 8, 'sub_total', 'text', 'Sub Total', 0, 1, 1, 1, 1, 1, '{}', 14),
+(69, 8, 'delivery_charge', 'text', 'Delivery Charge', 0, 1, 1, 1, 1, 1, '{}', 15),
+(70, 8, 'transaction_id', 'text', 'Transaction Id', 0, 1, 1, 1, 1, 1, '{}', 18),
+(71, 9, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 0),
+(72, 9, 'item_name', 'text', 'Item Name', 0, 1, 1, 1, 1, 1, '{}', 2),
+(73, 9, 'quantity', 'text', 'Quantity', 0, 1, 1, 1, 1, 1, '{}', 3),
+(74, 9, 'price', 'text', 'Price', 0, 1, 1, 1, 1, 1, '{}', 4),
+(75, 9, 'total', 'text', 'Total', 0, 1, 1, 1, 1, 1, '{}', 5),
+(76, 9, 'category', 'text', 'Category', 0, 1, 1, 1, 1, 1, '{}', 6),
+(77, 9, 'item_id', 'text', 'Item Id', 0, 1, 1, 1, 1, 1, '{}', 7),
+(78, 9, 'user_id', 'text', 'User Id', 0, 1, 1, 1, 1, 1, '{}', 10),
+(79, 9, 'user_email', 'text', 'User Email', 0, 1, 1, 1, 1, 1, '{}', 11),
+(80, 9, 'order_id', 'text', 'Order Id', 0, 1, 1, 1, 1, 1, '{}', 13),
+(81, 9, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 15),
+(82, 9, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 16),
+(83, 9, 'suborder_belongsto_user_relationship', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 8),
+(84, 9, 'suborder_belongsto_user_relationship_1', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_email\",\"key\":\"email\",\"label\":\"email\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 12),
+(85, 9, 'suborder_belongsto_product_relationship', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"item_name\",\"key\":\"name\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 9),
+(86, 9, 'suborder_belongsto_product_relationship_1', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"item_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 14);
 
 -- --------------------------------------------------------
 
@@ -178,7 +214,9 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (4, 'categories', 'categories', 'Category', 'Categories', NULL, 'App\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2020-05-04 10:32:48', '2020-05-04 10:32:48'),
 (5, 'products', 'products', 'Product', 'Products', 'voyager-logbook', 'App\\Product', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:39:31', '2020-05-04 10:53:12'),
 (6, 'carts', 'carts', 'Cart', 'Carts', 'voyager-credit-cards', 'App\\Cart', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 05:48:56', '2020-05-05 05:51:14'),
-(7, 'pincodes', 'pincodes', 'Pincode', 'Pincodes', 'voyager-hammer', 'App\\Pincode', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 12:01:39', '2020-05-05 12:02:19');
+(7, 'pincodes', 'pincodes', 'Pincode', 'Pincodes', 'voyager-hammer', 'App\\Pincode', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 12:01:39', '2020-05-05 12:02:19'),
+(8, 'orders', 'orders', 'Order', 'Orders', 'voyager-rum', 'App\\Order', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-07 01:55:25', '2020-05-07 02:17:05'),
+(9, 'suborders', 'suborders', 'Suborder', 'Suborders', 'voyager-lab', 'App\\Suborder', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-07 02:23:36', '2020-05-07 02:26:48');
 
 -- --------------------------------------------------------
 
@@ -256,7 +294,9 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (12, 1, 'Categories', '', '_self', 'voyager-cannon', '#000000', NULL, 15, '2020-05-04 10:32:50', '2020-05-04 10:33:55', 'voyager.categories.index', 'null'),
 (13, 1, 'Products', '', '_self', 'voyager-logbook', NULL, NULL, 16, '2020-05-04 10:39:31', '2020-05-04 10:39:31', 'voyager.products.index', NULL),
 (14, 1, 'Carts', '', '_self', 'voyager-credit-cards', NULL, NULL, 17, '2020-05-05 05:48:57', '2020-05-05 05:48:57', 'voyager.carts.index', NULL),
-(15, 1, 'Pincodes', '', '_self', 'voyager-hammer', '#000000', NULL, 18, '2020-05-05 12:01:40', '2020-05-05 12:02:48', 'voyager.pincodes.index', 'null');
+(15, 1, 'Pincodes', '', '_self', 'voyager-hammer', '#000000', NULL, 18, '2020-05-05 12:01:40', '2020-05-05 12:02:48', 'voyager.pincodes.index', 'null'),
+(16, 1, 'Orders', '', '_self', 'voyager-rum', NULL, NULL, 19, '2020-05-07 01:55:26', '2020-05-07 01:55:26', 'voyager.orders.index', NULL),
+(17, 1, 'Suborders', '', '_self', 'voyager-lab', NULL, NULL, 20, '2020-05-07 02:23:37', '2020-05-07 02:23:37', 'voyager.suborders.index', NULL);
 
 -- --------------------------------------------------------
 
@@ -298,6 +338,40 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2018_03_16_000000_make_settings_value_nullable', 1),
 (22, '2019_08_19_000000_create_failed_jobs_table', 1),
 (23, '2014_10_12_100000_create_password_resets_table', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `user_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `landmark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `town_city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pincode` int(11) DEFAULT NULL,
+  `address_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_items` int(11) DEFAULT NULL,
+  `order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_price` int(11) DEFAULT NULL,
+  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `sub_total` int(11) DEFAULT NULL,
+  `delivery_charge` int(11) DEFAULT NULL,
+  `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `user_email`, `name`, `mobile`, `landmark`, `town_city`, `pincode`, `address_type`, `total_items`, `order_id`, `total_price`, `payment_status`, `created_at`, `updated_at`, `sub_total`, `delivery_charge`, `transaction_id`) VALUES
+(1, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#UAD0C9V12', 77, 'PENDING', '2020-05-07 05:33:11', '2020-05-07 05:33:11', 27, 50, NULL);
 
 -- --------------------------------------------------------
 
@@ -382,7 +456,17 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (43, 'read_pincodes', 'pincodes', '2020-05-05 12:01:40', '2020-05-05 12:01:40'),
 (44, 'edit_pincodes', 'pincodes', '2020-05-05 12:01:40', '2020-05-05 12:01:40'),
 (45, 'add_pincodes', 'pincodes', '2020-05-05 12:01:40', '2020-05-05 12:01:40'),
-(46, 'delete_pincodes', 'pincodes', '2020-05-05 12:01:40', '2020-05-05 12:01:40');
+(46, 'delete_pincodes', 'pincodes', '2020-05-05 12:01:40', '2020-05-05 12:01:40'),
+(47, 'browse_orders', 'orders', '2020-05-07 01:55:25', '2020-05-07 01:55:25'),
+(48, 'read_orders', 'orders', '2020-05-07 01:55:25', '2020-05-07 01:55:25'),
+(49, 'edit_orders', 'orders', '2020-05-07 01:55:25', '2020-05-07 01:55:25'),
+(50, 'add_orders', 'orders', '2020-05-07 01:55:25', '2020-05-07 01:55:25'),
+(51, 'delete_orders', 'orders', '2020-05-07 01:55:25', '2020-05-07 01:55:25'),
+(52, 'browse_suborders', 'suborders', '2020-05-07 02:23:37', '2020-05-07 02:23:37'),
+(53, 'read_suborders', 'suborders', '2020-05-07 02:23:37', '2020-05-07 02:23:37'),
+(54, 'edit_suborders', 'suborders', '2020-05-07 02:23:37', '2020-05-07 02:23:37'),
+(55, 'add_suborders', 'suborders', '2020-05-07 02:23:37', '2020-05-07 02:23:37'),
+(56, 'delete_suborders', 'suborders', '2020-05-07 02:23:37', '2020-05-07 02:23:37');
 
 -- --------------------------------------------------------
 
@@ -445,7 +529,17 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (43, 1),
 (44, 1),
 (45, 1),
-(46, 1);
+(46, 1),
+(47, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(56, 1);
 
 -- --------------------------------------------------------
 
@@ -550,6 +644,27 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 (8, 'admin.loader', 'Admin Loader', '', '', 'image', 3, 'Admin'),
 (9, 'admin.icon_image', 'Admin Icon Image', '', '', 'image', 4, 'Admin'),
 (10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', '', '', 'text', 1, 'Admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `suborders`
+--
+
+CREATE TABLE `suborders` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `item_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
+  `item_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `user_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -665,6 +780,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -712,6 +833,12 @@ ALTER TABLE `settings`
   ADD UNIQUE KEY `settings_key_unique` (`key`);
 
 --
+-- Indexes for table `suborders`
+--
+ALTER TABLE `suborders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `translations`
 --
 ALTER TABLE `translations`
@@ -754,13 +881,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -778,7 +905,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -787,10 +914,16 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `pincodes`
@@ -815,6 +948,12 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `settings`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `suborders`
+--
+ALTER TABLE `suborders`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `translations`
