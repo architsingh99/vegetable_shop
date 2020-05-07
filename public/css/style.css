@@ -1690,6 +1690,13 @@ h3.agileits-icons-title {
 	}
 }
 @media (max-width: 640px){
+    .offer-p{
+        margin: -95px -80px 0 0!important;
+    }
+    .offer-image
+{
+    width:146px!important; 
+}
 	.icon-box {
 		float: left;
 		width: 50%;
@@ -1712,6 +1719,9 @@ h3.agileits-icons-title {
 	}
 }
 @media (max-width: 384px){
+    .offer-p{
+        margin: -95px -90px 0 0!important;
+    }
 	.icon-box {
 		float: none;
 		width: 100%;
@@ -2745,6 +2755,9 @@ input[type="radio"], input[type="checkbox"] {
     }
 }
 @media(max-width: 1080px){
+    .offer-p{
+        margin: -95px -70px 0 0!important;
+    }
     .header-bot_inner_wthreeinfo_header_mid {
         width: 100%;
     }
