@@ -1,8 +1,9 @@
 @include('../../header')
 <div class="container">
-    <div class="row justify-content-center" style="padding-left: 30%;">
-        <div class="col-md-8">
-            <div class="card">
+<div class="row justify-content-center" >
+        <div style="    margin: auto;
+    float: initial;" class="col-md-8">
+            <div class="card" style="text-align:center">
             <h2><div class="card-header">{{ __('Reset Password') }}</div></h2>
             <br><br>
                 <div class="card-body">
@@ -29,8 +30,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0" style="padding-left: 40%;">
-                            <div class="col-md-6 offset-md-4">
+                        <div class="form-group row mb-0">
+                            <div class="col-md-12 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
