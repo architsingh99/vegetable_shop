@@ -76,11 +76,11 @@
 					</li>
 					<li>
 						<a href="{{url('login')}}">
-							<span class="fa fa-unlock-alt" aria-hidden="true"></span> Sign In </a>
+							<span class="fa fa-sign-in" aria-hidden="true"></span> Login </a>
 					</li>
 					<li>
 						<a href="{{url('register')}}">
-							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up </a>
+							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Register </a>
 					</li>
 					
 					@endif

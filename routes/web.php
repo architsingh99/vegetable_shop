@@ -45,3 +45,6 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Auth::routes(['verify' => true]);
+
+Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
+Route::get('/callback/{provider}', 'SocialController@callback');
