@@ -12,23 +12,27 @@
 */
 Route::get('/','VegetableEccomerce@get');
 
-Route::get('check_out','VegetableEccomerce@checkout')->middleware('verified');
+Route::get('check_out','VegetableEccomerce@checkout')->middleware('auth');
 
-Route::post('add_to_cart', 'VegetableEccomerce@addToCart')->middleware('verified');
+Route::post('add_to_cart', 'VegetableEccomerce@addToCart')->middleware('auth');
 
-Route::post('update_cart', 'VegetableEccomerce@update_cart')->middleware('verified');
+Route::post('update_cart', 'VegetableEccomerce@update_cart')->middleware('auth');
 
-Route::get('remove_from_cart/{cart_id}', 'VegetableEccomerce@remove_from_cart')->middleware('verified');
+Route::get('remove_from_cart/{cart_id}', 'VegetableEccomerce@remove_from_cart')->middleware('auth');
 
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('check_pincode/{pincode}', 'VegetableEccomerce@check_pincode');
 
-Route::post('post_orders', 'VegetableEccomerce@post_orders')->middleware('verified');
+Route::post('post_orders', 'VegetableEccomerce@post_orders')->middleware('auth');
 
 Route::get('pay-success/{order_id}', 'VegetableEccomerce@success');
 
-Route::get('account','HomeController@account')->middleware('verified');
+Route::get('send_message/{number}', 'VegetableEccomerce@getUserNumber');
+
+Route::get('/whatsapp', 'VegetableEccomerce@test');
+
+Route::get('account','HomeController@account')->middleware('auth');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

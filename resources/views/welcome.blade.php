@@ -252,7 +252,7 @@
         document.getElementById('addToCartButton' + index).style.display = 'none';
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/add_to_cart", // You add the id of the post and the update datetime to the url as well
+            url: "http://127.0.0.1:8000/add_to_cart", // You add the id of the post and the update datetime to the url as well
             data: {
                 _token: document.getElementById('token').value,
                 product_id: document.getElementById('product_id' + index).value,

@@ -13,7 +13,8 @@
         "instamojo/instamojo-php": "^0.4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "tcg/voyager": "^1.3"
+        "tcg/voyager": "^1.3",
+        "twilio/sdk": "^6.4"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

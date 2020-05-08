@@ -201,7 +201,7 @@ function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8000/update_cart",
+        url: "http://127.0.0.1:8000/update_cart",
         data: {
             _token: document.getElementById('token').value,
             cart_id: cart_id,
@@ -247,7 +247,7 @@ function checkPincode() {
         console.log(pin);
         $.ajax({
             type: "GET",
-            url: "http://localhost:8000/check_pincode/" +
+            url: "http://127.0.0.1:8000/check_pincode/" +
                 pin, // You add the id of the post and the update datetime to the url as well
             success: function(response) {
                 document.getElementById('pincodeStatus').innerText = response.data.message;
