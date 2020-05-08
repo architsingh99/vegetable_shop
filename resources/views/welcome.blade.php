@@ -70,39 +70,17 @@
         <div class="agileinfo-ads-display col-md-12">
             <div class="wrapper">
                 <!-- first section (nuts) -->
-                <div class="product-sec1">
+                <!-- <div class="product-sec1"> -->
                     <!-- <h3 class="heading-tittle">Nuts</h3> -->
-                    <?php $done = 0; ?>
+                  
+                        <?php $done = 0; ?>
                     <?php $skip = 0; ?>
                     @foreach($products as $key => $cat)
-
-                    @if(($key + 1) % 3 == 0 || $skip == 1)
-                    @if($done == 1)
-                    <div class="clearfix"></div>
-                </div>
-                <div class="product-sec1">
-                    <?php $skip=0 ?>
-                    @else
-                    <?php $done=1;
-						$skip=1; ?>
-                    <div class="product-sec1 product-sec2">
-                        <div class="col-xs-7 effect-bg">
-                            <h3 class="">Bazaar 24x7</h3>
-                            <h6>Enjoy our all healthy Products</h6>
-                            <!-- <p>Get Extra 10% Off</p> -->
-                        </div>
-                        <h3 class="w3l-nut-middle">Instanst Delivery</h3>
-                        <div class="col-xs-5 bg-right-nut">
-                            <img class="welcome-img-banner" src="images/fruit_veg.png" alt="" >
-                        </div>
-                        @endif
-                        @endif
-                        @if($skip == 0)
-                        <div class="col-md-4 product-men">
+                    
+                        <div class="col-md-4 men-thumb-item-sale product-men">
                             <div class="men-pro-item simpleCart_shelfItem">
-                                <div class="men-thumb-item">
-                                    <img style="width: 240px; height: 240px;"
-                                        src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}"
+                                <div class="front-item">
+                                    <img  src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}"
                                         alt="">
                                     <!-- <div class="men-cart-pro">
 										<div class="inner-men-cart-pro">
@@ -153,12 +131,11 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
                         @endforeach
                         <div class="clearfix"></div>
-                    </div>
+                    <!-- </div> -->
                     <!-- //first section (nuts) -->
-                    @if($done == 0)
+                   
                     <div class="product-sec1 product-sec2">
                         <div class="col-xs-7 effect-bg">
                             <h3 class="">Bazaar 24x7</h3>
@@ -171,7 +148,6 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    @endif
                     <!-- //fourth section (noodles) -->
                 </div>
             </div>
