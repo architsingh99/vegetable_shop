@@ -28,6 +28,10 @@ Route::post('post_orders', 'VegetableEccomerce@post_orders')->middleware('auth')
 
 Route::get('pay-success/{order_id}', 'VegetableEccomerce@success');
 
+Route::get('send_message/{number}', 'VegetableEccomerce@getUserNumber');
+
+Route::get('/whatsapp', 'VegetableEccomerce@test');
+
 Route::get('account','HomeController@account')->middleware('auth');
 
 Route::group(['prefix' => 'admin'], function () {

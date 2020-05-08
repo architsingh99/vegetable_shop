@@ -14,7 +14,8 @@ use App\Order;
 use App\Suborder;
 
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
+//use GuzzleHttp\Client;
+use Twilio\Rest\Client;
 
 use DB;
 use Hash;
@@ -269,7 +270,9 @@ class VegetableEccomerce extends Controller
                 $subOrder->save();
                 Cart::find($value->id)->delete();
             }
-            // $this->getUserNumber($order[0]->mobile);
+            $message = "Your payment has been successfully recieved. Your ORDER ID is " . $request->order_id ." and TRANSACTION ID is " . $request['payment_id'] .". It will be delivered in approximately " . $deliverTime .". Thank you for shopping with us.";
+            $this->getUserNumber($order[0]->mobile, $message);
+            $this->sendWhatsAppSMS($order[0]->mobile, $message);
                return view('success')->with('transaction_id', $request['payment_id'])->with('order_id', '#'.$request->order_id)->with('delivery_time', $deliverTime);
            } 
          }catch (\Exception $e) {
@@ -279,84 +282,59 @@ class VegetableEccomerce extends Controller
 
 
 
-     public function getUserNumber($number)
+     public function getUserNumber($number, $msg)
     {
-        $phone_number = $number;
+            $curl = curl_init();
+            $num = $number;
+            if(strlen($number) > 10)
+                $num = substr($number, -10);
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => "https://api.msg91.com/api/v2/sendsms?country=91",
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => "",
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 30,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => "POST",
+				CURLOPT_POSTFIELDS => "{ \"sender\": \"BAZAAR\", \"route\": \"4\", \"country\": \"91\", \"sms\": [ { \"message\": \"".$msg."\", \"to\": [ \"".$num."\" ] }] }",
+				CURLOPT_SSL_VERIFYHOST => 0,
+				CURLOPT_SSL_VERIFYPEER => 0,
+				CURLOPT_HTTPHEADER => array(
+				    "authkey: 328588AuWJtGIqx4d5eb43c63P1",
+				    "content-type: application/json"
+				),
+			));
 
-        $message = "A message has been sent to you";
+			$response = curl_exec($curl);
+			$err = curl_error($curl);
 
-        $this->initiateSmsActivation($phone_number, $message);
-//        $this->initiateSmsGuzzle($phone_number, $message);
+			curl_close($curl);
 
-        return redirect()->back()->with('message', 'Message has been sent successfully');
+			// if ($err) {
+			// 	dd("SMS couldn't send");
+			// } else {
+			// 	dd("message sent");
+			// }
     }
 
-
-    public function initiateSmsActivation($phone_number, $message){
-        $isError = 0;
-        $errorMessage = true;
-
-        //Preparing post parameters
-        $postData = array(
-            'username' => $this->SMS_USERNAME,
-            'password' => $this->SMS_PASSWORD,
-            'message' => $message,
-            'sender' => $this->SMS_SENDER,
-            'mobiles' => $phone_number,
-            'response' => $this->RESPONSE_TYPE
-        );
-
-        $url = "http://portal.bulksmsnigeria.net/api/";
-
-        $ch = curl_init();
-        curl_setopt_array($ch, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $postData
-        ));
-
-
-        //Ignore SSL certificate verification
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-
-        //get response
-        $output = curl_exec($ch);
-
-
-        //Print error if any
-        if (curl_errno($ch)) {
-            $isError = true;
-            $errorMessage = curl_error($ch);
-        }
-        curl_close($ch);
-
-
-        if($isError){
-            return array('error' => 1 , 'message' => $errorMessage);
-        }else{
-            return array('error' => 0 );
-        }
+    public function test(Request $request)
+    {
+        $res = $this->sendWhatsAppSMS('8404052003', 'hi');
+        dd($res);
     }
 
-    public function initiateSmsGuzzle($phone_number, $message)
-    {
-        $client = new Client();
-
-        $response = $client->post('http://portal.bulksmsnigeria.net/api/?', [
-            'verify'    =>  false,
-            'form_params' => [
-                'username' => $this->SMS_USERNAME,
-                'password' => $this->SMS_PASSWORD,
-                'message' => $message,
-                'sender' => $this->SMS_SENDER,
-                'mobiles' => $phone_number,
-            ],
-        ]);
-
-
-        $response = json_decode($response->getBody(), true);
+    public function sendWhatsAppSMS($number, $msg) {
+        $twilio = new Client('ACa9f2d841505758a730ec17d7f4599197', '2fcec50f015c4cd0e0ab9a158570471f');
+            if(strlen($number) == 10)
+                $num = "+91" . $number;
+            else $num =  "+91" . substr($number, -10);
+        $message = $twilio->messages
+                  ->create("whatsapp:".$num, // to
+                           array(
+                               "from" => "whatsapp:+14155238886",
+                               "body" => $msg
+                           )
+                  );
+        return $message;          
     }
 }

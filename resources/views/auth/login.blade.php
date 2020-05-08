@@ -5,20 +5,25 @@
     float: initial;" class="col-md-8">
             <div class="card" style="text-align:center">
                 <h2>
-                    <div class="card-header">{{ __('Login') }}</div>
+                    <div class="card-header">Login to Bazaar24x7</div>
                 </h2>
                 <br><br>
                 <div class="card-body">
-                    <div class="form-group row">
-                        <div class="col-md-8 offset-md-4">
-
+                   
                             <a href="{{ url('/auth/redirect/facebook') }}">
-                                <img src="images/facebook.png">
+                                <img style="height: 45px" class="social-login" src="images/facebook.png">
                             </a>
 
-                            <a href="{{ url('/auth/redirect/google') }}"><img src="images/google.png">
+                            <a href="{{ url('/auth/redirect/google') }}"><img style="height: 50px" class="social-login" src="images/google.png">
                             </a>
                         </div>
+                    </div>
+                    <br>
+                    
+                    <div class="form-group row">
+                    <div style="text-align: center" class="col-md-12 offset-md-4">
+                    <label  class="col-form-label text-md-right">Or</label>
+                    </div>
                     </div>
 
                     <form method="POST" action="{{ route('login') }}">
@@ -73,7 +78,7 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-12 offset-md-4">
+                            <div style="text-align: center" class="col-md-12 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>

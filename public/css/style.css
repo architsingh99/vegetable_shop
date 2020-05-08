@@ -5002,4 +5002,6 @@ input[type="radio"], input[type="checkbox"] {
     max-width: 10em;
     height: 10em;    
     }
-    
+    .social-login{
+        width: 15em;
+    }
