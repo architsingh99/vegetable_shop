@@ -579,9 +579,12 @@ button.w3view-cart {
 	width: 80%;
 }
 .product-men {
-    margin-top: 2em;
+    width: 31.8%;
+    margin-right: 1em;
+    margin-top: 1em;
 }
 .men-pro-item {
+    padding: 12px 0px 12px 0px;
     position: relative;
 }
 .men-thumb-item {
@@ -919,7 +922,7 @@ input.checked {
 .product-sec1 {
     box-shadow: 0px 0px 15px 0px #D6D6D6;
     padding: 30px 20px;
-    margin-bottom: 14px;
+    margin: 5em 0 1em 0px;
 }
 h3.heading-tittle {
     text-align: center;
@@ -1690,6 +1693,13 @@ h3.agileits-icons-title {
 	}
 }
 @media (max-width: 640px){
+    .offer-p{
+        margin: -95px -80px 0 0!important;
+    }
+    .offer-image
+{
+    width:146px!important; 
+}
 	.icon-box {
 		float: left;
 		width: 50%;
@@ -1701,6 +1711,10 @@ h3.agileits-icons-title {
 	}
 }
 @media (max-width: 414px){
+    .offer-p{
+        margin: -95px -90px 0 0!important;
+    }
+    
 	h3.agileits-icons-title {
 		font-size: 23px;
 	}
@@ -1712,6 +1726,13 @@ h3.agileits-icons-title {
 	}
 }
 @media (max-width: 384px){
+    .offer-p{
+        margin: -95px -90px 0 0!important;
+    }
+    .offer-image
+    {
+        width:138px!important; 
+    }
 	.icon-box {
 		float: none;
 		width: 100%;
@@ -2745,6 +2766,9 @@ input[type="radio"], input[type="checkbox"] {
     }
 }
 @media(max-width: 1080px){
+    .offer-p{
+        margin: -95px -70px 0 0!important;
+    }
     .header-bot_inner_wthreeinfo_header_mid {
         width: 100%;
     }
@@ -3076,7 +3100,7 @@ input[type="radio"], input[type="checkbox"] {
         margin-top: 7px;
     }
     .product-men {
-        margin-top: 2em;
+        margin-top: em;
         float: left;
         width: 33%;
     }
@@ -3830,9 +3854,10 @@ input[type="radio"], input[type="checkbox"] {
         padding: 0 1em;
     }
     .product-men {
-        margin-top: 1.5em;
-        float: none;
-        width: 100%;
+        margin-top: 1em;
+        margin-right: 7px;
+        /* float: none; */
+        width: 48%;
     }
     .product-new-top {
         width: 40px;
@@ -3855,7 +3880,7 @@ input[type="radio"], input[type="checkbox"] {
         font-size: 16px;
     }
     span.item_price {
-        font-size: 18px;
+        font-size: 15px;
     }
     .info-product-price del {
         font-size: 15px;
@@ -4195,6 +4220,10 @@ input[type="radio"], input[type="checkbox"] {
     }
 }
 @media(max-width: 414px){
+    .product-men{
+        margin-right: 3px!important;
+        width: 49%!important;
+    }    
     .carousel-caption h2, .carousel-caption h3 {
         font-size: 2em;
     }
@@ -4470,7 +4499,7 @@ input[type="radio"], input[type="checkbox"] {
         font-size: 13px;
     }
     span.item_price {
-        font-size: 17px;
+        font-size: 14px;
     }
     .single-right-left del {
         margin: 0 7px 0 9px;
@@ -4934,3 +4963,43 @@ input[type="radio"], input[type="checkbox"] {
     width: 335px; 
     padding-left: 10%;
 }
+.offer-image
+{
+    width:150px; 
+    position:absolute; 
+    float:right; 
+    z-index:2;
+    margin: -132px 0 0 140px;
+}
+.offer-p{
+    /* width:150px;  */
+    position: relative;
+    float:right; 
+    margin: -95px -56px 0 0;
+    z-index: 3;
+    font-size: 24px;
+    color: rgb(255, 255, 255)!important;
+    font-weight: 600;
+}
+@media (max-width: 430px){
+    .snipcart-details input.button {
+        font-size: 8px;
+        padding: 12px 4px;
+    }
+      .front-item img{
+        max-width: 9em!important;
+        height: 6em!important;   
+    }
+    }
+    .men-thumb-item-sale{
+    
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+    .front-item{
+       text-align: center;
+    }
+    .front-item img{
+    max-width: 10em;
+    height: 10em;    
+    }
+    
