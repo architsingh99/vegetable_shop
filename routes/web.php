@@ -34,6 +34,12 @@ Route::get('/whatsapp', 'VegetableEccomerce@test');
 
 Route::get('account','HomeController@account')->middleware('auth');
 
+# Call Route
+Route::get('payment', ['as' => 'payment', 'uses' => 'PaymentController@payment'])->middleware('auth');
+
+# Status Route
+Route::get('payment/status', ['as' => 'payment.status', 'uses' => 'PaymentController@status'])->middleware('auth');
+
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });

@@ -23,6 +23,7 @@ use Redirect;
 use Auth;
 use EloquentBuilder;
 use Illuminate\Http\Request;
+use Tzsk\Payu\Facade\Payment;
 
 class VegetableEccomerce extends Controller
 {
@@ -191,7 +192,7 @@ class VegetableEccomerce extends Controller
               $order->total_price = $request->input('finalPriceOrder'); 
               $order->payment_status = 'PENDING'; 
               $order->save();
-              $this->pay($order);
+              $this->payment($order);
     }
     catch(Exception $e) {
         print($e);
@@ -336,5 +337,25 @@ class VegetableEccomerce extends Controller
                            )
                   );
         return $message;          
+    }
+
+    public function payment($data)
+    {
+        $attributes = [
+            'txnid' => $data->order_id, # Transaction ID.
+            'amount' => (int)$data->total_price, # Amount to be charged.
+            'productinfo' => $data->order_id,
+            'firstname' => $data->name, # Payee Name.
+            'email' => $data->user_email, # Payee Email Address.
+            'phone' => $data->mobile, # Payee Phone Number.
+        ];
+        
+        return Payment::make($attributes, function ($then) {
+            // $then->redirectTo('payment/status');
+            // # OR...
+            // $then->redirectRoute('payment.status');
+            // # OR...
+            $then->redirectAction('PaymentController@status');
+        });
     }
 }
