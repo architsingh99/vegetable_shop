@@ -17,7 +17,7 @@
                     </h3>
                     <p>Order
                         <span>Now</span> </p>
-                    <a class="button2" href="product.html">Shop Now </a>
+                    <a class="button2" href="{{url('categories/2')}}">Shop Now </a>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     </h3>
                     <p>Order
                         <span>Now</p>
-                    <a class="button2" href="product.html">Shop Now </a>
+                    <a class="button2" href="{{url('categories/1')}}">Shop Now </a>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
 <div class="ads-grid">
     <div class="container">
         <!-- tittle heading -->
-        <h3 class="tittle-w3l">Welcome To Bazzar 24x7
+        <h3 class="tittle-w3l">{{$msg}}
             <span class="heading-style">
                 <i></i>
                 <i></i>

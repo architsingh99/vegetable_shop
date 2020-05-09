@@ -31,6 +31,26 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui1.css') }}">
 	<!-- fonts -->
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+	<script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<style>
+	.dataTables_wrapper .dt-buttons {
+  float:none;  
+  text-align:center;
+}
+.dt-button {
+	padding-right: 2%;
+}
+</style>
 </head>
 
 <body>
@@ -54,26 +74,26 @@
 			<div class="col-md-9 header">
 				<!-- header lists -->
 				<ul>
+				<li>
+						<span class="fa fa-whatsapp" aria-hidden="true"></span> 9957588417
+					</li>
 					<li>
-						<a href="#" data-toggle="modal" data-target="#myModal1">
+						<a href="{{url('track_orders')}}">
 							<span class="fa fa-truck" aria-hidden="true"></span>Track Order</a>
 					</li>
 					@if (Auth::user())
-					<li>
+					<!-- <li>
 							<span class="fa fa-user-circle-o" aria-hidden="true"></span>Hi, {{Auth::user()-> name}} </a>
-					</li>
+					</li> -->
 					<li>
 					<a href="{{url('logout')}}">
 							<span class="fa fa-sign-out" aria-hidden="true"></span>Signout </a>
 					</li>
 					<li>
 					<a href="{{url('account')}}">
-							<span class="fa fa-user" aria-hidden="true"></span>Account </a>
+							<span class="fa fa-user" aria-hidden="true"></span>{{Auth::user()-> name}} </a>
 					</li>
 					@else
-					<li>
-						<span class="fa fa-whatsapp" aria-hidden="true"></span> 9957588417
-					</li>
 					<li>
 						<a href="{{url('login')}}">
 							<span class="fa fa-sign-in" aria-hidden="true"></span> Login </a>
@@ -145,10 +165,10 @@
 									<a class="nav-stylehead" href="about.html">About Us</a>
 								</li>
 								<li>
-								<a class="nav-stylehead" href="about.html">Vegetables</a>
+								<a class="nav-stylehead" href="{{url('categories/2')}}">Vegetables</a>
 								</li>
 								<li>
-								<a class="nav-stylehead" href="about.html">Fruits</a>
+								<a class="nav-stylehead" href="{{url('categories/1')}}">Fruits</a>
 								</li>
 								<li class="">
 									<a class="nav-stylehead" href="faqs.html">Faqs</a>

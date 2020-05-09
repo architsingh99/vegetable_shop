@@ -48,3 +48,9 @@ Auth::routes(['verify' => true]);
 
 Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
 Route::get('/callback/{provider}', 'SocialController@callback');
+
+Route::get('track_orders', 'VegetableEccomerce@trackOrders')->middleware('auth');
+Route::get('sub_orders/{order_id}', 'VegetableEccomerce@subOrders');
+
+Route::get('deliver', 'VegetableEccomerce@deliver')->name('deliver');
+Route::get('categories/{id}', 'VegetableEccomerce@categoriesGet');

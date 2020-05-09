@@ -24,6 +24,8 @@ use Auth;
 use EloquentBuilder;
 use Illuminate\Http\Request;
 use Tzsk\Payu\Facade\Payment;
+use Mail;
+use App\Mail\SendMailable;
 
 class VegetableEccomerce extends Controller
 {
@@ -66,9 +68,27 @@ class VegetableEccomerce extends Controller
         ->groupBy('category', 'categories.name',)
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
-        $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(15);
+        $products = Product::with('categories')->orderBy('created_at', 'desc');
+        $msg = "Welcome To Bazzar 24x7";
         //dd($products[0]->categories);
-       return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products);
+       return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
+    }
+
+    public function categoriesGet(Request $request)
+    {
+        $categories = Category::all();
+        $categoriesCount = DB::table('products')
+        ->join('categories', 'categories.id', '=', 'products.category')
+        ->select('categories.name', 'category', DB::raw('count(*) as total'))
+        ->groupBy('category', 'categories.name',)
+        ->pluck('categories.name', 'total','category')->all();
+        //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
+        $products = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->get();
+        $msg = "Vegetables";
+        if($request->id == 1)
+            $msg = "Fruits";
+        //dd($products);
+       return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
     }
 
     public function addToCart(Request $request)
@@ -192,7 +212,7 @@ class VegetableEccomerce extends Controller
               $order->total_price = $request->input('finalPriceOrder'); 
               $order->payment_status = 'PENDING'; 
               $order->save();
-              $this->payment($order);
+              $this->pay($order);
     }
     catch(Exception $e) {
         print($e);
@@ -262,7 +282,7 @@ class VegetableEccomerce extends Controller
                 $subOrder->item_name = $product[0]->name;
                 $subOrder->quantity = $value->quantity;
                 $subOrder->price = $product[0]->price_per_kg;
-                $subOrder->total = $product[0]->price_per_kg * $value->quantity;
+                $subOrder->total = ($product[0]->price_per_kg * $value->quantity) / 1000;
                 $subOrder->category = $product[0]->category;
                 $subOrder->item_id = $product[0]->id;
                 $subOrder->user_id = $value->user_id;
@@ -357,5 +377,38 @@ class VegetableEccomerce extends Controller
             // # OR...
             $then->redirectAction('PaymentController@status');
         });
+    }
+
+    public function trackOrders(Request $request)
+    {
+       $orders = DB::table('orders')
+            ->where('user_id', auth()->user()->id)->get();
+           // dd($orders);
+    return view('myorders')->with('orders', $orders);
+          
+    }
+
+    public function subOrders(Request $request)
+    {
+       $orders = DB::table('suborders')
+            ->where('order_id', $request->order_id)->get();
+           // dd($orders);
+    return view('suborders')->with('orders', $orders)->with('order_id', $request->order_id);
+          
+    }
+
+    public function deliver(Request $request)
+    {
+        $orders = DB::table('orders')
+        ->where('order_id', $request->order_id)->get();
+
+        DB::table('orders')
+            ->where('id', $request->id)
+            ->update(['delivery_status' =>'Delivered']);
+        \Mail::to($orders[0]->user_email)->send(new SendMailable($orders[0]->name, $request->order_id));
+        $message = "Your order with id " . $request->order_id ." has been successfully delivered. Than you for shopping with us.";
+        $this->getUserNumber($orders[0]->mobile, $message);
+        //$this->sendWhatsAppSMS($orders[0]->mobile, $message);
+        return \Redirect::to(URL::previous());    
     }
 }
