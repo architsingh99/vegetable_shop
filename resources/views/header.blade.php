@@ -29,6 +29,7 @@
     <!--//pop-up-box-->
     <!-- price range -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui1.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/floating-wpp.css') }}">
     <!-- fonts -->
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
@@ -68,7 +69,7 @@
 			</a>
 			<p style="line-height: 4px;" class="bazzar logo-name">
 	        
-				    Bazzar24x7
+				    Baazar24x7
 				    <p class="tag-line logo-tag">
 				       FRESH VEGETABLES
 				    </p>
@@ -105,12 +106,37 @@
                                     <div class="dropdown nav-stylehead">
                                         <a class="nav-stylehead dropbtn ">Categories</a>
                                         <div class="dropdown-content">
+                                            @if(isset($categories))
+                                        @foreach($categories as $key => $cat)
+                                            <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
+                                            @endforeach
+
+                                            @else
                                             <a href="{{url('categories/2')}}">Vegetables</a>
                                             <a href="{{url('categories/1')}}">Fruits</a>
-
+                                            @endif
                                         </div>
                                     </div>
                                 </li>
+                                <!-- <li class="dropdown">
+									<a href="#" class="dropdown-toggle nav-stylehead" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu multi-column columns-3">
+										<div class="agile_inner_drop_nav_info">
+											<div class="col-sm-4 multi-gd-img">
+												<ul class="multi-column-dropdown">
+													<li>
+                                                    <a href="{{url('categories/2')}}">Vegetables</a>
+													</li>
+													<li>
+                                                        <a href="{{url('categories/1')}}">Fruits</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</ul>
+								</li> -->
                                 <li class="">
                                     <a class="nav-stylehead" href="#">Faqs</a>
                                 </li>

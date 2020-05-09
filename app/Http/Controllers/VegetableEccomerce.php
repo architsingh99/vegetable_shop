@@ -13,6 +13,7 @@ use App\Pincode;
 use App\Order;
 use App\Suborder;
 use App\Otp;
+use App\User;
 
 use GuzzleHttp\Exception\GuzzleException;
 //use GuzzleHttp\Client;
@@ -70,7 +71,7 @@ class VegetableEccomerce extends Controller
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
         $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(15);
-        $msg = "Welcome To Bazzar24x7";
+        $msg = "Welcome To Baazar24x7";
         //dd($products[0]->categories);
        return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
     }
@@ -78,6 +79,7 @@ class VegetableEccomerce extends Controller
     public function categoriesGet(Request $request)
     {
         $categories = Category::all();
+        $categoryData = Category::where('id', (int)$request->id)->get();
         $categoriesCount = DB::table('products')
         ->join('categories', 'categories.id', '=', 'products.category')
         ->select('categories.name', 'category', DB::raw('count(*) as total'))
@@ -85,11 +87,8 @@ class VegetableEccomerce extends Controller
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
         $products = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->get();
-        $msg = "Vegetables";
-        if($request->id == 1)
-            $msg = "Fruits";
         //dd($products);
-       return view('category')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
+       return view('category')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('categoryData', $categoryData);
     }
 
     public function addToCart(Request $request)
@@ -295,6 +294,7 @@ class VegetableEccomerce extends Controller
             $message = "Your payment has been successfully recieved. Your ORDER ID is " . $request->order_id ." and TRANSACTION ID is " . $request['payment_id'] .". It will be delivered in approximately " . $deliverTime .". Thank you for shopping with us.";
             $this->getUserNumber($order[0]->mobile, $message);
             $this->sendWhatsAppSMS($order[0]->mobile, $message);
+            $categories = Category::all();
                return view('success')->with('transaction_id', $request['payment_id'])->with('order_id', '#'.$request->order_id)->with('delivery_time', $deliverTime);
            } 
          }catch (\Exception $e) {
@@ -385,6 +385,7 @@ class VegetableEccomerce extends Controller
        $orders = DB::table('orders')
             ->where('user_id', auth()->user()->id)->get();
            // dd($orders);
+           $categories = Category::all();
     return view('myorders')->with('orders', $orders);
           
     }
@@ -394,6 +395,7 @@ class VegetableEccomerce extends Controller
        $orders = DB::table('suborders')
             ->where('order_id', $request->order_id)->get();
            // dd($orders);
+           $categories = Category::all();
     return view('suborders')->with('orders', $orders)->with('order_id', $request->order_id);
           
     }
@@ -418,17 +420,60 @@ class VegetableEccomerce extends Controller
         $confirm_code = rand(100000, 999999);
         $msg = "Your one time password is " . $confirm_code . ".";
         $this->getUserNumber($request->mobile, $msg);
+        $num = $request->mobile;
+            if(strlen($request->mobile) > 10)
+                $num = substr($request->mobile, -10);
         $otp = new Otp();
-        $otp->mobile = $request->mobile;
+        $otp->mobile = $num;
         $otp->otp = $confirm_code;
         $otp->save();
            // dd($orders);
+        //DB::table('otps')->where('status', 1)->whereBetween('created_at', [now()->subMinutes(30), now()])->get();
            $data = [
             'status'                     => 200,
             'message'                    => "OTP has been send successfully."
      ];
         //dd($data);
     return $this->sendResponse($data, "OTP has been send successfully.");
+          
+    }
+
+    public function loginViaOtp(Request $request)
+    {
+        $num = $request->mobile;
+            if(strlen($request->mobile) > 10)
+                $num = substr($request->mobile, -10);
+        $otp = DB::table('otps')->where('status', 1)->where('mobile', $num)->where('otp', $request->otp)->whereBetween('created_at', [now()->subMinutes(30), now()])->get();
+           // dd($orders);
+           if($otp->isEmpty())
+        {
+            $data = [
+                'status'                     => 400,
+                'message'                    => "Invalid OTP."
+         ];
+            //dd($data);
+        return $this->sendResponse($data, "Invalid OTP.");
+        }
+        else
+        {
+            DB::table('otps')
+            ->where('id', $otp[0]->id)
+            ->update(['status'=> 2]);
+            $users = DB::table('users')->where('email', $num)->get();
+            if($users->isEmpty())
+            {
+                $user = User::create([
+                    'name'          => "GUEST",
+                    'email'         => $num,
+                    'password'         => $num + $request->otp + $otp[0]->id
+                                  ]);
+                
+            }
+            auth()->login($user);
+            return redirect('/');
+        }
+        //DB::table('otps')->where('status', 1)->whereBetween('created_at', [now()->subMinutes(30), now()])->get();
+           
           
     }
 }
