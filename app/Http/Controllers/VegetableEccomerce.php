@@ -68,8 +68,8 @@ class VegetableEccomerce extends Controller
         ->groupBy('category', 'categories.name',)
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
-        $products = Product::with('categories')->orderBy('created_at', 'desc');
-        $msg = "Welcome To Bazzar 24x7";
+        $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(15);
+        $msg = "Welcome To Bazzar24x7";
         //dd($products[0]->categories);
        return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
     }
@@ -88,7 +88,7 @@ class VegetableEccomerce extends Controller
         if($request->id == 1)
             $msg = "Fruits";
         //dd($products);
-       return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
+       return view('category')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
     }
 
     public function addToCart(Request $request)
