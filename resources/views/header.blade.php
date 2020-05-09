@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -55,91 +54,18 @@
 
 <body>
 	<!-- top-header -->
-	<div class="header-most-top">
-		<p>We Deliver Fresh Vegetables</p>
-	</div>
-	<!-- //top-header -->
-	<!-- header-bot-->
-	<div class="header-bot">
-		<div class="header-bot_inner_wthreeinfo_header_mid">
-			<!-- header-bot-->
-			<div class="col-md-3 logo_agile">
+	
+
+	<!-- navigation -->
+	<div class="ban-top">
+	    <div class="col-md-3 logo_agile">
 				
 					<a href="{{url('/')}}">
-						<img style="width: 125px" src="{{ asset('images/logo2.png') }}" alt=" ">
+						<img class="logo-design" style="width: 125px" src="{{ asset('images/logo2.png') }}" alt=" ">
 					</a>
 				
 			</div>
-			<!-- header-bot -->
-			<div class="col-md-9 header">
-				<!-- header lists -->
-				<ul>
-				<li>
-						<span class="fa fa-whatsapp" aria-hidden="true"></span> 9957588417
-					</li>
-					<li>
-						<a href="{{url('track_orders')}}">
-							<span class="fa fa-truck" aria-hidden="true"></span>Track Order</a>
-					</li>
-					@if (Auth::user())
-					<!-- <li>
-							<span class="fa fa-user-circle-o" aria-hidden="true"></span>Hi, {{Auth::user()-> name}} </a>
-					</li> -->
-					<li>
-					<a href="{{url('logout')}}">
-							<span class="fa fa-sign-out" aria-hidden="true"></span>Signout </a>
-					</li>
-					<li>
-					<a href="{{url('account')}}">
-							<span class="fa fa-user" aria-hidden="true"></span>{{Auth::user()-> name}} </a>
-					</li>
-					@else
-					<li>
-						<a href="{{url('login')}}">
-							<span class="fa fa-sign-in" aria-hidden="true"></span> Login </a>
-					</li>
-					<li>
-						<a href="{{url('register')}}">
-							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Register </a>
-					</li>
-					
-					@endif
-				</ul>
-				<!-- //header lists -->
-				<!-- search -->
-				<div class="agileits_search">
-					<form action="#" method="post">
-						<input name="Search" type="search" placeholder="How can we help you today?" required="">
-						<button type="submit" class="btn btn-default" aria-label="Left Align">
-							<span class="fa fa-search" aria-hidden="true"> </span>
-						</button>
-					</form>
-				</div>
-				<!-- //search -->
-				<!-- cart details -->
-				<div class="top_nav_right">
-					<div class="wthreecartaits wthreecartaits2 cart cart box_1">
-						<!-- <form action="#" method="post" class="last"> -->
-							<input type="hidden" name="cmd" value="_cart">
-							<input type="hidden" name="display" value="1">
-							<a href="{{url('check_out')}}"><button class="w3view-cart" name="submit" value="">
-								<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-							</button></a>
-						<!-- </form> -->
-					</div>
-				</div>
-				<!-- //cart details -->
-				<div class="clearfix"></div>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
-	<!-- //Modal2 -->
-	<!-- //signup Model -->
-	<!-- //header-bot -->
-	<!-- navigation -->
-	<div class="ban-top">
-		<div class="container">
+		<div class="col-md-8">
 			<div class="top_nav_left">
 				<nav class="navbar navbar-default">
 					<div class="container-fluid">
@@ -162,7 +88,7 @@
 									</a>
 								</li>
 								<li class="">
-									<a class="nav-stylehead" href="about.html">About Us</a>
+									<a class="nav-stylehead" href="#">About Us</a>
 								</li>
 								<li>
 								<a class="nav-stylehead" href="{{url('categories/2')}}">Vegetables</a>
@@ -171,16 +97,47 @@
 								<a class="nav-stylehead" href="{{url('categories/1')}}">Fruits</a>
 								</li>
 								<li class="">
-									<a class="nav-stylehead" href="faqs.html">Faqs</a>
+									<a class="nav-stylehead" href="#">Faqs</a>
 								</li>
 								<li class="">
-									<a class="nav-stylehead" href="contact.html">Contact</a>
+									<a class="nav-stylehead" href="#">Contact</a>
 								</li>
+								@if (Auth::user())
+            					<li>
+            					<a href="{{url('logout')}}">Signout </a>
+            					</li>
+            					<li>
+            					<a href="{{url('account')}}">{{Auth::user()-> name}} </a>
+            					</li>
+            					@else
+            					<li>
+            						<a href="{{url('login')}}"> Login </a>
+            					</li>
+            					<li>
+            						<a href="{{url('register')}}"> Register </a>
+            					</li>
+            					
+            					@endif
 							</ul>
 						</div>
 					</div>
 				</nav>
 			</div>
 		</div>
+		<div class="col-md-1 ">
+				
+				<div class="top_nav_right">
+					<div class="wthreecartaits wthreecartaits2 cart cart box_1">
+						<!-- <form action="#" method="post" class="last"> -->
+							<input type="hidden" name="cmd" value="_cart">
+							<input type="hidden" name="display" value="1">
+							<a href="{{url('check_out')}}"><button class="w3view-cart" name="submit" value="">
+								<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+							</button></a>
+						<!-- </form> -->
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
 	</div>
 	<!-- //navigation -->

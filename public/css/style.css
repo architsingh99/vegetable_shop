@@ -171,7 +171,7 @@ label{
     width: 73%;
 }
 .header-bot {
-    padding: 15px 0 20px;
+    padding: 15px 0 0;
 }
 /*-- //logo --*/
 /*-- model_signin --*/
@@ -333,7 +333,7 @@ ul.multi-column-dropdown li a:hover{
 /* //navigation */
 /*-- cart details--*/
 .top_nav_right {
-    float: right;
+    float: left;
     width: 20%;
 }
 .box_1 {
@@ -360,9 +360,11 @@ button.w3view-cart {
 /*-- //header-bottom --*/
 /*-- banner --*/
 .ban-top {
-    border: 1px solid rgba(0, 0, 0, 0.22);
-    margin: 0 10px 10px 10px;
+    /*border: 1px solid rgba(0, 0, 0, 0.22);*/
+    margin: 0 10px 0 10px;
     border-radius: 4px;
+    /*border-top:1px solid #e96c1d;*/
+    /*border-bottom:1px solid #e96c1d;*/
 }
 .dropdown-menu.columns-3 {
     min-width:673px;
@@ -373,8 +375,8 @@ button.w3view-cart {
 }
 .carousel-caption {
     position: inherit;
-    min-height:600px;
-    padding-top:8em;
+    min-height: 325px;
+    padding-top: 1em;
 }
 /*-- carousel-slider --*/  
 .carousel .item{    
@@ -407,13 +409,13 @@ button.w3view-cart {
 }  
 
 .carousel-caption h2, .carousel-caption h3 {
-    font-size: 5em;
+    font-size: 3em;
     font-weight: 600;
     letter-spacing: 0px;
     text-transform: uppercase;
     text-shadow: 3px 8px 2px rgb(12, 12, 12);
     background: rgba(0, 0, 0, 0.34);
-    padding: 35px 0;
+    padding: 25px 0;
 }
 .carousel-caption h2 span, .carousel-caption h3 span{
     font-weight: 800;
@@ -421,12 +423,12 @@ button.w3view-cart {
 }
 .carousel-caption p {
     letter-spacing: 5px;
-    font-size: 24px;
+    font-size: 22px;
     color: #fff;
     margin: 20px 0;
 }
 .carousel-caption p span{
-	font-size: 40px;
+	font-size: 28px;
 	letter-spacing: 0px;
 	font-weight:600;
 }
@@ -470,8 +472,8 @@ button.w3view-cart {
     border-radius: 4px;
     color: #fff;
     letter-spacing: 2px;
-    padding: 11px 27px;
-    margin-top: 2em;
+   padding: 6px 20px;
+    margin-top: 1em;
 }
 .button2:hover, .button2:focus{
     background: #e96c1d;
@@ -579,7 +581,7 @@ button.w3view-cart {
 	width: 80%;
 }
 .product-men {
-    width: 31.8%;
+    width: 22.8%;
     margin-right: 1em;
     margin-top: 1em;
 }
@@ -1000,12 +1002,12 @@ h3.w3l-nut-middle {
 }
 /*-- tittle heading --*/
 h3.tittle-w3l {
-    color: #000;
-    font-size: 3em;
+        color: #000;
+    font-size: 36px;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
     position: relative;
-    padding-bottom: 20px;
+    padding-bottom: 16px;
 }
 span.heading-style {
     position: absolute;
@@ -1185,10 +1187,10 @@ h3.tittle-w3l:after {
     transition: 0.5s all;
 }
 .footer-top {
-    background: rgb(28, 34, 36);
+    background: rgb(78, 76, 75);
 }
 .agile-leftmk {
-    padding: 4em 0 3em 3em;
+    padding: 5em 0 3em 3em;
     position: relative;
 }
 .footer-top h2 {
@@ -1437,7 +1439,7 @@ p.footer-main span {
     -o-background-size: cover;
     -ms-background-size: cover;
     -moz-background-size: cover;
-    min-height: 300px;
+        min-height: 200px;
 }
 ul.w3_short li {
     display: inline-block;
@@ -4999,17 +5001,20 @@ input[type="radio"], input[type="checkbox"] {
        text-align: center;
     }
     .front-item img{
-    max-width: 10em;
-    height: 10em;    
+    max-width: 12em;
+    height: 8em;
     }
     .social-login{
         width: 15em;
     }
-    .phonebtn
-    {
-        padding-top: 10px;
+    
+     .tabimg{
+     
+         height: 260px;
+ }
+ @media (min-width:991px){
+    .logo-design{
+        width: 5em!important;
+    position: absolute;
     }
-    .phonelog
-    {
-        padding: 10px;
-    }
+}
