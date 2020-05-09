@@ -5005,3 +5005,11 @@ input[type="radio"], input[type="checkbox"] {
     .social-login{
         width: 15em;
     }
+    .phonebtn
+    {
+        padding-top: 10px;
+    }
+    .phonelog
+    {
+        padding: 10px;
+    }
