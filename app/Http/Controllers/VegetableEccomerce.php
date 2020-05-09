@@ -12,6 +12,7 @@ use App\Cart;
 use App\Pincode;
 use App\Order;
 use App\Suborder;
+use App\Otp;
 
 use GuzzleHttp\Exception\GuzzleException;
 //use GuzzleHttp\Client;
@@ -410,5 +411,24 @@ class VegetableEccomerce extends Controller
         $this->getUserNumber($orders[0]->mobile, $message);
         //$this->sendWhatsAppSMS($orders[0]->mobile, $message);
         return \Redirect::to(URL::previous());    
+    }
+
+    public function sendOtp(Request $request)
+    {
+        $confirm_code = rand(100000, 999999);
+        $msg = "Your one time password is " . $confirm_code . ".";
+        $this->getUserNumber($request->mobile, $msg);
+        $otp = new Otp();
+        $otp->mobile = $request->mobile;
+        $otp->otp = $confirm_code;
+        $otp->save();
+           // dd($orders);
+           $data = [
+            'status'                     => 200,
+            'message'                    => "OTP has been send successfully."
+     ];
+        //dd($data);
+    return $this->sendResponse($data, "OTP has been send successfully.");
+          
     }
 }

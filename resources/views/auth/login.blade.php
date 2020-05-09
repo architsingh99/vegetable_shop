@@ -124,9 +124,16 @@
                     </div>
 
                     <div style="text-align: center;    margin-top: 1em;" class="col-md-12 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
+                        <button onclick="sendOTP(0)" type="submit" class="btn btn-primary">
                             Send OTP
                         </button>
+                        <button onclick="editNumber()" type="submit" class="btn btn-primary" style="display: none;">
+                            Edit Number
+                        </button>
+                        <button onclick="sendOTP(1)" type="submit" class="btn btn-primary" style="display: none;">
+                            Resend OTP
+                        </button>
+                        <img src="{{asset('images/25.gif')}}" id="preloaderOTP" style="display: none; height: 30px;">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -148,3 +155,33 @@
         </div>
 
     </div>
+
+    <script>
+        function sendOTP(key) {
+    //alert(cart_id)
+    var mobile = document.getElementById('phone').value;
+    if(mobile == "" || mobile == null || mobile.length < 10)
+    {
+        swal({
+                    title: "Error",
+                    text: "Please enter valid mobile number",
+                    icon: "error",
+                });
+    }
+    else
+    {
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/send_otp/" +
+                mobile + "/" + key,
+        success: function(response) {
+            swal({
+                    title: "Success",
+                    text: "OTP sent to your mobile.",
+                    icon: "success",
+                });
+        }
+    });
+    }
+}
+    </script>

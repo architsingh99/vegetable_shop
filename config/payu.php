@@ -56,10 +56,10 @@ return [
         ],
 
         'payumoney' => [
-            'key' => 'gtKFFx',
-            'salt' => 'eCwWELxi',
+            'key' => 'rlgB3Mdx',
+            'salt' => 'BvCdOoYnyW',
             'money' => true,
-            'auth' => '/3BAVbnl2RPBIxWQ9cxmoqjg1uUYeO+foj9nxN6Oc08='
+            'auth' => 'BtfMt5CVdn3yly6rX41kcP04d/D2CJe1P+6XDC1Cqpg='
         ],
     ],
 
