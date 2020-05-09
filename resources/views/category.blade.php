@@ -71,7 +71,7 @@
                                     </h4>
                                     <div class="info-product-price">
                                         <span class="item_price">₹{{$cat->price_per_kg}} per kg</span>
-                                        <del>₹{{($cat->price_per_kg * 1.2)}} per kg</del>
+                                        <!-- <del>₹{{($cat->price_per_kg * 1.2)}} per kg</del> -->
                                     </div>
                                     <div class="info-product-price">
                                         <span class="item_price">Quantity <select name="quantity{{$key}}"
@@ -161,8 +161,8 @@
                                 </h4>
                                 <div class="w3l-pricehkj">
                                     <h6>₹{{$cat->price_per_kg}} per kg</h6>
-                                    <img class="offer-image" src="{{ asset('images/offer.png') }}">
-                                    <h3 class="offer-image offer-p">Save <br>&nbsp ₹{{($cat->price_per_kg * 1.2) - $cat->price_per_kg}}</h3>
+                                    <!-- <img class="offer-image" src="{{ asset('images/offer.png') }}"> -->
+                                    <!-- <h3 class="offer-image offer-p">Save <br>&nbsp ₹{{($cat->price_per_kg * 1.2) - $cat->price_per_kg}}</h3> -->
                                 </div>
                                 <div class="info-product-price">
                                         <span class="item_price">Quantity <select name="quantity{{$key}}"

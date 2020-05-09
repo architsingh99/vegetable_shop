@@ -12,7 +12,7 @@
 				</div>
 			</div>
 			<div class="col-xs-4 w3l-rightmk">
-				<img src="{{ asset('images/tab3.png') }}" alt=" ">
+				<img class="tabimg" src="{{ asset('images/tab3.png') }}" alt=" ">
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -23,10 +23,7 @@
 		<div class="container">
 			<!-- footer first section -->
 			<p class="footer-main">
-				<span>"Grocery Shoppy"</span> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
-				magni dolores eos qui ratione voluptatem sequi nesciunt.Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-				accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-				beatae vitae dicta sunt explicabo.</p>
+				
 			<!-- //footer first section -->
 			<!-- footer second section -->
 			<div class="w3l-grids-footer">
@@ -134,8 +131,7 @@
 	<!-- copyright -->
 	<div class="copy-right">
 		<div class="container">
-			<p>© 2020 Bazaar 24x7. All rights reserved | Developed by 
-				<a target="_blank" href="www.electronmedialab.in"> Electronmedialab</a>
+			<p>© 2020 Bazaar 24x7 | All rights reserved.
 			</p>
 		</div>
 	</div>
