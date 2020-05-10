@@ -28,6 +28,7 @@ use Illuminate\Http\Request;
 use Tzsk\Payu\Facade\Payment;
 use Mail;
 use App\Mail\SendMailable;
+use App\Http\Controllers\Controller;
 
 class VegetableEccomerce extends Controller
 {
@@ -133,9 +134,10 @@ class VegetableEccomerce extends Controller
     public function checkout(Request $request)
     {
         //$userId = Auth::user()->id;
+        $categories = Category::all();
         $checkout = Cart::with('product')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         //dd($checkout);
-        return view('checkout')->with('checkout', $checkout);
+        return view('checkout')->with('checkout', $checkout)->with('categories', $categories);
     }
 
     public function update_cart(Request $request)
@@ -196,6 +198,14 @@ class VegetableEccomerce extends Controller
         try{
             $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
+            $payment_status = 'PENDING';
+            $payment_method = "Online Payment";
+
+            if((int)$request->input('payment_method') == 2)
+            {
+                $payment_status = 'Cash On Delivery';
+                $payment_method = "Cash On Delivery";
+            }
             $order = new Order();
               $order->user_id = auth()->user()->id;
               $order->user_email = auth()->user()->email; 
@@ -210,71 +220,30 @@ class VegetableEccomerce extends Controller
               $order->sub_total = $request->input('subtotalOrder'); 
               $order->delivery_charge = $request->input('deliveryChargeOrder'); 
               $order->total_price = $request->input('finalPriceOrder'); 
-              $order->payment_status = 'PENDING'; 
+              $order->payment_status = $payment_status; 
+              $order->payment_method = $payment_method; 
               $order->save();
-              $this->pay($order);
+              if((int)$request->input('payment_method') == 2)
+              {
+                //$this->cashOnDelivery($order);
+                return redirect('cash_on_delivery/' . $order->id);
+              }
+              else
+              {
+               //$this->paymentPayUMoney($order);
+               return redirect('payment/' . $order->id);
+               //app('App\Http\Controllers\PaymentController')->payment($order);
+              }
     }
     catch(Exception $e) {
-        print($e);
+        dd($e);
     }
     }
 
-    public function pay($data){
-        // dd(env('IM_API_KEY'));
-         $api = new \Instamojo\Instamojo(
-                config('services.instamojo.api_key'),
-                config('services.instamojo.auth_token'),
-                config('services.instamojo.url')
-            );
-           // dd($api);
+    public function cashOnDelivery(Request $request){
         try {
-         $str1 = substr($data->order_id, 1); 
-            $response = $api->paymentRequestCreate(array(
-                "purpose" => "ORDER ID: $data->order_id",
-                "amount" => (int)$data->total_price,
-                "buyer_name" => "$data->name",
-                "send_email" => true,
-                "email" => "$data->user_email",
-                "phone" => "$data->mobile",
-                "redirect_url" => "http://127.0.0.1/pay-success/".$str1
-                ));
-                 
-                header('Location: ' . $response['longurl']);
-                exit();
-        }catch (Exception $e) {
-            print('Error: ' . $e->getMessage());
-        }
-     }
-
-     public function success(Request $request){
-        try {
-    
-           $api = new \Instamojo\Instamojo(
-               config('services.instamojo.api_key'),
-               config('services.instamojo.auth_token'),
-               config('services.instamojo.url')
-           );
-    
-           $response = $api->paymentRequestStatus(request('payment_request_id'));
-    
-           if( !isset($response['payments'][0]['status']) ) {
-              dd('payment failed');
-           } else if($response['payments'][0]['status'] != 'Credit') {
-                dd('payment failed');
-           }
-           else {
-            DB::table('orders')
-            ->where('order_id', '#'.$request->order_id)
-            ->update(['payment_status' =>'Completed',
-            'transaction_id'=>$request['payment_id']]);
-            $order = DB::table('orders')->where('order_id', '#'.$request->order_id)->get();
-            $cart = DB::table('carts')->where('user_id', $order[0]->user_id)->get();
-            $checkout = DB::table('pincodes')->where('pincode', $order[0]->pincode)->get();
-            $deliverTime = $checkout[0]->delivery_time . " minutes";
-            if($checkout[0]->delivery_time > 60)
-            {
-                $deliverTime =  ($checkout[0]->delivery_time / 60) . " hr and " . ($checkout[0]->delivery_time % 60) . " minutes.";
-            }
+            $order = DB::table('orders')->where('id', $request->id)->first();
+            $cart = DB::table('carts')->where('user_id', $order->user_id)->get();
             foreach($cart as $key => $value)
             {
                 $product = DB::table('products')->where('id', $value->product_id)->get();
@@ -286,21 +255,103 @@ class VegetableEccomerce extends Controller
                 $subOrder->category = $product[0]->category;
                 $subOrder->item_id = $product[0]->id;
                 $subOrder->user_id = $value->user_id;
-                $subOrder->order_id = $order[0]->order_id;
-                $subOrder->user_email = $order[0]->user_email;
+                $subOrder->order_id = $order->order_id;
+                $subOrder->user_email = $order->user_email;
                 $subOrder->save();
                 Cart::find($value->id)->delete();
             }
-            $message = "Your payment has been successfully recieved. Your ORDER ID is " . $request->order_id ." and TRANSACTION ID is " . $request['payment_id'] .". It will be delivered in approximately " . $deliverTime .". Thank you for shopping with us.";
-            $this->getUserNumber($order[0]->mobile, $message);
-            $this->sendWhatsAppSMS($order[0]->mobile, $message);
+            $message = "Your order has been successfully recieved. Your ORDER ID is " . $order->order_id .". Kindly pay Rs. ". $order->total_price." at the time of delivery.  Thank you for shopping with us.";
+            $this->getUserNumber($order->mobile, $message);
+            //$this->sendWhatsAppSMS($order->mobile, $message);
             $categories = Category::all();
-               return view('success')->with('transaction_id', $request['payment_id'])->with('order_id', '#'.$request->order_id)->with('delivery_time', $deliverTime);
-           } 
+            return view('success')->with('categories', $categories)->with('message', $message);
          }catch (\Exception $e) {
             dd($e);
         }
      }
+
+    // public function pay($data){
+    //     // dd(env('IM_API_KEY'));
+    //      $api = new \Instamojo\Instamojo(
+    //             config('services.instamojo.api_key'),
+    //             config('services.instamojo.auth_token'),
+    //             config('services.instamojo.url')
+    //         );
+    //        // dd($api);
+    //     try {
+    //      $str1 = substr($data->order_id, 1); 
+    //         $response = $api->paymentRequestCreate(array(
+    //             "purpose" => "ORDER ID: $data->order_id",
+    //             "amount" => (int)$data->total_price,
+    //             "buyer_name" => "$data->name",
+    //             "send_email" => true,
+    //             "email" => "$data->user_email",
+    //             "phone" => "$data->mobile",
+    //             "redirect_url" => "http://127.0.0.1/pay-success/".$str1
+    //             ));
+                 
+    //             header('Location: ' . $response['longurl']);
+    //             exit();
+    //     }catch (Exception $e) {
+    //         print('Error: ' . $e->getMessage());
+    //     }
+    //  }
+
+    //  public function success(Request $request){
+    //     try {
+    
+    //        $api = new \Instamojo\Instamojo(
+    //            config('services.instamojo.api_key'),
+    //            config('services.instamojo.auth_token'),
+    //            config('services.instamojo.url')
+    //        );
+    
+    //        $response = $api->paymentRequestStatus(request('payment_request_id'));
+    
+    //        if( !isset($response['payments'][0]['status']) ) {
+    //           dd('payment failed');
+    //        } else if($response['payments'][0]['status'] != 'Credit') {
+    //             dd('payment failed');
+    //        }
+    //        else {
+    //         DB::table('orders')
+    //         ->where('order_id', '#'.$request->order_id)
+    //         ->update(['payment_status' =>'Completed',
+    //         'transaction_id'=>$request['payment_id']]);
+    //         $order = DB::table('orders')->where('order_id', '#'.$request->order_id)->get();
+    //         $cart = DB::table('carts')->where('user_id', $order[0]->user_id)->get();
+    //         $checkout = DB::table('pincodes')->where('pincode', $order[0]->pincode)->get();
+    //         $deliverTime = $checkout[0]->delivery_time . " minutes";
+    //         if($checkout[0]->delivery_time > 60)
+    //         {
+    //             $deliverTime =  ($checkout[0]->delivery_time / 60) . " hr and " . ($checkout[0]->delivery_time % 60) . " minutes.";
+    //         }
+    //         foreach($cart as $key => $value)
+    //         {
+    //             $product = DB::table('products')->where('id', $value->product_id)->get();
+    //             $subOrder = new Suborder();
+    //             $subOrder->item_name = $product[0]->name;
+    //             $subOrder->quantity = $value->quantity;
+    //             $subOrder->price = $product[0]->price_per_kg;
+    //             $subOrder->total = ($product[0]->price_per_kg * $value->quantity) / 1000;
+    //             $subOrder->category = $product[0]->category;
+    //             $subOrder->item_id = $product[0]->id;
+    //             $subOrder->user_id = $value->user_id;
+    //             $subOrder->order_id = $order[0]->order_id;
+    //             $subOrder->user_email = $order[0]->user_email;
+    //             $subOrder->save();
+    //             Cart::find($value->id)->delete();
+    //         }
+    //         $message = "Your payment has been successfully recieved. Your ORDER ID is " . $request->order_id ." and TRANSACTION ID is " . $request['payment_id'] .". It will be delivered in approximately " . $deliverTime .". Thank you for shopping with us.";
+    //         $this->getUserNumber($order[0]->mobile, $message);
+    //         //$this->sendWhatsAppSMS($order[0]->mobile, $message);
+    //         $categories = Category::all();
+    //            return view('success')->with('categories', $categories)->with('message', $message);
+    //        } 
+    //      }catch (\Exception $e) {
+    //         dd($e);
+    //     }
+    //  }
 
 
 
@@ -360,25 +411,25 @@ class VegetableEccomerce extends Controller
         return $message;          
     }
 
-    public function payment($data)
-    {
-        $attributes = [
-            'txnid' => $data->order_id, # Transaction ID.
-            'amount' => (int)$data->total_price, # Amount to be charged.
-            'productinfo' => $data->order_id,
-            'firstname' => $data->name, # Payee Name.
-            'email' => $data->user_email, # Payee Email Address.
-            'phone' => $data->mobile, # Payee Phone Number.
-        ];
+    // public function payment($data)
+    // {
+    //     $attributes = [
+    //         'txnid' => $data->order_id, # Transaction ID.
+    //         'amount' => (int)$data->total_price, # Amount to be charged.
+    //         'productinfo' => $data->order_id,
+    //         'firstname' => $data->name, # Payee Name.
+    //         'email' => $data->user_email, # Payee Email Address.
+    //         'phone' => $data->mobile, # Payee Phone Number.
+    //     ];
         
-        return Payment::make($attributes, function ($then) {
-            // $then->redirectTo('payment/status');
-            // # OR...
-            // $then->redirectRoute('payment.status');
-            // # OR...
-            $then->redirectAction('PaymentController@status');
-        });
-    }
+    //     return Payment::make($attributes, function ($then) {
+    //         // $then->redirectTo('payment/status');
+    //         // # OR...
+    //         // $then->redirectRoute('payment.status');
+    //         // # OR...
+    //         $then->redirectAction('PaymentController@status');
+    //     });
+    // }
 
     public function trackOrders(Request $request)
     {
@@ -491,4 +542,5 @@ class VegetableEccomerce extends Controller
            
           
     }
+
 }

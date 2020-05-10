@@ -170,6 +170,12 @@
 
                                     </select>
                                 </div>
+                                <div class="clear"> </div>
+                                <div class="controls">
+                                <h4>Payment Method</h4>
+                                    <input type="radio" style="width: auto;" name="payment_method" required="" value="1" checked>Pay Now
+                                    <br><input type="radio" style="width: auto;" name="payment_method" required="" value="2">Cash On Delivery
+                                </div>
                             </div>
                             <input type="hidden" value="" name="deliveryPincode" id="deliveryPincode">
                             <input type="hidden" id="subtotalOrder" name="subtotalOrder" value="{{$total}}">
@@ -247,7 +253,7 @@ function checkPincode() {
         console.log(pin);
         $.ajax({
             type: "GET",
-            url: "http://127.0.0.1:8000/check_pincode/" +
+            url: "http://localhost:8000/check_pincode/" +
                 pin, // You add the id of the post and the update datetime to the url as well
             success: function(response) {
                 document.getElementById('pincodeStatus').innerText = response.data.message;

@@ -109,8 +109,8 @@
                                         <div class="dropdown-content">
                                             @if(isset($categories))
                                         @foreach($categories as $key => $cat)
-                                            <!-- <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a> -->
-                                            <a href="{{url('coming_soon')}}">{{$cat->name}}</a>
+                                            <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
+                                            <!-- <a href="{{url('coming_soon')}}">{{$cat->name}}</a> -->
                                             
                                             @endforeach
                                             @endif
