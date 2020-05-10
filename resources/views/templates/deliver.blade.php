@@ -319,7 +319,7 @@
                     <tr>
                       <td>
                         <p>Hi {{ $name }},</p>
-                        <p>Your order with id {{ $orderId }} has been successfully delivered. Than you for shopping with us.</p>
+                        <p>Your order with id {{ $orderId }} has been successfully delivered. Thank you for shopping with us.</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>

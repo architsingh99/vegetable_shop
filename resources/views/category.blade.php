@@ -65,7 +65,7 @@
                                     <!-- <span class="product-new-top">New</span> -->
                                 </div>
                                 <div class="item-info-product ">
-                                    <h4>
+                                <h4 class="h4-design">
                                         <!-- <a href="single.html">Almonds, 100g</a> -->
                                         {{$cat->name}}
                                     </h4>

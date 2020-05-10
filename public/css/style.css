@@ -1712,6 +1712,11 @@ h3.agileits-icons-title {
 		width: 50%;
 	}
 }
+@media (max-width: 495px){
+    .h4-design{
+        min-height: 3em;
+    }
+}
 @media (max-width: 480px){
 	.bs-glyphicons li {
 		width: 31%;
