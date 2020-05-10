@@ -6,7 +6,7 @@
     <meta name="robots" content="none" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="admin login">
-    <title>Admin Baazar 24X7</title>
+    <title>Bazaar24x7:Admin</title>
     <link rel="stylesheet" href="{{ voyager_asset('css/app.css') }}">
     @if (__('voyager::generic.is_rtl') == 'true')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css">
@@ -53,7 +53,10 @@
                         @else
                         <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="{{ Voyager::image($admin_logo_img) }}" alt="Logo Icon">
                         @endif
-                        
+                        <div class="copy animated fadeIn">
+                            <h1>Bazaar24x7</h1>
+                            <p>Admin</p>
+                        </div>
                     </div> <!-- .logo-title-container -->
                 </div>
             </div>

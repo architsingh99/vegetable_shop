@@ -94,19 +94,21 @@
                                         <!-- <a href="single.html">Almonds, 100g</a> -->
                                         {{$cat->name}}
                                     </h4>
+                                    <br>
                                     <!-- <div class="info-product-price">
                                         <span class="item_price">₹{{$cat->price_per_kg}} per kg</span>
                                         <del>₹{{($cat->price_per_kg * 1.2)}} per kg</del>
                                     </div> -->
                                     <div
                                         class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <!-- <form action="#" method="post">
-											<fieldset> -->
-                                        <a href="{{url('categories', $cat->id)}}"><input type="button"
+                                        
+                                        <!-- <a href="{{url('categories', $cat->id)}}"><input type="button"
+                                            value="View Products" class="button" /></a> -->
+                                        
+                                        <a href="{{url('coming_soon')}}"><input type="button"
                                             value="View Products" class="button" /></a>
 
-                                        <!-- </fieldset>
-										</form> -->
+                                       
                                     </div>
 
                                 </div>
@@ -220,7 +222,7 @@
         document.getElementById('addToCartButton' + index).style.display = 'none';
         $.ajax({
             type: "POST",
-            url: "http://emlt.site/add_to_cart", // You add the id of the post and the update datetime to the url as well
+            url: "http://127.0.0.1:8000/add_to_cart", // You add the id of the post and the update datetime to the url as well
             data: {
                 _token: document.getElementById('token').value,
                 product_id: document.getElementById('product_id' + index).value,

@@ -67,11 +67,11 @@ class VegetableEccomerce extends Controller
         $categoriesCount = DB::table('products')
         ->join('categories', 'categories.id', '=', 'products.category')
         ->select('categories.name', 'category', DB::raw('count(*) as total'))
-        ->groupBy('category', 'categories.name',)
+        ->groupBy('category', 'categories.name')
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
         $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(15);
-        $msg = "Welcome To Baazar24x7";
+        $msg = "Welcome To Bazaar24x7";
         //dd($products[0]->categories);
        return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
     }
@@ -83,7 +83,7 @@ class VegetableEccomerce extends Controller
         $categoriesCount = DB::table('products')
         ->join('categories', 'categories.id', '=', 'products.category')
         ->select('categories.name', 'category', DB::raw('count(*) as total'))
-        ->groupBy('category', 'categories.name',)
+        ->groupBy('category', 'categories.name')
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
         $products = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->get();
@@ -236,7 +236,7 @@ class VegetableEccomerce extends Controller
                 "send_email" => true,
                 "email" => "$data->user_email",
                 "phone" => "$data->mobile",
-                "redirect_url" => "http://127.0.0.1:8000/pay-success/".$str1
+                "redirect_url" => "http://127.0.0.1/pay-success/".$str1
                 ));
                  
                 header('Location: ' . $response['longurl']);
@@ -445,6 +445,7 @@ class VegetableEccomerce extends Controller
                 $num = substr($request->mobile, -10);
         $otp = DB::table('otps')->where('status', 1)->where('mobile', $num)->where('otp', $request->otp)->whereBetween('created_at', [now()->subMinutes(30), now()])->get();
            // dd($orders);
+           
            if($otp->isEmpty())
         {
             $data = [
@@ -460,6 +461,8 @@ class VegetableEccomerce extends Controller
             ->where('id', $otp[0]->id)
             ->update(['status'=> 2]);
             $users = DB::table('users')->where('email', $num)->get();
+           // $user = DB::table('users')->where('email', $num)->first();
+            
             if($users->isEmpty())
             {
                 $user = User::create([
@@ -467,10 +470,22 @@ class VegetableEccomerce extends Controller
                     'email'         => $num,
                     'password'         => $num + $request->otp + $otp[0]->id
                                   ]);
+                auth()->login($user);
                 
             }
-            auth()->login($user);
-            return redirect('/');
+            else
+            {
+                $user = User::where(['email' => $num])->first();
+                Auth::login($user);
+            }
+            
+            //auth()->login($user);
+            $data = [
+                'status'                     => 200,
+                'message'                    => "valid OTP."
+         ];
+            //dd($data);
+        return $this->sendResponse($data, "valid OTP.");
         }
         //DB::table('otps')->where('status', 1)->whereBetween('created_at', [now()->subMinutes(30), now()])->get();
            

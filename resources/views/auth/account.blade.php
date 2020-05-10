@@ -55,9 +55,9 @@
                         </form>
                         <div class="form-group row mb-0" style="padding-left: 40%;">
                             <div class="col-md-6 offset-md-4">
-                                <button type="button" onclick="myorders()" class="btn btn-primary">
+                                <a href="{{ url('../track_orders') }}" type="button"  class="btn btn-primary">
                                     {{ __('Check your previous orders!') }}
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

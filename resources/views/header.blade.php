@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui1.css') }}">
     <link rel="stylesheet" href="{{ asset('css/floating-wpp.css') }}">
     <!-- fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
@@ -67,7 +68,7 @@
             <a href="{{url('/')}}">
                 <img class="logo-design" style="width: 125px" src="{{ asset('images/logo2.png') }}" alt=" ">
 			</a>
-			<p style="line-height: 4px;" class="bazzar logo-name">
+			<p style="line-height: 14px;" class="bazzar logo-name">
 	        
 				    Baazar24x7
 				    <p class="tag-line logo-tag">
@@ -108,12 +109,10 @@
                                         <div class="dropdown-content">
                                             @if(isset($categories))
                                         @foreach($categories as $key => $cat)
-                                            <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
+                                            <!-- <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a> -->
+                                            <a href="{{url('coming_soon')}}">{{$cat->name}}</a>
+                                            
                                             @endforeach
-
-                                            @else
-                                            <a href="{{url('categories/2')}}">Vegetables</a>
-                                            <a href="{{url('categories/1')}}">Fruits</a>
                                             @endif
                                         </div>
                                     </div>
@@ -148,7 +147,7 @@
                                     <a class="nav-stylehead" href="{{url('logout')}}">Signout </a>
                                 </li>
                                 <li>
-                                    <a class="nav-stylehead" href="{{url('account')}}">{{Auth::user()-> name}} </a>
+                                    <a class="nav-stylehead" href="{{url('account')}}">Hi,{{Auth::user()-> name}} </a>
                                 </li>
                                 @else
                                 <li>
@@ -173,7 +172,7 @@
                     <input type="hidden" name="cmd" value="_cart">
                     <input type="hidden" name="display" value="1">
                     <a href="{{url('check_out')}}"><button class="w3view-cart" name="submit" value="">
-                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         </button></a>
                     <!-- </form> -->
                 </div>

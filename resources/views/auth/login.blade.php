@@ -127,10 +127,10 @@
                         <button onclick="sendOTP(0)" type="button" id="sendOtpButton" class="btn btn-primary">
                             Send OTP
                         </button>
-                        <button onclick="editNumber()" type="button" id="editNumberButton" class="btn btn-primary" style="display: none;">
+                        <button  onclick="editNumber()" type="button" id="editNumberButton" class="btn btn-primary" style="margin: auto;display: none;">
                             Edit Number
                         </button>
-                        <button onclick="sendOTP(1)" type="button" id="resendOtpButton" class="btn btn-primary" style="display: none;">
+                        <button  onclick="sendOTP(1)" type="button" id="resendOtpButton" class="btn btn-primary" style="margin: auto; display: none;">
                             Resend OTP
                         </button>
                         <img src="{{asset('images/25.gif')}}" id="preloaderOTP" style="display: none; height: 30px;">
@@ -143,7 +143,7 @@
                     </div>
 
                     <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
-                     <button type="button" onclick="loginOtp()" id="loginButton" class="btn btn-primary">
+                     <button  type="button" onclick="loginOtp()" id="loginButton" class="btn btn-primary">
                             Login
                         </button>
                         <img src="{{asset('images/25.gif')}}" id="preloaderLogin" style="display: none; height: 30px;">
@@ -175,7 +175,7 @@
     document.getElementById('preloaderOTP').style.display = 'block';
     $.ajax({
         type: "GET",
-        url: "http://localhost:8000/send_otp/" +
+        url: "http://127.0.0.1:8000/send_otp/" +
                 mobile + "/" + key,
         success: function(response) {
             document.getElementById('phone').readOnly = true;
@@ -221,7 +221,7 @@ function loginOtp()
     document.getElementById('preloaderLogin').style.display = 'block';
     $.ajax({
         type: "GET",
-        url: "http://localhost:8000/loginViaOtp/" +
+        url: "http://127.0.0.1:8000/loginViaOtp/" +
                 mobile + "/" + otp,
                 success: function(response) {
                     if(response.data.status == 400) {
@@ -230,6 +230,12 @@ function loginOtp()
                     text: "Please enter valid otp.",
                     icon: "error",
                 });
+                    }
+                    else
+                    {
+                            let url = "http://127.0.0.1:8000/";
+                            // url = url.replace(':id', id);
+                            document.location.href=url;
                     }
         }
     });

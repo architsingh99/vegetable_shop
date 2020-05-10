@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2020 at 12:08 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Generation Time: May 10, 2020 at 01:23 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -37,13 +37,6 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `user_id`, `product_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(6, 1, 1, 100, '2020-05-07 15:24:59', '2020-05-07 15:24:59');
-
 -- --------------------------------------------------------
 
 --
@@ -63,8 +56,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`, `image`) VALUES
-(1, 'Fruits', '2020-05-04 10:44:00', '2020-05-09 15:52:37', 'categories\\May2020\\WSNP6XJ9VcmqdBnTNtDJ.jpg'),
-(2, 'Vegetables', '2020-05-04 10:44:00', '2020-05-09 15:52:15', 'categories\\May2020\\od3uMCehlH7Q51u1fM5Y.jpg');
+(1, 'Fruits', '2020-05-04 10:44:00', '2020-05-09 19:41:44', 'categories\\May2020\\jSAtwASsU8RJ5cfJdmLq.jpg'),
+(2, 'Vegetables', '2020-05-04 10:44:00', '2020-05-09 19:41:55', 'categories\\May2020\\hzk4ZmW7XavXxVqIbEY9.jpg'),
+(3, 'bakery', '2020-05-10 04:53:23', '2020-05-10 04:53:23', 'categories\\May2020\\wWWckAkBidvVMVrKdenf.jpg'),
+(4, 'grocery', '2020-05-10 04:55:07', '2020-05-10 04:55:07', 'categories\\May2020\\qK0LH63UQ6FmKU3NFgl1.png');
 
 -- --------------------------------------------------------
 
@@ -371,16 +366,6 @@ CREATE TABLE `orders` (
   `delivery_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'PENDING'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `user_id`, `user_email`, `name`, `mobile`, `landmark`, `town_city`, `pincode`, `address_type`, `total_items`, `order_id`, `total_price`, `payment_status`, `created_at`, `updated_at`, `sub_total`, `delivery_charge`, `transaction_id`, `delivery_status`) VALUES
-(7, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#AO93MFUW5', 77, 'Completed', '2020-05-07 06:32:53', '2020-05-07 06:32:53', 27, 50, 'MOJO0507305A82133521', 'PENDING'),
-(8, 1, 'admin@admin.com', 'Archit Singh', '+917002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#JXWMEDROB', 77, 'Completed', '2020-05-07 09:10:00', '2020-05-07 09:10:00', 27, 50, 'MOJO0507L05A82133655', 'PENDING'),
-(9, 1, 'admin@admin.com', 'Archit Singh', '7002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#BKM2EX96J', 77, 'Completed', '2020-05-07 15:09:44', '2020-05-07 15:09:44', 27, 50, 'MOJO0507A05A82133775', 'Delivered'),
-(10, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#S0V8MUABZ', 54, 'Completed', '2020-05-07 15:17:18', '2020-05-07 15:17:18', 4, 50, 'MOJO0507R05A82133776', 'Delivered');
-
 -- --------------------------------------------------------
 
 --
@@ -405,7 +390,13 @@ INSERT INTO `otps` (`id`, `mobile`, `otp`, `status`, `created_at`, `updated_at`)
 (2, '7002088304', 881029, 1, '2020-05-09 15:35:17', '2020-05-09 15:35:17'),
 (3, '7002088304', 586821, 2, '2020-05-09 15:36:52', '2020-05-09 15:36:52'),
 (4, '7002088304', 152582, 2, '2020-05-09 15:38:17', '2020-05-09 15:38:17'),
-(5, '7002088304', 377324, 2, '2020-05-09 15:39:42', '2020-05-09 15:39:42');
+(5, '7002088304', 377324, 2, '2020-05-09 15:39:42', '2020-05-09 15:39:42'),
+(6, '7399232150', 697521, 2, '2020-05-09 19:43:11', '2020-05-09 19:43:11'),
+(7, '7399232150', 119543, 1, '2020-05-09 20:34:15', '2020-05-09 20:34:15'),
+(8, '7399232150', 231384, 1, '2020-05-09 20:35:23', '2020-05-09 20:35:23'),
+(9, '7399232150', 935244, 2, '2020-05-10 04:10:59', '2020-05-10 04:10:59'),
+(10, '7399232150', 160410, 2, '2020-05-10 04:12:05', '2020-05-10 04:12:05'),
+(11, '7399232150', 940419, 2, '2020-05-10 04:12:54', '2020-05-10 04:12:54');
 
 -- --------------------------------------------------------
 
@@ -629,7 +620,8 @@ CREATE TABLE `pincodes` (
 --
 
 INSERT INTO `pincodes` (`id`, `pincode`, `delivery_charge`, `delivery_time`, `created_at`, `updated_at`) VALUES
-(1, 786171, 50, 60, '2020-05-05 12:03:13', '2020-05-05 12:03:13');
+(1, 786171, 50, 60, '2020-05-05 12:03:13', '2020-05-05 12:03:13'),
+(2, 785001, 10, 60, '2020-05-10 05:22:20', '2020-05-10 05:22:20');
 
 -- --------------------------------------------------------
 
@@ -655,8 +647,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price_per_kg`, `minimum_quantity`, `created_at`, `updated_at`, `category`, `main_image`, `other_images`) VALUES
-(1, 'Onion', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 40, 100, '2020-05-04 10:45:00', '2020-05-04 10:53:57', 2, 'products\\May2020\\WSQocFZ8QC8hK4Mt1184.jpg', NULL),
-(2, 'Potato', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 30, 100, '2020-05-04 10:46:00', '2020-05-04 10:53:45', 2, 'products\\May2020\\TVIxPIFF5WBWbhrz32x0.jpg', NULL);
+(1, 'Onion', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 40, 100, '2020-05-04 10:45:00', '2020-05-10 04:17:46', 2, 'products\\May2020\\saC4wQzYrAvyaEVTTu5Q.jpg', NULL),
+(2, 'Potato', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 30, 100, '2020-05-04 10:46:00', '2020-05-10 04:17:29', 2, 'products\\May2020\\1Md8CGzEdG26z1Az06h0.jpg', NULL),
+(3, 'mango', NULL, 80, 500, '2020-05-10 04:51:51', '2020-05-10 04:51:51', 1, 'products\\May2020\\mpsOzy79xBaMQXhcYSW2.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -734,15 +727,6 @@ CREATE TABLE `suborders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `suborders`
---
-
-INSERT INTO `suborders` (`id`, `item_name`, `quantity`, `price`, `total`, `category`, `item_id`, `user_id`, `user_email`, `order_id`, `created_at`, `updated_at`) VALUES
-(1, 'Potato', 900, 30, 27000, 2, 2, 1, 'admin@admin.com', '#AO93MFUW5', '2020-05-07 06:39:53', '2020-05-07 06:39:53'),
-(2, 'Potato', 900, 30, 27000, 2, 2, 1, 'admin@admin.com', '#BKM2EX96J', '2020-05-07 15:10:24', '2020-05-07 15:10:24'),
-(3, 'Onion', 100, 40, 4000, 2, 1, 1, 'admin@admin.com', '#S0V8MUABZ', '2020-05-07 15:18:09', '2020-05-07 15:18:09');
-
 -- --------------------------------------------------------
 
 --
@@ -785,9 +769,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$RqKASZJOuIXOnOCa4pzF/uRvaijylff7cHw9WRzCxvOHUqhLciD2q', NULL, NULL, '2020-05-02 13:24:58', '2020-05-02 13:24:59'),
-(16, 2, 'Archit Singh', 'architsingh99@gmail.com', 'users/default.png', NULL, '$2y$10$FNXrc9k5jMMo4eTAHDEu6ux/NUfZyWrHAMQip4k/N8h661YZWBtlW', NULL, NULL, '2020-05-03 09:42:59', '2020-05-03 09:42:59'),
-(17, 2, 'GUEST', '7002088304', 'users/default.png', NULL, '7002675128', NULL, NULL, '2020-05-09 15:46:40', '2020-05-09 15:46:40');
+(1, 1, 'Admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$RqKASZJOuIXOnOCa4pzF/uRvaijylff7cHw9WRzCxvOHUqhLciD2q', NULL, NULL, '2020-05-02 13:24:58', '2020-05-02 13:24:59');
 
 -- --------------------------------------------------------
 
@@ -965,7 +947,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `data_rows`
@@ -1013,7 +995,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `payu_payments`
@@ -1031,13 +1013,13 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `pincodes`
 --
 ALTER TABLE `pincodes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1067,7 +1049,7 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
