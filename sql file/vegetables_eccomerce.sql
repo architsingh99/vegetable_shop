@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2020 at 02:12 AM
+-- Generation Time: May 10, 2020 at 12:08 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -54,16 +54,17 @@ CREATE TABLE `categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Fruits', '2020-05-04 10:44:22', '2020-05-04 10:44:22'),
-(2, 'Vegetables', '2020-05-04 10:44:34', '2020-05-04 10:44:34');
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`, `image`) VALUES
+(1, 'Fruits', '2020-05-04 10:44:00', '2020-05-09 15:52:37', 'categories\\May2020\\WSNP6XJ9VcmqdBnTNtDJ.jpg'),
+(2, 'Vegetables', '2020-05-04 10:44:00', '2020-05-09 15:52:15', 'categories\\May2020\\od3uMCehlH7Q51u1fM5Y.jpg');
 
 -- --------------------------------------------------------
 
@@ -178,7 +179,8 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (84, 9, 'suborder_belongsto_user_relationship_1', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_email\",\"key\":\"email\",\"label\":\"email\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 12),
 (85, 9, 'suborder_belongsto_product_relationship', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"item_name\",\"key\":\"name\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 9),
 (86, 9, 'suborder_belongsto_product_relationship_1', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"item_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 14),
-(87, 8, 'delivery_status', 'text', 'Delivery Status', 0, 1, 1, 1, 1, 1, '{}', 19);
+(87, 8, 'delivery_status', 'text', 'Delivery Status', 0, 1, 1, 1, 1, 1, '{}', 19),
+(88, 4, 'image', 'image', 'Image', 0, 1, 1, 1, 1, 1, '{}', 5);
 
 -- --------------------------------------------------------
 
@@ -212,7 +214,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', '', 1, 0, NULL, '2020-05-02 13:23:27', '2020-05-02 13:23:27'),
 (2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2020-05-02 13:23:28', '2020-05-02 13:23:28'),
 (3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2020-05-02 13:23:28', '2020-05-02 13:23:28'),
-(4, 'categories', 'categories', 'Category', 'Categories', NULL, 'App\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2020-05-04 10:32:48', '2020-05-04 10:32:48'),
+(4, 'categories', 'categories', 'Category', 'Categories', NULL, 'App\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:32:48', '2020-05-09 15:50:54'),
 (5, 'products', 'products', 'Product', 'Products', 'voyager-logbook', 'App\\Product', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:39:31', '2020-05-04 10:53:12'),
 (6, 'carts', 'carts', 'Cart', 'Carts', 'voyager-credit-cards', 'App\\Cart', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 05:48:56', '2020-05-05 05:51:14'),
 (7, 'pincodes', 'pincodes', 'Pincode', 'Pincodes', 'voyager-hammer', 'App\\Pincode', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 12:01:39', '2020-05-05 12:02:19'),
@@ -378,6 +380,32 @@ INSERT INTO `orders` (`id`, `user_id`, `user_email`, `name`, `mobile`, `landmark
 (8, 1, 'admin@admin.com', 'Archit Singh', '+917002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#JXWMEDROB', 77, 'Completed', '2020-05-07 09:10:00', '2020-05-07 09:10:00', 27, 50, 'MOJO0507L05A82133655', 'PENDING'),
 (9, 1, 'admin@admin.com', 'Archit Singh', '7002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#BKM2EX96J', 77, 'Completed', '2020-05-07 15:09:44', '2020-05-07 15:09:44', 27, 50, 'MOJO0507A05A82133775', 'Delivered'),
 (10, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#S0V8MUABZ', 54, 'Completed', '2020-05-07 15:17:18', '2020-05-07 15:17:18', 4, 50, 'MOJO0507R05A82133776', 'Delivered');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `otps`
+--
+
+CREATE TABLE `otps` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otp` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `otps`
+--
+
+INSERT INTO `otps` (`id`, `mobile`, `otp`, `status`, `created_at`, `updated_at`) VALUES
+(1, '7002088304', 959010, 1, '2020-05-09 15:33:57', '2020-05-09 15:33:57'),
+(2, '7002088304', 881029, 1, '2020-05-09 15:35:17', '2020-05-09 15:35:17'),
+(3, '7002088304', 586821, 2, '2020-05-09 15:36:52', '2020-05-09 15:36:52'),
+(4, '7002088304', 152582, 2, '2020-05-09 15:38:17', '2020-05-09 15:38:17'),
+(5, '7002088304', 377324, 2, '2020-05-09 15:39:42', '2020-05-09 15:39:42');
 
 -- --------------------------------------------------------
 
@@ -758,7 +786,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$RqKASZJOuIXOnOCa4pzF/uRvaijylff7cHw9WRzCxvOHUqhLciD2q', NULL, NULL, '2020-05-02 13:24:58', '2020-05-02 13:24:59'),
-(16, 2, 'Archit Singh', 'architsingh99@gmail.com', 'users/default.png', NULL, '$2y$10$FNXrc9k5jMMo4eTAHDEu6ux/NUfZyWrHAMQip4k/N8h661YZWBtlW', NULL, NULL, '2020-05-03 09:42:59', '2020-05-03 09:42:59');
+(16, 2, 'Archit Singh', 'architsingh99@gmail.com', 'users/default.png', NULL, '$2y$10$FNXrc9k5jMMo4eTAHDEu6ux/NUfZyWrHAMQip4k/N8h661YZWBtlW', NULL, NULL, '2020-05-03 09:42:59', '2020-05-03 09:42:59'),
+(17, 2, 'GUEST', '7002088304', 'users/default.png', NULL, '7002675128', NULL, NULL, '2020-05-09 15:46:40', '2020-05-09 15:46:40');
 
 -- --------------------------------------------------------
 
@@ -832,6 +861,12 @@ ALTER TABLE `migrations`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `otps`
+--
+ALTER TABLE `otps`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -936,7 +971,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `data_types`
@@ -973,6 +1008,12 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `orders`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `otps`
+--
+ALTER TABLE `otps`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `payu_payments`
@@ -1026,7 +1067,7 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables

@@ -13,7 +13,7 @@
                     <a href="{{url('/')}}">Home</a>
                     <i>|</i>
                 </li>
-                <li>{{$msg}}</li>
+                <li>{{$categoryData[0]->name}}</li>
             </ul>
         </div>
     </div>
@@ -24,7 +24,7 @@
 <div class="ads-grid">
     <div class="container">
         <!-- tittle heading -->
-        <h3 class="tittle-w3l">{{$msg}}
+        <h3 class="tittle-w3l">{{$categoryData[0]->name}}
             <span class="heading-style">
                 <i></i>
                 <i></i>
@@ -47,7 +47,7 @@
                 <!-- first section (nuts) -->
                 <!-- <div class="product-sec1"> -->
                     <!-- <h3 class="heading-tittle">Nuts</h3> -->
-                  
+                  @if(!$products->isEmpty())
                         <?php $done = 0; ?>
                     <?php $skip = 0; ?>
                     @foreach($products as $key => $cat)
@@ -107,6 +107,9 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                        <h2> COMING SOON...</h2>
+                        @endif
                         <div class="clearfix"></div>
                     <!-- </div> -->
                     <!-- //first section (nuts) -->
@@ -131,6 +134,7 @@
     </div>
     <!-- //top products -->
     <!-- special offers -->
+    @if(!$products->isEmpty())
     <div class="featured-section" id="projects">
         <div class="container">
             <!-- tittle heading -->
@@ -142,6 +146,7 @@
                 </span>
             </h3>
             <!-- //tittle heading -->
+            
             <div class="content-bottom-in">
                 <ul id="flexiselDemo1">
                     @foreach($products as $key => $cat)
@@ -205,8 +210,10 @@
                     @endforeach
                 </ul>
             </div>
+            
         </div>
     </div>
+    @endif
     <!-- //special offers -->
     <script>
     async function addToCart(index) {

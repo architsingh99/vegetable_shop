@@ -75,12 +75,12 @@
                   
                         <?php $done = 0; ?>
                     <?php $skip = 0; ?>
-                    @foreach($products as $key => $cat)
+                    @foreach($categories as $key => $cat)
                     
                         <div class="col-md-4 men-thumb-item-sale product-men">
                             <div class="men-pro-item simpleCart_shelfItem">
                                 <div class="front-item">
-                                    <img  src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}"
+                                    <img  src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->image) }}"
                                         alt="">
                                     <!-- <div class="men-cart-pro">
 										<div class="inner-men-cart-pro">
@@ -94,35 +94,16 @@
                                         <!-- <a href="single.html">Almonds, 100g</a> -->
                                         {{$cat->name}}
                                     </h4>
-                                    <div class="info-product-price">
+                                    <!-- <div class="info-product-price">
                                         <span class="item_price">₹{{$cat->price_per_kg}} per kg</span>
-                                        <!-- <del>₹{{($cat->price_per_kg * 1.2)}} per kg</del> -->
-                                    </div>
-                                    <div class="info-product-price">
-                                        <span class="item_price">Quantity <select name="quantity{{$key}}"
-                                                id="quantity{{$key}}">
-                                                @for($i=1;$i<=100;$i++) <option
-                                                    value="{{($cat->minimum_quantity * $i)}}">
-                                                    {{($cat->minimum_quantity * $i) < 1000 ? ($cat->minimum_quantity * $i) . " g" : ($cat->minimum_quantity * $i)/1000 . " kg"}}
-                                                    </option>
-                                                    @endfor
-                                            </select></span>
-                                    </div>
+                                        <del>₹{{($cat->price_per_kg * 1.2)}} per kg</del>
+                                    </div> -->
                                     <div
                                         class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                         <!-- <form action="#" method="post">
 											<fieldset> -->
-                                        <input type="hidden" id="product_id{{$key}}" value="{{$cat->id}}" />
-                                        <input type="hidden" id="token" name="_token" value="{{csrf_token()}}">
-                                        @if (!Auth::check())
-                                        <a href="{{url('login')}}"><input type="button" name="submit"
-                                                value="Login Required" class="button" /></a>
-                                        @else
-                                        <img src="{{asset('images/25.gif')}}" id="preloader{{$key}}"
-                                            style="display: none; height: 30px;">
-                                        <input type="button" id="addToCartButton{{$key}}" onclick="addToCart({{$key}})"
-                                            value="Add to cart" class="button" />
-                                        @endif
+                                        <a href="{{url('categories', $cat->id)}}"><input type="button"
+                                            value="View Products" class="button" /></a>
 
                                         <!-- </fieldset>
 										</form> -->

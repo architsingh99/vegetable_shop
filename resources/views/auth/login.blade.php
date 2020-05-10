@@ -123,22 +123,30 @@
                             required autocomplete="phone" autofocus>
                     </div>
 
-                    <div style="text-align: center;    margin-top: 1em;" class="col-md-12 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
+                    <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
+                        <button onclick="sendOTP(0)" type="button" id="sendOtpButton" class="btn btn-primary">
                             Send OTP
                         </button>
+                        <button onclick="editNumber()" type="button" id="editNumberButton" class="btn btn-primary" style="display: none;">
+                            Edit Number
+                        </button>
+                        <button onclick="sendOTP(1)" type="button" id="resendOtpButton" class="btn btn-primary" style="display: none;">
+                            Resend OTP
+                        </button>
+                        <img src="{{asset('images/25.gif')}}" id="preloaderOTP" style="display: none; height: 30px;">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" style="display: none;" id="otpForm">
                     <div style=" margin: auto; float: inherit;" class="col-md-4">
-                        <input id="phone" type="phone" class="form-control" name="phone" value="{{ old('phone') }}"
+                        <input id="otp" type="phone" class="form-control" name="phone"
                             required autocomplete="phone" autofocus placeholder="Enter OTP">
                     </div>
 
-                    <div style="text-align: center;    margin-top: 1em;" class="col-md-12 offset-md-4">
-                     <button type="submit" class="btn btn-primary">
+                    <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
+                     <button type="button" onclick="loginOtp()" id="loginButton" class="btn btn-primary">
                             Login
                         </button>
+                        <img src="{{asset('images/25.gif')}}" id="preloaderLogin" style="display: none; height: 30px;">
                     </div>
                 </div>
             </div>
@@ -148,3 +156,83 @@
         </div>
 
     </div>
+
+    <script>
+        function sendOTP(key) {
+    //alert(cart_id)
+    var mobile = document.getElementById('phone').value;
+    if(mobile == "" || mobile == null || mobile.length < 10)
+    {
+        swal({
+                    title: "Error",
+                    text: "Please enter valid mobile number",
+                    icon: "error",
+                });
+    }
+    else
+    {
+        document.getElementById('sendOtpButton').style.display = 'none';
+    document.getElementById('preloaderOTP').style.display = 'block';
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/send_otp/" +
+                mobile + "/" + key,
+        success: function(response) {
+            document.getElementById('phone').readOnly = true;
+            document.getElementById('editNumberButton').style.display = 'block';
+    document.getElementById('preloaderOTP').style.display = 'none';
+    document.getElementById('resendOtpButton').style.display = 'block';
+    document.getElementById('otpForm').style.display = 'block';
+            swal({
+                    title: "Success",
+                    text: "OTP sent to your mobile.",
+                    icon: "success",
+                });
+        }
+    });
+    }
+}
+
+function editNumber()
+{
+    document.getElementById('phone').readOnly = false;
+            document.getElementById('editNumberButton').style.display = 'none';
+    document.getElementById('preloaderOTP').style.display = 'none';
+    document.getElementById('resendOtpButton').style.display = 'none';
+    document.getElementById('otpForm').style.display = 'none';
+    document.getElementById('sendOtpButton').style.display = 'block';
+}
+
+function loginOtp()
+{
+    var mobile = document.getElementById('phone').value;
+    var otp = document.getElementById('otp').value;
+    if(otp == "" || otp == null)
+    {
+        swal({
+                    title: "Error",
+                    text: "Please enter valid otp.",
+                    icon: "error",
+                });
+    }
+    else
+    {
+        document.getElementById('loginButton').style.display = 'none';
+    document.getElementById('preloaderLogin').style.display = 'block';
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/loginViaOtp/" +
+                mobile + "/" + otp,
+                success: function(response) {
+                    if(response.data.status == 400) {
+                    swal({
+                    title: "Error",
+                    text: "Please enter valid otp.",
+                    icon: "error",
+                });
+                    }
+        }
+    });
+    }
+}
+    </script>
