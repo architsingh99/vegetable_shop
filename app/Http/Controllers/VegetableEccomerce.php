@@ -32,12 +32,20 @@ use App\Http\Controllers\Controller;
 
 class VegetableEccomerce extends Controller
 {
-    //
-    private $SMS_SENDER = "Sample";
-    private $RESPONSE_TYPE = 'json';
-    private $SMS_USERNAME = 'architsingh99@gmail.com';
-    private $SMS_PASSWORD = 'digboi@2014';
+    public function updatePassword (Request $request) 
+    {
+          $this->validate($request, [
+              'password'     => 'min:6',
+          ],
+        );
 
+              $user_id=Auth::user()->id;
+              User::where('id', $user_id)
+              ->update(['password' => Hash::make($request->input('password'))
+                  ]);
+                  return redirect()->back()->with("message","Password has been successfully updated, Now you can this password to Signin ");
+         
+    }
 
     public function sendResponse($data, $message) {
 

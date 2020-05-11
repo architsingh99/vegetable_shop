@@ -3,6 +3,9 @@
     <div class="container">
         <div class="row justify-content-center" >
             <div class="col-md-12">
+            @if(session()->has('message'))
+                <div id="sendmessage">{{session()->get('message')}}</div>
+                @endif
                 <div class="card">
                     @if (Auth::user())
                     <h2>
@@ -30,7 +33,8 @@
 
                             </div>
                         </div>
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{url('updatePassword')}}"enctype="multipart/form-data">
+                              
                             @csrf
 
                             <div class="form-group row">
@@ -42,6 +46,11 @@
                                         placeholder="Want to create new Password?" name="password" required
                                         autocomplete="new-password">
 
+                                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                                 </div>
                             </div>
 

@@ -3348,6 +3348,9 @@ input[type="radio"], input[type="checkbox"] {
     }
 }
 @media(max-width: 767px){
+    a.dropbtn {
+        color: #fff!important;
+    }
     .navbar-toggle {
         float: right;
         margin: 8px 0;
@@ -4994,9 +4997,12 @@ input[type="radio"], input[type="checkbox"] {
         padding: 6px 4px;
     }
       .front-item img{
-        max-width: 9em!important;
-        height: 6em!important;   
-    }
+    max-width: 8em!important;
+    height: 5em!important;
+}
+.info-product-price {
+    margin: 0;
+}
     }
     .men-thumb-item-sale{
     
@@ -5035,7 +5041,7 @@ input[type="radio"], input[type="checkbox"] {
     
 }
 .bazzar{
-    padding-top: 5em;
+    padding-top: 3em;
     padding-left: 90px;
     color: #000;
 }
@@ -5083,7 +5089,7 @@ color: #000;
 .dropdown:hover .dropbtn {color: #e96c1d;}
 @media (max-width: 991px){
     a.dropbtn {
-        color: #fff;
+        color: #777;
     }
 }
 @media (max-width: 495px){

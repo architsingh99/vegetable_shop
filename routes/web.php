@@ -12,6 +12,8 @@
 */
 Route::get('/','VegetableEccomerce@get');
 
+Route::post('updatePassword', 'VegetableEccomerce@updatePassword');
+
 Route::get('check_out','VegetableEccomerce@checkout')->middleware('auth');
 
 Route::post('add_to_cart', 'VegetableEccomerce@addToCart')->middleware('auth');

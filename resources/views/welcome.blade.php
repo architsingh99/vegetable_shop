@@ -102,11 +102,11 @@
                                     <div
                                         class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                         
-                                        <!-- <a href="{{url('categories', $cat->id)}}"><input type="button"
-                                            value="View Products" class="button" /></a> -->
-                                        
-                                        <a href="{{url('coming_soon')}}"><input type="button"
+                                        <a href="{{url('categories', $cat->id)}}"><input type="button"
                                             value="View Products" class="button" /></a>
+<!--                                         
+                                        <a href="{{url('coming_soon')}}"><input type="button"
+                                            value="View Products" class="button" /></a> -->
 
                                        
                                     </div>

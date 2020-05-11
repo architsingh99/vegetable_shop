@@ -71,13 +71,17 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
             <a href="{{url('/')}}">
                 <img class="logo-design" style="width: 125px" src="{{ asset('images/logo2.png') }}" alt=" ">
 			</a>
-			<p style="line-height: 14px;" class="bazzar logo-name">
+			<p style="    line-height: 23px;
+    font-family: berlin sans fb;
+    font-weight: 600;
+    font-size: 24px;" class="bazzar logo-name">
 	        
-				    Baazar24x7
-				    <p class="tag-line logo-tag">
-				       FRESH VEGETABLES
+				    Bazaar24x7
 				    </p>
-				</p>
+				    <p style="line-height: 14px; font-weight: 600;" class="tag-line logo-tag">
+				       Bringing Bazaar to Home
+				    </p>
+				
 
         </div>
         <div class="col-md-8">
@@ -110,12 +114,18 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
                                     <div class="dropdown nav-stylehead">
                                         <a class="nav-stylehead dropbtn ">Categories</a>
                                         <div class="dropdown-content">
-                                            @if(isset($categories))
+                                         @if(isset($categories))
                                         @foreach($categories as $key => $cat)
-                                            <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
-                                            <!-- <a href="{{url('coming_soon')}}">{{$cat->name}}</a> -->
-                                            
+                                            <!--<a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>-->
+                                            <a href="{{url('coming_soon')}}">{{$cat->name}}</a>
                                             @endforeach
+
+                                            @else
+                                            
+                                            <a href="{{url('coming_soon')}}">Fruits</a>
+                                            <a href="{{url('coming_soon')}}">Vegetable</a>
+                                            <a href="{{url('coming_soon')}}">Backery</a>
+                                            <a href="{{url('coming_soon')}}">Grocery</a>
                                             @endif
                                         </div>
                                     </div>
