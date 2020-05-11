@@ -208,7 +208,7 @@ class VegetableEccomerce extends Controller
             }
             $order = new Order();
               $order->user_id = auth()->user()->id;
-              $order->user_email = auth()->user()->email; 
+              $order->user_email = $request->input('email'); 
               $order->name = $request->input('name'); 
               $order->mobile = $request->input('mobile');  
               $order->landmark = $request->input('landmark'); 
@@ -540,6 +540,18 @@ class VegetableEccomerce extends Controller
         }
         //DB::table('otps')->where('status', 1)->whereBetween('created_at', [now()->subMinutes(30), now()])->get();
            
+          
+    }
+
+    public function getHash(Request $request)
+    {
+        $hash=hash('sha512', $request->input('key').'|'.$request->input('txnid').'|'.$request->input('amount').'|'.$request->input('pinfo').'|'.$request->input('fname').'|'.$request->input('email').'|||||'.$request->input('udf5').'||||||'.$request->input('salt'));
+		$data = [
+            'status'                     => 200,
+            'message'                    => $hash
+     ];
+        //dd($data);
+    return $this->sendResponse($data, "hash value");
           
     }
 

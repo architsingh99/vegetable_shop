@@ -131,24 +131,37 @@
 
             <p style="color: red; display:none;" id="pincodeStatus"></p>
 		</div>
-		
+        <?php
+        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
+        ?>
 
         <div class="checkout-left" id="addressPayment" style="display: none;">
             <div class="address_form_agile">
                 <h4>Add a new Details</h4>
-                <form action="{{url('post_orders')}}" method="post" class="creditly-card-form agileinfo_form">
+                <form action="{{url('post_orders')}}" method="post" id="paymentForm" class="creditly-card-form agileinfo_form">
                 @csrf
+                <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" />
+                <input type="hidden" id="key" name="key" value="gtKFFx" />
+                <input type="hidden" id="salt" name="salt" value="eCwWELxi" />
+                <input type="hidden" id="txnid" name="txnid" value="{{$order_id}}" />
+                <input type="hidden" id="hash" name="hash" />
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
                         <div class="information-wrapper">
                             <div class="first-row">
                                 <div class="controls">
-                                    <input class="billing-address-name" type="text" name="name" placeholder="Full Name"
+                                    <input class="billing-address-name" type="text" name="name" id="name" placeholder="Full Name"
                                         required="">
                                 </div>
                                 <div class="w3_agileits_card_number_grids">
                                     <div class="w3_agileits_card_number_grid_left">
                                         <div class="controls">
-                                            <input type="text" placeholder="Mobile Number" name="mobile" required="">
+                                            <input type="text" placeholder="Mobile Number" id="mobile" name="mobile" required="">
+                                        </div>
+                                    </div>
+                                    <div class="w3_agileits_card_number_grid_left">
+                                        <div class="controls">
+                                            <input type="text" placeholder="Email" name="email" id="email" required="">
                                         </div>
                                     </div>
                                     <div class="w3_agileits_card_number_grid_right">
@@ -173,15 +186,15 @@
                                 <div class="clear"> </div>
                                 <div class="controls">
                                 <h4>Payment Method</h4>
-                                    <input type="radio" style="width: auto;" name="payment_method" required="" value="1" checked>Pay Now
-                                    <br><input type="radio" style="width: auto;" name="payment_method" required="" value="2">Cash On Delivery
+                                    <input type="radio" style="width: auto;" name="payment_method" id="payment_method" required="" value="1" checked>Pay Now
+                                    <br><input type="radio" style="width: auto;" name="payment_method" id="payment_method" required="" value="2">Cash On Delivery
                                 </div>
                             </div>
                             <input type="hidden" value="" name="deliveryPincode" id="deliveryPincode">
                             <input type="hidden" id="subtotalOrder" name="subtotalOrder" value="{{$total}}">
                             <input type="hidden" id="deliveryChargeOrder" name="deliveryChargeOrder" value="0">
                             <input type="hidden" id="finalPriceOrder" name="finalPriceOrder" value="0">
-                            <button type="submit"class="submit check_out" id="makePaymentButton" onclick="makePaymentHideButton()">Make a Payment <span class="fa fa-hand-o-right" aria-hidden="true"></span></button>
+                            <button type="button"class="submit check_out" id="makePaymentButton" onclick="makePaymentHideButton()">Make a Payment <span class="fa fa-hand-o-right" aria-hidden="true"></span></button>
                             <img src="{{asset('images/25.gif')}}" id="preloadermakePaymentButton" style="display: none; height: 30px;">
                         </div>
                     </div>
@@ -227,6 +240,7 @@ function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
                 document.getElementById('finalPrice').value = (Number(document.getElementById('subtotal')
                     .value)) + (Number(document.getElementById('deliveryCharge').value));
                 document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
+                getHash();
             }
             document.getElementById(z).innerText = '₹' + newprice;
             // swal({
@@ -277,6 +291,7 @@ function checkPincode() {
                     document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
                     document.getElementById('subtotalOrder').value =  document.getElementById('subtotal').value;
                     document.getElementById('deliveryChargeOrder').value =  response.data.delivery_charge;
+                    getHash();
                 } else {
                     document.getElementById('deliveryChargeText').innerText = 'Enter Pincode First';
                     document.getElementById('deliveryCharge').value = 0;
@@ -309,7 +324,96 @@ function editPincode() {
 function makePaymentHideButton() {
     document.getElementById('preloadermakePaymentButton').style.display = 'block';
     document.getElementById('makePaymentButton').style.display = 'none';
-    return true;
+    if(Number(document.getElementById('payment_method').value) == 1)
+        this.launchBOLT();
+    else
+        document.getElementById('paymentForm').submit();
 }
+
+function getHash()
+{
+    console.log("332")
+    $.ajax({
+          url: 'http://localhost:8000/getHash',
+          type: 'post',
+          data: { 
+            _token: document.getElementById('token').value,
+            key: $('#key').val(),
+			salt: $('#salt').val(),
+			txnid: $('#txnid').val(),
+			amount: $('#finalPriceOrder').val(),
+		    pinfo: $('#txnid').val(),
+            fname: $('#name').val(),
+			email: $('#email').val(),
+			mobile: $('#mobile').val(),
+			udf5: $('#udf5').val()
+          },
+          success: function(json) {
+            console.log(json)
+            document.getElementById('hash').value = json.data.message;
+          }
+        }); 
+}
+
+function launchBOLT()
+{
+	bolt.launch({
+	key: $('#key').val(),
+	txnid: $('#txnid').val(), 
+	hash: $('#hash').val(),
+	amount: $('#finalPriceOrder').val(),
+	firstname: $('#name').val(),
+	email: $('#email').val(),
+	phone: $('#mobile').val(),
+	productinfo: $('#txnid').val(),
+	udf5: $('#udf5').val(),
+	surl : 'http://localhost:8000/success/1',
+	furl: 'http://localhost:8000/getHash/1',
+	mode: 'dropout'	
+},{ responseHandler: function(BOLT){
+	console.log( BOLT.response.txnStatus );		
+	if(BOLT.response.txnStatus != 'CANCEL')
+	{
+		//Salt is passd here for demo purpose only. For practical use keep salt at server side only.
+		console.log(BOLT.response);
+		var form = jQuery(fr);
+		// jQuery('body').append(form);								
+		// form.submit();
+	}
+},
+	catchException: function(BOLT){
+        console.log("error ", BOLT);
+ 		alert( BOLT.message );
+	}
+});
+}
+
+// $('#payment_form').bind('keyup blur', function(){
+// 	$.ajax({
+//           url: 'http://localhost:8000/getHash',
+//           type: 'post',
+//           data: JSON.stringify({ 
+//             key: $('#key').val(),
+// 			salt: $('#salt').val(),
+// 			txnid: $('#txnid').val(),
+// 			amount: $('#amount').val(),
+// 		    pinfo: $('#pinfo').val(),
+//             fname: $('#fname').val(),
+// 			email: $('#email').val(),
+// 			mobile: $('#mobile').val(),
+// 			udf5: $('#udf5').val()
+//           }),
+// 		  contentType: "application/json",
+//           dataType: 'json',
+//           success: function(json) {
+//             if (json['error']) {
+// 			 $('#alertinfo').html('<i class="fa fa-info-circle"></i>'+json['error']);
+//             }
+// 			else if (json['success']) {	
+// 				$('#hash').val(json['success']);
+//             }
+//           }
+//         }); 
+// });
 </script>
 @include('footer')

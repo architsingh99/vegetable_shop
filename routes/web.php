@@ -18,6 +18,8 @@ Route::post('add_to_cart', 'VegetableEccomerce@addToCart')->middleware('auth');
 
 Route::post('update_cart', 'VegetableEccomerce@update_cart')->middleware('auth');
 
+Route::post('getHash', 'VegetableEccomerce@getHash')->middleware('auth');
+
 Route::get('remove_from_cart/{cart_id}', 'VegetableEccomerce@remove_from_cart')->middleware('auth');
 
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
