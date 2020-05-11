@@ -24,11 +24,17 @@
         </thead>
         <tbody>
         @foreach($orders as $key => $cat)
+        <?php
+                             if($cat->product->quantity_in_grams == 1)
+                                $valueForDisplay = $cat->quantity < 1000 ? $cat->quantity . " g" : $cat->quantity/1000 . " kg";
+                              else
+                                $valueForDisplay = $cat->quantity;
+          ?>
             <tr>
                 <td>{{$cat->item_name}}</td>
                 
                 <td>{{$cat->price}}</td>
-                <td>{{$cat->quantity < 1000 ? $cat->quantity . " g" : $cat->quantity/1000 . " kg"}}</td>
+                <td>{{$valueForDisplay}}</td>
                 <td>{{$cat->total}}</td>
                </tr>
             @endforeach

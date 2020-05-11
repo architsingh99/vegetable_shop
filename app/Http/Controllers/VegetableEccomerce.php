@@ -259,7 +259,10 @@ class VegetableEccomerce extends Controller
                 $subOrder->item_name = $product[0]->name;
                 $subOrder->quantity = $value->quantity;
                 $subOrder->price = $product[0]->price_per_kg;
-                $subOrder->total = ($product[0]->price_per_kg * $value->quantity) / 1000;
+                $dividedBy = 1; 
+                if($product[0]->quantity_in_grams == 1)
+                    $dividedBy = 1000;
+                $subOrder->total = ($product[0]->price_per_kg * $value->quantity) / $dividedBy;
                 $subOrder->category = $product[0]->category;
                 $subOrder->item_id = $product[0]->id;
                 $subOrder->user_id = $value->user_id;
@@ -445,17 +448,17 @@ class VegetableEccomerce extends Controller
             ->where('user_id', auth()->user()->id)->get();
            // dd($orders);
            $categories = Category::all();
-    return view('myorders')->with('orders', $orders);
+    return view('myorders')->with('categories', $categories)->with('orders', $orders);
           
     }
 
     public function subOrders(Request $request)
     {
-       $orders = DB::table('suborders')
+       $orders = Suborder::with('product')
             ->where('order_id', $request->order_id)->get();
            // dd($orders);
            $categories = Category::all();
-    return view('suborders')->with('orders', $orders)->with('order_id', $request->order_id);
+    return view('suborders')->with('categories', $categories)->with('orders', $orders)->with('order_id', $request->order_id);
           
     }
 

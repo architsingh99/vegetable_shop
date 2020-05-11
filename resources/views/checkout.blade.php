@@ -70,18 +70,28 @@
 												<span>1</span>
 											</div>
                                             <div class="entry value-plus active">&nbsp;</div> -->
-                                        <?php 
-                                        $total = $total + ($value->product->price_per_kg * $value->quantity / 1000); ?>
+                                        <?php
+                                        $dividedBy = 1; 
+                                        if($value->product->quantity_in_grams == 1)
+                                             $dividedBy = 1000;
+                                        $total = $total + (int)($value->product->price_per_kg * $value->quantity / $dividedBy); ?>
+                                        <input type="hidden" id="old_quantity{{$value->id}}" value="{{$value->quantity}}">
                                         <select class="form-control"
                                             onchange="changeQuantity({{$value->id}}, this.value, {{$value->product->price_per_kg}}, 
-                                            {{$value->quantity}})"
+                                            {{$value->product->quantity_in_grams}})"
                                             name="quantity{{$value->id}}" id="quantity{{$value->id}}">
                                             @for($i=1;$i<=100;$i++) {{$value->product}} 
                                             <option
                                                 value="{{($value->product->minimum_quantity * $i)}}"
                                                 {{($value->quantity == $value->product->minimum_quantity * $i) ? "selected" : ""}}>
-                                                {{($value->product->minimum_quantity * $i) < 1000 ? ($value->product->minimum_quantity * $i) . " g" : ($value->product->minimum_quantity * $i)/1000 . " kg"}}
-                                                </option>
+                                                <?php
+                                                    if($value->product->quantity_in_grams == 1)
+                                                        $valueForDisplay = ($value->product->minimum_quantity * $i) < 1000 ? ($value->product->minimum_quantity * $i) . " g" : ($value->product->minimum_quantity * $i)/1000 . " kg";
+                                                    else
+                                                        $valueForDisplay = $value->product->minimum_quantity * $i;
+                                                    ?>
+                                                    {{$valueForDisplay}}
+                                                 </option>
                                                 @endfor
                                         </select>
                                     </div>
@@ -89,7 +99,7 @@
                             </td>
 
                             <td class="text-al-left invert" id="price{{$value->id}}">
-                                ₹{{$value->product->price_per_kg * $value->quantity / 1000}}</td>
+                                ₹{{$value->product->price_per_kg * $value->quantity / $dividedBy}}</td>
                             <td class="invert">
                                 <a href="{{url('remove_from_cart', $value->id)}}" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-trash"></span>
@@ -215,10 +225,17 @@
 </div>
 
 <script>
-function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
+function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
     //alert(cart_id)
-    var oldprice = (old_quantity * price_per_kg) / 1000;
-    var newprice = (quantity * price_per_kg) / 1000;
+    var y = 'old_quantity' + cart_id;
+    var old_quantity = document.getElementById(y).value;
+    var oldprice = (old_quantity * price_per_kg);
+    var newprice = (quantity * price_per_kg);
+    if(Number(quantity_type) == 1)
+    {
+         oldprice = oldprice / 1000;
+         newprice = newprice / 1000;
+    }
     var z = 'price' + cart_id;
 
     $.ajax({
@@ -246,6 +263,7 @@ function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
                 getHash();
             }
             document.getElementById(z).innerText = '₹' + newprice;
+            document.getElementById(y).value = quantity;
             // swal({
             //     title: response.data.status,
             //     text: response.data.message,
@@ -328,12 +346,30 @@ function editPincode() {
 }
 
 function makePaymentHideButton() {
+    if(Number(document.getElementById('finalPriceOrder').value) < 250)
+    {
+        swal({
+                    title: "Error",
+                    text: "Minimum cart value should be Rs.250.",
+                    icon: "error",
+                });
+    }
+    else
+    {
     document.getElementById('preloadermakePaymentButton').style.display = 'block';
     document.getElementById('makePaymentButton').style.display = 'none';
-    if(Number(document.getElementById('payment_method').value) == 1)
+    var paymentMethod = 2;
+    var ele = document.getElementsByName('payment_method'); 
+              
+              for(i = 0; i < ele.length; i++) { 
+                  if(ele[i].checked) 
+                     paymentMethod = ele[i].value;
+              } 
+    if(Number(paymentMethod) == 1)
         this.launchBOLT();
     else
         document.getElementById('paymentForm').submit();
+    }
 }
 
 function getHash()

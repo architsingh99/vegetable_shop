@@ -168,7 +168,7 @@
 
                                 </h4>
                                 <div class="w3l-pricehkj">
-                                    <h6>₹{{$cat->price_per_kg}} per kg</h6>
+                                    <h6>₹{{$cat->price_per_kg}} {{($cat->quantity_in_grams == 1) ? "per kg" : "" }}</h6>
                                     <!-- <img class="offer-image" src="{{ asset('images/offer.png') }}"> -->
                                     <!-- <h3 class="offer-image offer-p">Save <br>&nbsp ₹{{($cat->price_per_kg * 1.2) - $cat->price_per_kg}}</h3> -->
                                 </div>
@@ -177,7 +177,13 @@
                                                 id="quantity{{$key}}">
                                                 @for($i=1;$i<=100;$i++) <option
                                                     value="{{($cat->minimum_quantity * $i)}}">
-                                                    {{($cat->minimum_quantity * $i) < 1000 ? ($cat->minimum_quantity * $i) . " g" : ($cat->minimum_quantity * $i)/1000 . " kg"}}
+                                                    <?php
+                                                    if($cat->quantity_in_grams == 1)
+                                                        $valueForDisplay = ($cat->minimum_quantity * $i) < 1000 ? ($cat->minimum_quantity * $i) . " g" : ($cat->minimum_quantity * $i)/1000 . " kg";
+                                                    else
+                                                        $valueForDisplay = $cat->minimum_quantity * $i;
+                                                    ?>
+                                                    {{$valueForDisplay}}
                                                     </option>
                                                     @endfor
                                             </select></span>
@@ -222,7 +228,7 @@
         document.getElementById('addToCartButton' + index).style.display = 'none';
         $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:8000/add_to_cart", // You add the id of the post and the update datetime to the url as well
+            url: "http://localhost:8000/add_to_cart", // You add the id of the post and the update datetime to the url as well
             data: {
                 _token: document.getElementById('token').value,
                 product_id: document.getElementById('product_id' + index).value,

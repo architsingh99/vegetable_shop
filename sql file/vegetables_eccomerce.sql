@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2020 at 01:23 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Generation Time: May 12, 2020 at 12:17 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -116,14 +116,14 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (26, 5, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
 (27, 5, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '{}', 4),
 (28, 5, 'description', 'rich_text_box', 'Description', 0, 1, 1, 1, 1, 1, '{}', 5),
-(29, 5, 'price_per_kg', 'number', 'Price Per Kg', 0, 1, 1, 1, 1, 1, '{}', 6),
-(30, 5, 'minimum_quantity', 'number', 'Minimum Quantity In Grams', 0, 1, 1, 1, 1, 1, '{}', 7),
-(31, 5, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 10),
-(32, 5, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 11),
+(29, 5, 'price_per_kg', 'number', 'Price Per Kg/ Per Quantity', 0, 1, 1, 1, 1, 1, '{}', 7),
+(30, 5, 'minimum_quantity', 'number', 'Minimum Quantity In Grams/ Number', 0, 1, 1, 1, 1, 1, '{}', 8),
+(31, 5, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 11),
+(32, 5, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 12),
 (33, 5, 'product_belongsto_category_relationship', 'relationship', 'categories', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Category\",\"table\":\"categories\",\"type\":\"belongsTo\",\"column\":\"category\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"categories\",\"pivot\":\"0\",\"taggable\":\"0\"}', 2),
 (34, 5, 'category', 'text', 'Category', 0, 1, 1, 1, 1, 1, '{}', 3),
-(35, 5, 'main_image', 'image', 'Main Image', 0, 1, 1, 1, 1, 1, '{}', 8),
-(36, 5, 'other_images', 'multiple_images', 'Other Images', 0, 1, 1, 1, 1, 1, '{}', 9),
+(35, 5, 'main_image', 'image', 'Main Image', 0, 1, 1, 1, 1, 1, '{}', 9),
+(36, 5, 'other_images', 'multiple_images', 'Other Images', 0, 1, 1, 1, 1, 1, '{}', 10),
 (37, 6, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
 (38, 6, 'user_id', 'text', 'User Id', 0, 1, 1, 1, 1, 1, '{}', 2),
 (39, 6, 'product_id', 'text', 'Product Id', 0, 1, 1, 1, 1, 1, '{}', 5),
@@ -150,14 +150,13 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (60, 8, 'total_items', 'number', 'Total Items', 0, 1, 1, 1, 1, 1, '{}', 13),
 (61, 8, 'order_id', 'text', 'Order Id', 0, 1, 1, 1, 1, 1, '{}', 2),
 (62, 8, 'total_price', 'number', 'Total Price', 0, 1, 1, 1, 1, 1, '{}', 16),
-(63, 8, 'payment_status', 'text', 'Payment Status', 0, 1, 1, 1, 1, 1, '{}', 17),
-(64, 8, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 18),
-(65, 8, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 19),
-(66, 8, 'order_belongsto_user_relationship', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 3),
-(67, 8, 'order_belongsto_user_relationship_1', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_email\",\"key\":\"email\",\"label\":\"email\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 5),
+(63, 8, 'payment_status', 'text', 'Payment Status', 0, 1, 1, 1, 1, 1, '{}', 18),
+(64, 8, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 20),
+(65, 8, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 22),
+(66, 8, 'order_belongsto_user_relationship', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"email\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 3),
 (68, 8, 'sub_total', 'text', 'Sub Total', 0, 1, 1, 1, 1, 1, '{}', 14),
 (69, 8, 'delivery_charge', 'text', 'Delivery Charge', 0, 1, 1, 1, 1, 1, '{}', 15),
-(70, 8, 'transaction_id', 'text', 'Transaction Id', 0, 1, 1, 1, 1, 1, '{}', 18),
+(70, 8, 'transaction_id', 'text', 'Transaction Id', 0, 1, 1, 1, 1, 1, '{}', 19),
 (71, 9, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 0),
 (72, 9, 'item_name', 'text', 'Item Name', 0, 1, 1, 1, 1, 1, '{}', 2),
 (73, 9, 'quantity', 'text', 'Quantity', 0, 1, 1, 1, 1, 1, '{}', 3),
@@ -174,8 +173,10 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (84, 9, 'suborder_belongsto_user_relationship_1', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_email\",\"key\":\"email\",\"label\":\"email\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 12),
 (85, 9, 'suborder_belongsto_product_relationship', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"item_name\",\"key\":\"name\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 9),
 (86, 9, 'suborder_belongsto_product_relationship_1', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"item_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 14),
-(87, 8, 'delivery_status', 'text', 'Delivery Status', 0, 1, 1, 1, 1, 1, '{}', 19),
-(88, 4, 'image', 'image', 'Image', 0, 1, 1, 1, 1, 1, '{}', 5);
+(87, 8, 'delivery_status', 'text', 'Delivery Status', 0, 1, 1, 1, 1, 1, '{}', 21),
+(88, 4, 'image', 'image', 'Image', 0, 1, 1, 1, 1, 1, '{}', 5),
+(89, 8, 'payment_method', 'text', 'Payment Method', 0, 1, 1, 1, 1, 1, '{}', 17),
+(90, 5, 'quantity_in_grams', 'radio_btn', 'Quantity In Grams', 0, 1, 1, 1, 1, 1, '{\"default\":\"1\",\"options\":{\"0\":\"No\",\"1\":\"Yes\"}}', 6);
 
 -- --------------------------------------------------------
 
@@ -210,10 +211,10 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2020-05-02 13:23:28', '2020-05-02 13:23:28'),
 (3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2020-05-02 13:23:28', '2020-05-02 13:23:28'),
 (4, 'categories', 'categories', 'Category', 'Categories', NULL, 'App\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:32:48', '2020-05-09 15:50:54'),
-(5, 'products', 'products', 'Product', 'Products', 'voyager-logbook', 'App\\Product', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:39:31', '2020-05-04 10:53:12'),
+(5, 'products', 'products', 'Product', 'Products', 'voyager-logbook', 'App\\Product', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:39:31', '2020-05-11 15:34:23'),
 (6, 'carts', 'carts', 'Cart', 'Carts', 'voyager-credit-cards', 'App\\Cart', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 05:48:56', '2020-05-05 05:51:14'),
 (7, 'pincodes', 'pincodes', 'Pincode', 'Pincodes', 'voyager-hammer', 'App\\Pincode', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 12:01:39', '2020-05-05 12:02:19'),
-(8, 'orders', 'orders', 'Order', 'Orders', 'voyager-rum', 'App\\Order', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-07 01:55:25', '2020-05-08 15:31:11'),
+(8, 'orders', 'orders', 'Order', 'Orders', 'voyager-rum', 'App\\Order', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-07 01:55:25', '2020-05-11 12:02:43'),
 (9, 'suborders', 'suborders', 'Suborder', 'Suborders', 'voyager-lab', 'App\\Suborder', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-07 02:23:36', '2020-05-07 02:26:48');
 
 -- --------------------------------------------------------
@@ -363,8 +364,22 @@ CREATE TABLE `orders` (
   `sub_total` int(11) DEFAULT NULL,
   `delivery_charge` int(11) DEFAULT NULL,
   `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `delivery_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'PENDING'
+  `delivery_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'PENDING',
+  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `user_email`, `name`, `mobile`, `landmark`, `town_city`, `pincode`, `address_type`, `total_items`, `order_id`, `total_price`, `payment_status`, `created_at`, `updated_at`, `sub_total`, `delivery_charge`, `transaction_id`, `delivery_status`, `payment_method`) VALUES
+(11, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#Z37S4OMXD', 54, 'Cash On Delivery', '2020-05-10 09:51:17', '2020-05-10 09:51:17', 4, 50, NULL, 'PENDING', 'Cash On Delivery'),
+(12, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#BGQR10257', 80, 'PENDING', '2020-05-10 11:10:22', '2020-05-10 11:10:22', 30, 50, NULL, 'PENDING', 'Online Payment'),
+(13, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 2, '#L31U92RMV', 84, 'Cash On Delivery', '2020-05-10 11:37:27', '2020-05-10 11:37:27', 34, 50, NULL, 'PENDING', 'Cash On Delivery'),
+(14, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#V7LAK80RT', 54, 'PENDING', '2020-05-11 08:25:59', '2020-05-11 08:25:59', 4, 50, NULL, 'PENDING', 'Online Payment'),
+(15, 1, 'admin@admin.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#BOPVLMJ0Z', 54, 'PENDING', '2020-05-11 09:48:09', '2020-05-11 09:48:09', 4, 50, NULL, 'PENDING', 'Online Payment'),
+(16, 1, 'admin@admin.com', 'Archit', '07002088304', 'Assam', 'Tinsukia', 786171, 'Office', 1, '#M90IBD8GF', 54, 'PENDING', '2020-05-11 09:48:32', '2020-05-11 09:48:32', 4, 50, NULL, 'PENDING', 'Online Payment'),
+(17, 1, 'architsingh99@gmail.com', 'Archit Singh', '07002088304', 'Assam', 'Tinsukia', 786171, 'Home', 2, '#U5NBKRC0E', 3062, 'Cash On Delivery', '2020-05-11 16:42:26', '2020-05-11 16:42:26', 3012, 50, NULL, 'PENDING', 'Cash On Delivery');
 
 -- --------------------------------------------------------
 
@@ -450,6 +465,14 @@ CREATE TABLE `payu_payments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payu_payments`
+--
+
+INSERT INTO `payu_payments` (`id`, `account`, `payable_id`, `payable_type`, `txnid`, `mihpayid`, `firstname`, `lastname`, `email`, `phone`, `amount`, `discount`, `net_amount_debit`, `data`, `status`, `unmappedstatus`, `mode`, `bank_ref_num`, `bankcode`, `cardnum`, `name_on_card`, `issuing_bank`, `card_type`, `created_at`, `updated_at`) VALUES
+(1, 'payumoney', NULL, NULL, 'WO4XHVED', '250261782', 'John', NULL, 'john@doe.com', '9876543210', 769, 0, 0, '{\"isConsentPayment\":\"0\",\"mihpayid\":\"250261782\",\"mode\":null,\"status\":\"failure\",\"unmappedstatus\":\"userCancelled\",\"key\":\"TOQkozk8\",\"txnid\":\"WO4XHVED\",\"amount\":\"769.00\",\"addedon\":\"2020-05-10 21:08:21\",\"productinfo\":\"Product Information\",\"firstname\":\"John\",\"lastname\":null,\"address1\":null,\"address2\":null,\"city\":null,\"state\":null,\"country\":null,\"zipcode\":null,\"email\":\"john@doe.com\",\"phone\":\"9876543210\",\"udf1\":null,\"udf2\":null,\"udf3\":null,\"udf4\":null,\"udf5\":null,\"udf6\":null,\"udf7\":null,\"udf8\":null,\"udf9\":null,\"udf10\":null,\"hash\":\"24335a8be7f7f73c094735160eea0ed34cb81350dc37eb2e2178e48cb6e651ec3441a34417373ff7b1c0e4929cc86cb5cb00156ff93cee426dd424fe2ca30e8b\",\"field1\":null,\"field2\":null,\"field3\":null,\"field4\":null,\"field5\":null,\"field6\":null,\"field7\":null,\"field8\":null,\"field9\":\"Cancelled by user\",\"PG_TYPE\":\"PAISA\",\"bank_ref_num\":\"250261782\",\"bankcode\":\"PAYUW\",\"error\":\"E000\",\"error_Message\":\"No Error\",\"payuMoneyId\":\"250261782\",\"_token\":\"xXul6hoztl7OVNISuvWVC625NPd3S62dnVMJj5P4\",\"callback\":\"aHR0cDovL2xvY2FsaG9zdDo4MDAwL3BheW1lbnQvc3RhdHVz\"}', 'Failed', 'userCancelled', NULL, '250261782', 'PAYUW', NULL, NULL, NULL, NULL, '2020-05-10 10:08:23', '2020-05-10 10:08:23'),
+(2, 'payumoney', NULL, NULL, 'M90IBD8GF', '250263221', 'Archit', NULL, 'techservicedock@gmail.com', '9957588417', 54, 0, 0, '{\"isConsentPayment\":\"0\",\"mihpayid\":\"250263221\",\"mode\":null,\"status\":\"failure\",\"unmappedstatus\":\"userCancelled\",\"key\":\"TOQkozk8\",\"txnid\":\"M90IBD8GF\",\"amount\":\"54.00\",\"addedon\":\"2020-05-11 20:53:01\",\"productinfo\":\"ORDER ID: #M90IBD8GF\",\"firstname\":\"Archit\",\"lastname\":null,\"address1\":null,\"address2\":null,\"city\":null,\"state\":null,\"country\":null,\"zipcode\":null,\"email\":\"techservicedock@gmail.com\",\"phone\":\"9957588417\",\"udf1\":null,\"udf2\":null,\"udf3\":null,\"udf4\":null,\"udf5\":null,\"udf6\":null,\"udf7\":null,\"udf8\":null,\"udf9\":null,\"udf10\":null,\"hash\":\"260591c84d1c21d964de0add6d61a18af18adfc82bd1b6ecb498b003a32ba8b907dd76ef7a8267cdd8fb35978129c3657a8216b2a46cc508e481b987d791bcdc\",\"field1\":null,\"field2\":null,\"field3\":null,\"field4\":null,\"field5\":null,\"field6\":null,\"field7\":null,\"field8\":null,\"field9\":\"Cancelled by user\",\"PG_TYPE\":\"PAISA\",\"bank_ref_num\":\"250263221\",\"bankcode\":\"PAYUW\",\"error\":\"E000\",\"error_Message\":\"No Error\",\"payuMoneyId\":\"250263221\",\"_token\":\"hN5nvaQayKuHFhqmitGcIYmhpVOJodXybOP2V6yF\",\"callback\":\"aHR0cDovL2xvY2FsaG9zdDo4MDAwL3BheW1lbnQvc3RhdHVz\"}', 'Failed', 'userCancelled', NULL, '250263221', 'PAYUW', NULL, NULL, NULL, NULL, '2020-05-11 09:53:01', '2020-05-11 09:53:01');
 
 -- --------------------------------------------------------
 
@@ -639,17 +662,19 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `category` int(11) DEFAULT NULL,
   `main_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `other_images` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `other_images` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `quantity_in_grams` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `price_per_kg`, `minimum_quantity`, `created_at`, `updated_at`, `category`, `main_image`, `other_images`) VALUES
-(1, 'Onion', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 40, 100, '2020-05-04 10:45:00', '2020-05-10 04:17:46', 2, 'products\\May2020\\saC4wQzYrAvyaEVTTu5Q.jpg', NULL),
-(2, 'Potato', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 30, 100, '2020-05-04 10:46:00', '2020-05-10 04:17:29', 2, 'products\\May2020\\1Md8CGzEdG26z1Az06h0.jpg', NULL),
-(3, 'mango', NULL, 80, 500, '2020-05-10 04:51:51', '2020-05-10 04:51:51', 1, 'products\\May2020\\mpsOzy79xBaMQXhcYSW2.jpg', NULL);
+INSERT INTO `products` (`id`, `name`, `description`, `price_per_kg`, `minimum_quantity`, `created_at`, `updated_at`, `category`, `main_image`, `other_images`, `quantity_in_grams`) VALUES
+(1, 'Onion', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 40, 100, '2020-05-04 10:45:00', '2020-05-10 04:17:46', 2, 'products\\May2020\\saC4wQzYrAvyaEVTTu5Q.jpg', NULL, 1),
+(2, 'Potato', '<p><span style=\"color: #4d5156; font-family: arial, sans-serif;\">The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion</span></p>', 30, 100, '2020-05-04 10:46:00', '2020-05-10 04:17:29', 2, 'products\\May2020\\1Md8CGzEdG26z1Az06h0.jpg', NULL, 1),
+(3, 'mango', NULL, 80, 500, '2020-05-10 04:51:51', '2020-05-10 04:51:51', 1, 'products\\May2020\\mpsOzy79xBaMQXhcYSW2.jpg', NULL, 1),
+(4, 'cake', NULL, 500, 1, '2020-05-11 15:43:52', '2020-05-11 15:43:52', 3, 'products\\May2020\\uD08z7g0b8jGdMr3z85f.jpg', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -726,6 +751,17 @@ CREATE TABLE `suborders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `suborders`
+--
+
+INSERT INTO `suborders` (`id`, `item_name`, `quantity`, `price`, `total`, `category`, `item_id`, `user_id`, `user_email`, `order_id`, `created_at`, `updated_at`) VALUES
+(4, 'Onion', 100, 40, 4, 2, 1, 1, 'admin@admin.com', '#Z37S4OMXD', '2020-05-10 09:51:17', '2020-05-10 09:51:17'),
+(5, 'Potato', 1000, 30, 30, 2, 2, 1, 'admin@admin.com', '#L31U92RMV', '2020-05-10 11:37:27', '2020-05-10 11:37:27'),
+(6, 'Onion', 100, 40, 4, 2, 1, 1, 'admin@admin.com', '#L31U92RMV', '2020-05-10 11:37:28', '2020-05-10 11:37:28'),
+(7, 'Onion', 300, 40, 12, 2, 1, 1, 'architsingh99@gmail.com', '#U5NBKRC0E', '2020-05-11 16:42:26', '2020-05-11 16:42:26'),
+(8, 'cake', 6, 500, 3, 3, 4, 1, 'architsingh99@gmail.com', '#U5NBKRC0E', '2020-05-11 16:42:27', '2020-05-11 16:42:27');
 
 -- --------------------------------------------------------
 
@@ -941,7 +977,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -953,7 +989,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `data_types`
@@ -989,7 +1025,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `otps`
@@ -1001,7 +1037,7 @@ ALTER TABLE `otps`
 -- AUTO_INCREMENT for table `payu_payments`
 --
 ALTER TABLE `payu_payments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1019,7 +1055,7 @@ ALTER TABLE `pincodes`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1037,7 +1073,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `suborders`
 --
 ALTER TABLE `suborders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `translations`

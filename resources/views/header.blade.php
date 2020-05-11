@@ -116,16 +116,13 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
                                         <div class="dropdown-content">
                                          @if(isset($categories))
                                         @foreach($categories as $key => $cat)
-                                            <!--<a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>-->
-                                            <a href="{{url('coming_soon')}}">{{$cat->name}}</a>
+                                            <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
+                                            <!-- <a href="{{url('coming_soon')}}">{{$cat->name}}</a> -->
                                             @endforeach
 
                                             @else
                                             
-                                            <a href="{{url('coming_soon')}}">Fruits</a>
-                                            <a href="{{url('coming_soon')}}">Vegetable</a>
-                                            <a href="{{url('coming_soon')}}">Backery</a>
-                                            <a href="{{url('coming_soon')}}">Grocery</a>
+                                            <a href="{{url('coming_soon')}}">Coming Soon</a>
                                             @endif
                                         </div>
                                     </div>
