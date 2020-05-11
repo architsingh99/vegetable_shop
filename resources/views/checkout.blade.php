@@ -70,11 +70,14 @@
 												<span>1</span>
 											</div>
                                             <div class="entry value-plus active">&nbsp;</div> -->
-                                        <?php $total = $total + ($value->product->price_per_kg * $value->quantity / 1000); ?>
+                                        <?php 
+                                        $total = $total + ($value->product->price_per_kg * $value->quantity / 1000); ?>
                                         <select class="form-control"
-                                            onchange="changeQuantity({{$value->id}}, this.value, {{$value->product->price_per_kg}}, {{$value->quantity}})"
+                                            onchange="changeQuantity({{$value->id}}, this.value, {{$value->product->price_per_kg}}, 
+                                            {{$value->quantity}})"
                                             name="quantity{{$value->id}}" id="quantity{{$value->id}}">
-                                            @for($i=1;$i<=100;$i++) {{$value->product}} <option
+                                            @for($i=1;$i<=100;$i++) {{$value->product}} 
+                                            <option
                                                 value="{{($value->product->minimum_quantity * $i)}}"
                                                 {{($value->quantity == $value->product->minimum_quantity * $i) ? "selected" : ""}}>
                                                 {{($value->product->minimum_quantity * $i) < 1000 ? ($value->product->minimum_quantity * $i) . " g" : ($value->product->minimum_quantity * $i)/1000 . " kg"}}
@@ -120,9 +123,9 @@
 
         @if(count($checkout) > 0)
         <div class="pincode-div pincode-box ">
-            <h4 style="    margin-bottom: 8px;">Check availability at </h4>
+            <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only</h4>
 
-            <input class="pincode-field" type="number" name="pincode" id="pincode" placeholder="Enter your Pincode" required="">
+            <input class="pincode-field" type="number" name="pincode" id="pincode" placeholder="Enter your Jorhat area pincode" required="">
 
             <button class="pincode-field-button" onclick="checkPincode()" id="verifyPincodeButton">Verify</button>
             <button class="pincode-field-button" onclick="editPincode()" id="editPincodeButton"
@@ -142,30 +145,30 @@
                         <div class="information-wrapper">
                             <div class="first-row">
                                 <div class="controls">
-                                    <input class="billing-address-name" type="text" name="name" placeholder="Full Name"
+                                    <input id="name" class="billing-address-name" type="text" name="name" placeholder="Full Name"
                                         required="">
                                 </div>
                                 <div class="w3_agileits_card_number_grids">
                                     <div class="w3_agileits_card_number_grid_left">
                                         <div class="controls">
-                                            <input type="text" placeholder="Mobile Number" name="mobile" required="">
+                                            <input id="mobile" type="text" placeholder="Mobile Number" name="mobile" required="">
                                         </div>
                                     </div>
                                     <div class="w3_agileits_card_number_grid_right">
                                         <div class="controls">
-                                            <input type="text" placeholder="Landmark" name="landmark" required="">
+                                            <input id="landmark" type="text" placeholder="Landmark" name="landmark" required="">
                                         </div>
                                     </div>
                                     <div class="clear"> </div>
                                 </div>
                                 <div class="controls">
-                                    <input type="text" placeholder="Town/City" name="city" required="">
+                                    <input id="city" type="text" placeholder="Town/City" name="city" required="">
                                 </div>
                                 <div class="controls">
                                     <select class="option-w3ls" name="address_type">
                                         <option default disabled>Select Address type</option>
-                                        <option value="Office">Office</option>
                                         <option value="Home">Home</option>
+                                        <option value="Office">Office</option>
                                         <option value="Commercial">Commercial</option>
 
                                     </select>
@@ -173,8 +176,8 @@
                                 <div class="clear"> </div>
                                 <div class="controls">
                                 <h4>Payment Method</h4>
-                                    <input type="radio" style="width: auto;" name="payment_method" required="" value="1" checked>Pay Now
-                                    <br><input type="radio" style="width: auto;" name="payment_method" required="" value="2">Cash On Delivery
+                                    <!--<input type="radio" style="width: auto;" name="payment_method" required="" value="1" disable>Pay Now-->
+                                    <br><input type="radio" style="width: auto;" name="payment_method" required="" value="2" checked>Cash On Delivery
                                 </div>
                             </div>
                             <input type="hidden" value="" name="deliveryPincode" id="deliveryPincode">
@@ -207,7 +210,7 @@ function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
 
     $.ajax({
         type: "POST",
-        url: "http://127.0.0.1:8000/update_cart",
+        url: "http://localhost:8000/update_cart",
         data: {
             _token: document.getElementById('token').value,
             cart_id: cart_id,
@@ -235,6 +238,9 @@ function changeQuantity(cart_id, quantity, price_per_kg, old_quantity) {
             //     icon: response.data.status,
             // });
             console.log(response);
+            console.log("oldquan=", old_quantity);
+            console.log("oldPrice=", oldprice);
+            console.log("newquan=", quantity);
         }
     });
 }
@@ -307,9 +313,16 @@ function editPincode() {
 }
 
 function makePaymentHideButton() {
-    document.getElementById('preloadermakePaymentButton').style.display = 'block';
-    document.getElementById('makePaymentButton').style.display = 'none';
-    return true;
-}
+    if ($("#name,#number,#landmark,#city").filter(function() { return $(this).val(); }).length > 0 )
+    {
+         document.getElementById('preloadermakePaymentButton').style.display = 'block';
+        document.getElementById('makePaymentButton').style.display = 'none';
+        return true;           
+    }
+    else{
+       // alert("Enter your address details");
+        return false;
+    }
+    }
 </script>
 @include('footer')
