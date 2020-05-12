@@ -30,6 +30,10 @@ Route::get('check_pincode/{pincode}', 'VegetableEccomerce@check_pincode');
 
 Route::post('post_orders', 'VegetableEccomerce@post_orders')->middleware('auth');
 
+Route::post('failed_payment', function () {
+    return view('failed_payment');
+});
+
 Route::get('pay-success/{order_id}', 'VegetableEccomerce@success');
 
 Route::get('send_message/{number}', 'VegetableEccomerce@getUserNumber');
@@ -45,6 +49,9 @@ Route::get('payment/{id}', ['as' => 'payment', 'uses' => 'PaymentController@paym
 Route::get('payment/status', ['as' => 'payment.status', 'uses' => 'PaymentController@status'])->middleware('auth');
 
 Route::get('cash_on_delivery/{id}', ['as' => 'cash_on_delivery', 'uses' => 'VegetableEccomerce@cashOnDelivery'])->middleware('auth');
+
+Route::get('payment_success/{id}', ['as' => 'payment_success', 'uses' => 'VegetableEccomerce@paymentSuccess'])->middleware('auth');
+
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });

@@ -204,9 +204,10 @@ class VegetableEccomerce extends Controller
         //dd($request->input('image'));
         
         try{
-            $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
-            $payment_status = 'PENDING';
+            // $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            // $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
+            $order_id =$request->input('txnid');
+            $payment_status = 'Successfull';
             $payment_method = "Online Payment";
 
             if((int)$request->input('payment_method') == 2)
@@ -239,7 +240,7 @@ class VegetableEccomerce extends Controller
               else
               {
                //$this->paymentPayUMoney($order);
-               return redirect('payment/' . $order->id);
+               return redirect('payment_success/' . $order->id);
                //app('App\Http\Controllers\PaymentController')->payment($order);
               }
     }
@@ -272,6 +273,39 @@ class VegetableEccomerce extends Controller
                 Cart::find($value->id)->delete();
             }
             $message = "Your order has been successfully recieved. Your ORDER ID is " . $order->order_id .". Kindly pay Rs. ". $order->total_price." at the time of delivery.  Thank you for shopping with us.";
+            $this->getUserNumber($order->mobile, $message);
+            //$this->sendWhatsAppSMS($order->mobile, $message);
+            $categories = Category::all();
+            return view('success')->with('categories', $categories)->with('message', $message);
+         }catch (\Exception $e) {
+            dd($e);
+        }
+     }
+
+     public function paymentSuccess(Request $request){
+        try {
+            $order = DB::table('orders')->where('id', $request->id)->first();
+            $cart = DB::table('carts')->where('user_id', $order->user_id)->get();
+            foreach($cart as $key => $value)
+            {
+                $product = DB::table('products')->where('id', $value->product_id)->get();
+                $subOrder = new Suborder();
+                $subOrder->item_name = $product[0]->name;
+                $subOrder->quantity = $value->quantity;
+                $subOrder->price = $product[0]->price_per_kg;
+                $dividedBy = 1; 
+                if($product[0]->quantity_in_grams == 1)
+                    $dividedBy = 1000;
+                $subOrder->total = ($product[0]->price_per_kg * $value->quantity) / $dividedBy;
+                $subOrder->category = $product[0]->category;
+                $subOrder->item_id = $product[0]->id;
+                $subOrder->user_id = $value->user_id;
+                $subOrder->order_id = $order->order_id;
+                $subOrder->user_email = $order->user_email;
+                $subOrder->save();
+                Cart::find($value->id)->delete();
+            }
+            $message = "Your order has been successfully recieved. Your ORDER ID is " . $order->order_id .".  Thank you for shopping with us.";
             $this->getUserNumber($order->mobile, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
             $categories = Category::all();

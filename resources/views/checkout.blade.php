@@ -155,10 +155,11 @@
                 <form action="{{url('post_orders')}}" method="post" id="paymentForm" class="creditly-card-form agileinfo_form">
                 @csrf
                 <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" />
-                <input type="hidden" id="key" name="key" value="gtKFFx" />
-                <input type="hidden" id="salt" name="salt" value="eCwWELxi" />
+                <input type="hidden" id="key" name="key" value="TOQkozk8" />
+                <input type="hidden" id="salt" name="salt" value="azZk130FkV" />
                 <input type="hidden" id="txnid" name="txnid" value="{{$order_id}}" />
-                <input type="hidden" id="hash" name="hash" />
+                <input type="hidden" id="hash" name="hash" value=""/>
+                <input type="hidden" id="userId" name="userId" value="{{auth()->user()->id}}"/>
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
                         <div class="information-wrapper">
                             <div class="first-row">
@@ -260,7 +261,7 @@ function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
                 document.getElementById('finalPrice').value = (Number(document.getElementById('subtotal')
                     .value)) + (Number(document.getElementById('deliveryCharge').value));
                 document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
-                getHash();
+                
             }
             document.getElementById(z).innerText = '₹' + newprice;
             document.getElementById(y).value = quantity;
@@ -315,7 +316,7 @@ function checkPincode() {
                     document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
                     document.getElementById('subtotalOrder').value =  document.getElementById('subtotal').value;
                     document.getElementById('deliveryChargeOrder').value =  response.data.delivery_charge;
-                    getHash();
+                    
                 } else {
                     document.getElementById('deliveryChargeText').innerText = 'Enter Pincode First';
                     document.getElementById('deliveryCharge').value = 0;
@@ -345,7 +346,7 @@ function editPincode() {
     document.getElementById('addressPayment').style.display = 'none';
 }
 
-function makePaymentHideButton() {
+async function makePaymentHideButton() {
     if(Number(document.getElementById('finalPriceOrder').value) < 250)
     {
         swal({
@@ -366,7 +367,10 @@ function makePaymentHideButton() {
                      paymentMethod = ele[i].value;
               } 
     if(Number(paymentMethod) == 1)
-        this.launchBOLT();
+    {
+        let hashValue = await getHash();
+        //this.launchBOLT(hashValue);
+    }
     else
         document.getElementById('paymentForm').submit();
     }
@@ -375,6 +379,7 @@ function makePaymentHideButton() {
 function getHash()
 {
     console.log("332")
+    var s2 = ($('#txnid').val()).substr(1)
     $.ajax({
           url: 'http://localhost:8000/getHash',
           type: 'post',
@@ -393,24 +398,18 @@ function getHash()
           success: function(json) {
             console.log(json)
             document.getElementById('hash').value = json.data.message;
-          }
-        }); 
-}
-
-function launchBOLT()
-{
-	bolt.launch({
+            bolt.launch({
 	key: $('#key').val(),
 	txnid: $('#txnid').val(), 
-	hash: $('#hash').val(),
+	hash: json.data.message,
 	amount: $('#finalPriceOrder').val(),
 	firstname: $('#name').val(),
 	email: $('#email').val(),
 	phone: $('#mobile').val(),
 	productinfo: $('#txnid').val(),
 	udf5: $('#udf5').val(),
-	surl : 'http://localhost:8000/success/1',
-	furl: 'http://localhost:8000/getHash/1',
+	surl : 'http://localhost:8000/post_orders',
+	furl: 'http://localhost:8000/failed_payment',
 	mode: 'dropout'	
 },{ responseHandler: function(BOLT){
 	console.log( BOLT.response.txnStatus );		
@@ -428,7 +427,43 @@ function launchBOLT()
  		alert( BOLT.message );
 	}
 });
+          }
+        }); 
 }
+
+// function launchBOLT(hasValue)
+// {
+//     console.log("405 ", hasValue);
+// 	bolt.launch({
+// 	key: $('#key').val(),
+// 	txnid: $('#txnid').val(), 
+// 	hash: hasValue,
+// 	amount: $('#finalPriceOrder').val(),
+// 	firstname: $('#name').val(),
+// 	email: $('#email').val(),
+// 	phone: $('#mobile').val(),
+// 	productinfo: $('#txnid').val(),
+// 	udf5: $('#udf5').val(),
+// 	surl : 'http://localhost:8000/success/1',
+// 	furl: 'http://localhost:8000/getHash/1',
+// 	mode: 'dropout'	
+// },{ responseHandler: function(BOLT){
+// 	console.log( BOLT.response.txnStatus );		
+// 	if(BOLT.response.txnStatus != 'CANCEL')
+// 	{
+// 		//Salt is passd here for demo purpose only. For practical use keep salt at server side only.
+// 		console.log(BOLT.response);
+// 		var form = jQuery(fr);
+// 		// jQuery('body').append(form);								
+// 		// form.submit();
+// 	}
+// },
+// 	catchException: function(BOLT){
+//         console.log("error ", BOLT);
+//  		alert( BOLT.message );
+// 	}
+// });
+// }
 
 // $('#payment_form').bind('keyup blur', function(){
 // 	$.ajax({
