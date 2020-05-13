@@ -64,15 +64,19 @@
 									</div> -->
                                     <!-- <span class="product-new-top">New</span> -->
                                 </div>
+                                <img class="offer-image" src="{{ asset('images/offer.png') }}"> 
+                                     <h3 class="offer-p">Our Price <br>{{$cat->price_per_kg}} {{($cat->quantity_in_grams == 1) ? "/kg" : ""}}</h3> 
                                 <div class="item-info-product ">
                                 <h4 class="h4-design">
                                         <!-- <a href="single.html">Almonds, 100g</a> -->
                                         {{$cat->name}}
                                     </h4>
+                                     @if ($cat->mrp_per_kg)
                                     <div class="info-product-price">
-                                        <span class="item_price">₹{{$cat->price_per_kg}} {{($cat->quantity_in_grams == 1) ? "per kg" : "" }}</span>
+                                        <span class="item_price">MRP ₹ <s>{{$cat->mrp_per_kg}} {{($cat->quantity_in_grams == 1) ? "per kg" : "" }}</s></span>
                                         <!-- <del>₹{{($cat->price_per_kg * 1.2)}} per kg</del> -->
                                     </div>
+                                    @endif
                                     <div class="info-product-price">
                                         <span class="item_price">Quantity <select name="quantity{{$key}}"
                                                 id="quantity{{$key}}">
@@ -128,7 +132,7 @@
                         </div>
                         <h3 class="w3l-nut-middle">Same day Delivery</h3>
                         <div class="col-xs-5 bg-right-nut">
-                            <img class="welcome-img-banner" src="{{asset('images/fruit_veg.png')}}" alt="" >
+                            <img class="welcome-img-banner" src="{{ asset('images/fruit_veg.png')}}" alt="" >
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -155,7 +159,7 @@
             
             <div class="content-bottom-in">
                 <ul id="flexiselDemo1">
-                @foreach($productsSlider as $key => $cat)
+                    @foreach($productsSlider as $key => $cat)
                     <li>
                         <div class="w3l-specilamk">
                             <div class="speioffer-agile">
@@ -166,10 +170,10 @@
                                 <!-- </a> -->
                             </div>
                             <div class="product-name-w3l">
-                                <h4>
-                                    <!-- <a href="single.html">Aashirvaad, 5g</a> -->
-
-                                </h4>
+                                <h4 class="h4-design">
+                                        <!-- <a href="single.html">Almonds, 100g</a> -->
+                                        {{$cat->name}}
+                                    </h4>
                                 <div class="w3l-pricehkj">
                                     <h6>₹{{$cat->price_per_kg}} {{($cat->quantity_in_grams == 1) ? "per kg" : "" }}</h6>
                                     <!-- <img class="offer-image" src="{{ asset('images/offer.png') }}"> -->

@@ -37,7 +37,7 @@ class VegetableEccomerce extends Controller
     {
           $this->validate($request, [
               'password'     => 'min:6',
-          ],
+          ]
         );
 
               $user_id=Auth::user()->id;
@@ -80,7 +80,7 @@ class VegetableEccomerce extends Controller
         ->groupBy('category', 'categories.name')
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
-        $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(15);
+        $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(10);
         $msg = "Welcome To Bazaar24x7";
         //dd($products[0]->categories);
        return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
@@ -97,10 +97,9 @@ class VegetableEccomerce extends Controller
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
         $products = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->get();
-        
         $productsSlider = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->paginate(10);
         //dd($products);
-       return view('category')->with('categories', $categories)->with('productsSlider', $productsSlider)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('categoryData', $categoryData);
+       return view('category')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('productsSlider', $productsSlider)->with('products', $products)->with('categoryData', $categoryData);
     }
 
     public function addToCart(Request $request)
@@ -613,7 +612,8 @@ class VegetableEccomerce extends Controller
               $order->payment_status = $payment_status; 
               $order->payment_method = $payment_method; 
               $order->save();
-
+              
+              
         $hash=hash('sha512', $request->input('key').'|'.$request->input('txnid').'|'.$request->input('amount').'|'.$request->input('pinfo').'|'.$request->input('fname').'|'.$request->input('email').'|||||'.$request->input('udf5').'||||||'.$request->input('salt'));
 		$data = [
             'status'                     => 200,
@@ -623,11 +623,11 @@ class VegetableEccomerce extends Controller
     return $this->sendResponse($data, "hash value");
           
     }
-
+    
     public function paymentPayU(Request $request)
     {
         
-            $temporder = DB::table('temp_orders')->where('order_id', $request->input('txnid'))->orderBy('created_at', 'desc')->first();
+             $temporder = DB::table('temp_orders')->where('order_id', $request->input('txnid'))->orderBy('created_at', 'desc')->first();
             $payment_status = 'SUCCESSFULL';
             $payment_method = "Online Payment";
             $order = new Order();

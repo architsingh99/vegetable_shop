@@ -28,7 +28,7 @@ class HomeController extends Controller
     
     public function account()
     {
-        return view('Auth.account');
+        return view('auth.account');
     }
     
 }

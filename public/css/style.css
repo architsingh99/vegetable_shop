@@ -950,10 +950,10 @@ h3.heading-tittle {
     letter-spacing: 1px;
 }
 .info-product-price {
-    margin: 12px 0;
+    margin: 9px 0;
 }
 span.item_price {
-    font-size: 18px;
+    font-size: 16px;
     color: #d60404;
 }
 .info-product-price del {
@@ -1699,14 +1699,20 @@ h3.agileits-icons-title {
 		margin: 0;
 	}
 }
-@media (max-width: 640px){
-    .offer-p{
-        margin: -95px -80px 0 0!important;
-    }
+
+@media all and (min-width: 385px) and (max-width: 640px){
+.offer-p {
+    margin: -17px 0px 0 0!important;
+    font-size: 11px!important;
+}
     .offer-image
 {
-    width:146px!important; 
+    margin: -42px 0 0 74px!important;
+    width:88px!important; 
 }
+}
+
+@media (max-width: 640px){
 	.icon-box {
 		float: left;
 		width: 50%;
@@ -1734,11 +1740,13 @@ h3.agileits-icons-title {
 }
 @media (max-width: 384px){
     .offer-p{
-        margin: -95px -90px 0 0!important;
+        margin: -13px -4px 0 0!important;
+        font-size: 11px!important;
     }
     .offer-image
     {
-        width:138px!important; 
+        width: 82px!important;
+        margin: -32px 0 0 60px!important;
     }
 	.icon-box {
 		float: none;
@@ -2435,7 +2443,7 @@ td.invert-image a img {
     margin-top: 50px;
 }
 .address_form_agile h4 {
-    color: #1accfd;
+  color: #1accfd;
     font-size: 28px;
     margin-bottom: 22px;
     letter-spacing: 1px;
@@ -2773,10 +2781,17 @@ input[type="radio"], input[type="checkbox"] {
         min-width: 509px;
     }
 }
-@media(max-width: 1080px){
-    .offer-p{
-        margin: -95px -70px 0 0!important;
+@media all and (min-width: 641px) and (max-width: 1080px){
+.offer-p{
+           margin: -12px 9px 0 0!important;
+    font-size: 13px!important;
     }
+    .offer-image{
+        margin: -44px 0 0 84px!important;
+    }
+}
+@media(max-width: 1080px){
+
     .header-bot_inner_wthreeinfo_header_mid {
         width: 100%;
     }
@@ -4976,19 +4991,20 @@ input[type="radio"], input[type="checkbox"] {
 }
 .offer-image
 {
-    width:150px; 
-    position:absolute; 
-    float:right; 
-    z-index:2;
-    margin: -132px 0 0 140px;
+          width: 115px;
+    position: absolute;
+    float: right;
+    z-index: 2;
+    margin: -44px 0 0 123px;
 }
 .offer-p{
     /* width:150px;  */
-    position: relative;
-    float:right; 
-    margin: -95px -56px 0 0;
+position: relative;
+    float: right;
+    text-align: center;
+    margin: -15px 11px 0 0;
     z-index: 3;
-    font-size: 24px;
+    font-size: 14px;
     color: rgb(255, 255, 255)!important;
     font-weight: 600;
 }
@@ -5095,9 +5111,17 @@ color: #000;
 }
 @media (max-width: 495px){
     .h4-design{
+            font-size: 14px;
         min-height: 3em;
     }
 }
-.h4-design{
-    font-size: 16px;;
+ .h4-design{
+         font-weight: 600;
+           font-size: 16px;;
+    }
+#sendmessage
+{
+    font-size: 16px;
+    font-weight: 600;
+    color: #ce4200;
 }
