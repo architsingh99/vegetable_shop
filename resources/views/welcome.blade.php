@@ -127,8 +127,7 @@
                         </div>
                         <h3 class="w3l-nut-middle">Same day Delivery</h3>
                         <div class="col-xs-5 bg-right-nut">
-                            <img class="welcome-img-banner" src="images/fruit_veg.png" alt="" >
-                        </div>
+                        <img class="welcome-img-banner" src="{{ asset('images/fruit_veg.png')}}" alt="" >                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <!-- //fourth section (noodles) -->
