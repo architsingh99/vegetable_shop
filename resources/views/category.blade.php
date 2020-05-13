@@ -128,7 +128,7 @@
                         </div>
                         <h3 class="w3l-nut-middle">Same day Delivery</h3>
                         <div class="col-xs-5 bg-right-nut">
-                            <img class="welcome-img-banner" src="images/fruit_veg.png" alt="" >
+                            <img class="welcome-img-banner" src="{{asset('images/fruit_veg.png')}}" alt="" >
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -155,7 +155,7 @@
             
             <div class="content-bottom-in">
                 <ul id="flexiselDemo1">
-                    @foreach($products as $key => $cat)
+                @foreach($productsSlider as $key => $cat)
                     <li>
                         <div class="w3l-specilamk">
                             <div class="speioffer-agile">

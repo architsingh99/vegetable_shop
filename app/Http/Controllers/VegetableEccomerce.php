@@ -97,8 +97,10 @@ class VegetableEccomerce extends Controller
         ->pluck('categories.name', 'total','category')->all();
         //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
         $products = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->get();
+        
+        $productsSlider = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->paginate(10);
         //dd($products);
-       return view('category')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('categoryData', $categoryData);
+       return view('category')->with('categories', $categories)->with('productsSlider', $productsSlider)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('categoryData', $categoryData);
     }
 
     public function addToCart(Request $request)
@@ -505,7 +507,7 @@ class VegetableEccomerce extends Controller
         DB::table('orders')
             ->where('id', $request->id)
             ->update(['delivery_status' =>'Delivered']);
-        \Mail::to($orders[0]->user_email)->send(new SendMailable($orders[0]->name, $request->order_id));
+        //\Mail::to($orders[0]->user_email)->send(new SendMailable($orders[0]->name, $request->order_id));
         $message = "Your order with id " . $request->order_id ." has been successfully delivered. Than you for shopping with us.";
         $this->getUserNumber($orders[0]->mobile, $message);
         //$this->sendWhatsAppSMS($orders[0]->mobile, $message);

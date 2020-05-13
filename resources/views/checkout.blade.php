@@ -200,6 +200,8 @@
                                 <div class="clear"> </div>
                                 <div class="controls">
                                 <h4>Payment Method</h4>
+                                <h5 style="    color: #ff7600;
+    margin-bottom: 10px;">*Pay online to get faster processing of your order</h5>
                                     <input type="radio" style="width: auto;" name="payment_method" id="payment_method" required="" value="1" checked>Pay Now
                                     <br><input type="radio" style="width: auto;" name="payment_method" id="payment_method" required="" value="2">Cash On Delivery
                                 </div>
@@ -208,7 +210,7 @@
                             <input type="hidden" id="subtotalOrder" name="subtotalOrder" value="{{$total}}">
                             <input type="hidden" id="deliveryChargeOrder" name="deliveryChargeOrder" value="0">
                             <input type="hidden" id="finalPriceOrder" name="finalPriceOrder" value="0">
-                            <button type="button"class="submit check_out" id="makePaymentButton" onclick="makePaymentHideButton()">Make a Payment <span class="fa fa-hand-o-right" aria-hidden="true"></span></button>
+                            <button type="button"class="submit check_out" id="makePaymentButton" onclick="makePaymentHideButton()">Place Order <span class="fa fa-hand-o-right" aria-hidden="true"></span></button>
                             <img src="{{asset('images/25.gif')}}" id="preloadermakePaymentButton" style="display: none; height: 30px;">
                         </div>
                     </div>

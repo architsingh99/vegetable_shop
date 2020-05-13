@@ -2436,9 +2436,10 @@ td.invert-image a img {
 }
 .address_form_agile h4 {
     color: #1accfd;
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 28px;
+    margin-bottom: 22px;
     letter-spacing: 1px;
+    font-weight: 600;
 }
 .information-wrapper input, .information-wrapper select {
     width: 100%;
@@ -5096,4 +5097,7 @@ color: #000;
     .h4-design{
         min-height: 3em;
     }
+}
+.h4-design{
+    font-size: 16px;;
 }
