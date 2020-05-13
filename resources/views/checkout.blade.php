@@ -189,7 +189,7 @@
                                     <input id="city" type="text" placeholder="Town/City" name="city" required="">
                                 </div>
                                 <div class="controls">
-                                    <select class="option-w3ls" name="address_type">
+                                    <select class="option-w3ls" name="address_type" id="address_type">
                                         <option default disabled>Select Address type</option>
                                         <option value="Home">Home</option>
                                         <option value="Office">Office</option>
@@ -393,7 +393,13 @@ function getHash()
             fname: $('#name').val(),
 			email: $('#email').val(),
 			mobile: $('#mobile').val(),
-			udf5: $('#udf5').val()
+            udf5: $('#udf5').val(),
+			landmark: $('#landmark').val(),
+            city: $('#city').val(),
+            deliveryPincode: $('#deliveryPincode').val(),
+            address_type: $('#address_type').val(),
+            subtotalOrder: $('#subtotalOrder').val(),
+            deliveryChargeOrder: $('#deliveryChargeOrder').val()
           },
           success: function(json) {
             console.log(json)

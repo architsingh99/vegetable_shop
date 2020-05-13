@@ -30,6 +30,8 @@ Route::get('check_pincode/{pincode}', 'VegetableEccomerce@check_pincode');
 
 Route::post('post_orders', 'VegetableEccomerce@post_orders')->middleware('auth');
 
+Route::post('paymentPayU', 'VegetableEccomerce@paymentPayU')->middleware('auth');
+
 Route::post('failed_payment', function () {
     return view('failed_payment');
 });

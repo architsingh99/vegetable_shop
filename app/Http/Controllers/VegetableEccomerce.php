@@ -14,6 +14,7 @@ use App\Order;
 use App\Suborder;
 use App\Otp;
 use App\User;
+use App\TempOrder;
 
 use GuzzleHttp\Exception\GuzzleException;
 //use GuzzleHttp\Client;
@@ -590,6 +591,27 @@ class VegetableEccomerce extends Controller
 
     public function getHash(Request $request)
     {
+        $order_id =$request->input('txnid');
+            $payment_status = 'PENDING';
+            $payment_method = "Online Payment";
+            $order = new TempOrder();
+              $order->user_id = auth()->user()->id;
+              $order->user_email = $request->input('email'); 
+              $order->name = $request->input('fname'); 
+              $order->mobile = $request->input('mobile');  
+              $order->landmark = $request->input('landmark'); 
+              $order->town_city = $request->input('city'); 
+              $order->pincode = $request->input('deliveryPincode');  
+              $order->address_type = $request->input('address_type'); 
+              $order->total_items = DB::table('carts')->where('user_id', auth()->user()->id)->count();  
+              $order->order_id = $order_id; 
+              $order->sub_total = $request->input('subtotalOrder'); 
+              $order->delivery_charge = $request->input('deliveryChargeOrder'); 
+              $order->total_price = $request->input('amount'); 
+              $order->payment_status = $payment_status; 
+              $order->payment_method = $payment_method; 
+              $order->save();
+
         $hash=hash('sha512', $request->input('key').'|'.$request->input('txnid').'|'.$request->input('amount').'|'.$request->input('pinfo').'|'.$request->input('fname').'|'.$request->input('email').'|||||'.$request->input('udf5').'||||||'.$request->input('salt'));
 		$data = [
             'status'                     => 200,
@@ -598,6 +620,33 @@ class VegetableEccomerce extends Controller
         //dd($data);
     return $this->sendResponse($data, "hash value");
           
+    }
+
+    public function paymentPayU(Request $request)
+    {
+        
+            $temporder = DB::table('temp_orders')->where('order_id', $request->input('txnid'))->orderBy('created_at', 'desc')->first();
+            $payment_status = 'SUCCESSFULL';
+            $payment_method = "Online Payment";
+            $order = new Order();
+            $order->user_id = $temporder->user_id;
+            $order->user_email = $temporder->user_email; 
+            $order->name = $temporder->name; 
+            $order->mobile = $temporder->mobile;  
+            $order->landmark = $temporder->landmark; 
+            $order->town_city = $temporder->town_city; 
+            $order->pincode = $temporder->pincode;  
+            $order->address_type = $temporder->address_type; 
+            $order->total_items = $temporder->total_items;  
+            $order->order_id = $temporder->order_id; 
+            $order->sub_total = $temporder->sub_total; 
+            $order->delivery_charge = $temporder->delivery_charge; 
+            $order->total_price = $temporder->total_price; 
+            $order->payment_status = $payment_status; 
+            $order->payment_method = $payment_method; 
+            $order->save();
+            TempOrder::find($temporder->id)->delete();
+            return redirect('payment_success/' . $order->id);
     }
 
 }
