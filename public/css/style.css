@@ -5125,3 +5125,46 @@ color: #000;
     font-weight: 600;
     color: #ce4200;
 }
+
+
+
+.mySlides {
+    display: none;
+  }
+  .cursor {
+    cursor: pointer;
+  }
+  .caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+  }
+  .column {
+    float: left;
+    width: 16.66%;
+  }
+  
+  /* Add a transparency effect for thumnbail images */
+  .demo {
+    opacity: 0.6;
+  }
+  
+  .active,
+  .demo:hover {
+    opacity: 1;
+  }
+  .boot{
+   padding: 0;
+  }
+  .product-title{
+    font-size: 23px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    color: #e96c1d;
+  }
+  .pupup-close{
+    background-color: #15bdff;
+    color: #000;
+  }
