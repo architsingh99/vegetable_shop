@@ -139,14 +139,18 @@
 
                                                     <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}" style="width:100%">
                                                 </div>
+                                                @if($cat->other_images)
+                                                @foreach (json_decode($cat->other_images) as $image)
                                                 <div class="mySlides">
 
-                                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}" style="width:100%">
+                                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($image) }}" style="width:100%">
                                                 </div>
-                                                <div class="mySlides">
+                                                @endforeach
+                                                @endif
+                                                <!-- <div class="mySlides">
 
                                                     <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}" style="width:100%">
-                                                </div>
+                                                </div> -->
                                                 
                                                 
 
@@ -155,13 +159,13 @@
                                                         <img class="demo cursor" src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}"
                                                             style="width:100%" onclick="currentSlide(1)">
                                                     </div>
+                                                    @if($cat->other_images)
+                                                @foreach (json_decode($cat->other_images) as $key => $image)
                                                     <div class="column">
-                                                        <img class="demo cursor" src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}"
-                                                            style="width:100%" onclick="currentSlide(2)">
-                                                    </div><div class="column">
-                                                        <img class="demo cursor" src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}"
-                                                            style="width:100%" onclick="currentSlide(3)">
-                                                    </div>
+                                                        <img class="demo cursor" src="{{ Storage::disk(config('voyager.storage.disk'))->url($image) }}"
+                                                            style="width:100%" onclick="currentSlide({{($key + 2)}})">
+                                                    </div>@endforeach
+                                                @endif
                                                 </div>
                                             </td>
                                         </div>

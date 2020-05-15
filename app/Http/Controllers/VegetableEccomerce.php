@@ -7,6 +7,7 @@ use Exception;
 
 //use Request;
 use App\Category;
+use App\SubCategory;
 use App\Product;
 use App\Cart;
 use App\Pincode;
@@ -73,7 +74,7 @@ class VegetableEccomerce extends Controller
 
     public function get(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::with('subcategories')->get();
         $categoriesCount = DB::table('products')
         ->join('categories', 'categories.id', '=', 'products.category')
         ->select('categories.name', 'category', DB::raw('count(*) as total'))
@@ -267,6 +268,7 @@ class VegetableEccomerce extends Controller
                     $dividedBy = 1000;
                 $subOrder->total = ($product[0]->price_per_kg * $value->quantity) / $dividedBy;
                 $subOrder->category = $product[0]->category;
+                $subOrder->sub_category = $product[0]->sub_category;
                 $subOrder->item_id = $product[0]->id;
                 $subOrder->user_id = $value->user_id;
                 $subOrder->order_id = $order->order_id;
