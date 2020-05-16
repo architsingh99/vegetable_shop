@@ -110,6 +110,9 @@
                                     style="display: none; height: 30px;">
                                 <input type="button" id="addToCartButton{{$key}}" onclick="addToCart({{$key}})"
                                     value="Add to cart" class="button" />
+                                    @if($cat->subscription_available)
+                                    <a href="{{url('subscribe', $cat->id)}}"><input type="button" value="Subscripe" class="button" /></a>
+                                    @endif
                                 @endif
 
                                 <!-- </fieldset>
@@ -285,6 +288,9 @@
                                     style="display: none; height: 30px;">
                                 <input type="button" id="addToCartButton{{$key}}" onclick="addToCart({{$key}})"
                                     value="Add to cart" class="button" />
+                                    @if($cat->subscription_available)
+                                <a href="{{url('subscribe', $cat->id)}}"><input type="button" value="Subscripe" class="button" /></a>
+                                @endif
                                 @endif
 
                                 <input type="hidden" name="cmd" value="_cart" />
@@ -310,67 +316,4 @@
 @endif
 
 <!-- //special offers -->
-<script>
-function detailsModel(id) {
-    $('#productdetil' + id).modal('show');
-}
-async function addToCart(index) {
-    document.getElementById('preloader' + index).style.display = 'block';
-    document.getElementById('addToCartButton' + index).style.display = 'none';
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:8000/add_to_cart", // You add the id of the post and the update datetime to the url as well
-        data: {
-            _token: document.getElementById('token').value,
-            product_id: document.getElementById('product_id' + index).value,
-            quantity: document.getElementById('quantity' + index).value
-        },
-        success: function(response) {
-            // If not false, update the post
-            console.log(response);
-            swal({
-                title: response.data.status,
-                text: response.data.message,
-                icon: response.data.status,
-            });
-            document.getElementById('addToCartButton' + index).style.display = 'block';
-            document.getElementById('preloader' + index).style.display = 'none';
-        }
-    });
-}
-
-var slideIndex = 1;
-showSlides(slideIndex, 1);
-
-function plusSlides(n) {
-    showSlides(slideIndex += n, 1);
-}
-
-function currentSlide(n, id) {
-    showSlides(slideIndex = n, 1);
-}
-
-function showSlides(n, id) {
-    var i;
-    var slideName = "mySlides" + id;
-    var slides = document.getElementsByClassName(slideName);
-    var dots = document.getElementsByClassName("demo");
-    var captionText = document.getElementById("caption");
-    if (n > slides.length) {
-        slideIndex = 1
-    }
-    if (n < 1) {
-        slideIndex = slides.length
-    }
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex - 1].style.display = "block";
-    dots[slideIndex - 1].className += " active";
-    captionText.innerHTML = dots[slideIndex - 1].alt;
-}
-</script>
 @include('footer')

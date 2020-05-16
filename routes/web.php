@@ -71,6 +71,8 @@ Route::get('categories/{id}', 'VegetableEccomerce@categoriesGet');
 Route::get('send_otp/{mobile}/{key}', 'VegetableEccomerce@sendOtp');
 Route::get('loginViaOtp/{mobile}/{otp}', 'VegetableEccomerce@loginViaOtp');
 
+Route::get('subscribe/{id}', 'VegetableEccomerce@subscribe');
+
 Route::get('coming_soon', function () {
     return view('coming_soon');
 });

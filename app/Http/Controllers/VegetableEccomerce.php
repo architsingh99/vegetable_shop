@@ -653,4 +653,11 @@ class VegetableEccomerce extends Controller
             return redirect('payment_success/' . $order->id);
     }
 
+    public function subscribe(Request $request)
+    {
+        $product = DB::table('products')->where('id', $request->id)->first();
+        $categories = Category::all();
+        return view('details')->with('categories', $categories)->with('product', $product);   
+    }
+
 }
