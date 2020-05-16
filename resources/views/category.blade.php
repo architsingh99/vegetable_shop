@@ -126,47 +126,32 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title product-title">{{$cat->name}} </h4>
+                                <h4 class="modal-title product-title">{{$categoryData[0]->name}} </h4>
                             </div>
                             <div class="banner-bootom-w3-agileits boot">
                                 <table>
                                     <tr class="detilpupup">
 
                                         <div class="container">
-                                            <td>
+                                            <td style="width: 40%">
+                                                <section id="slider">
+                                                    <div class="container-fluid">
+                                                        <div style="width: 16em;" class="slider-inner">
+                                                            <div id="owl-demo" class="owl-carousel owl-theme"
+                                                                style="margin-top: 20px;">
+                                                                <div class="item">
+                                                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}" alt="sliderimg1">
+                                                                </div>
+                                                                @if($cat->other_images)
+                                                                @foreach (json_decode($cat->other_images) as $image)
+                                               
+                                                                <div class="item">
+                                                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($image) }}" alt="sliderimg1">
+                                                                </div>
+                                                                @endforeach                                                              
+                                                                @endif
+                                                            </div>
 
-                                                <div class="mySlides{{($key + 1)}}">
-
-                                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}" style="width:100%">
-                                                </div>
-                                                @if($cat->other_images)
-                                                @foreach (json_decode($cat->other_images) as $image)
-                                                <div class="mySlides{{($key + 1)}}">
-
-                                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($image) }}" style="width:100%">
-                                                </div>
-                                                @endforeach
-                                                @endif
-                                                <!-- <div class="mySlides">
-
-                                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}" style="width:100%">
-                                                </div> -->
-                                                
-                                                
-
-                                                <div class="row" style="margin: 0px;">
-                                                    <div class="column">
-                                                        <img class="demo cursor" src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->main_image) }}"
-                                                            style="width:100%" onclick="currentSlide(1, {{($key + 1)}})">
-                                                    </div>
-                                                    @if($cat->other_images)
-                                                @foreach (json_decode($cat->other_images) as $key1 => $image)
-                                                    <div class="column">
-                                                        <img class="demo cursor" src="{{ Storage::disk(config('voyager.storage.disk'))->url($image) }}"
-                                                            style="width:100%" onclick="currentSlide({{($key1 + 2)}}, {{($key + 1)}})">
-                                                    </div>@endforeach
-                                                @endif
-                                                </div>
                                             </td>
                                         </div>
 
@@ -177,7 +162,7 @@
                                                 <div class="single-right-left simpleCart_shelfItem">
                                                     <h3>{{$cat->name}} </h3>
                                                     <p>
-                                                    {!!$cat->description!!}
+                                                        {!!$cat->description!!}
                                                     </p>
                                                 </div>
                                             </td>
@@ -309,8 +294,48 @@
 </div>
 @endif
 
+<style>
+#slider .container-fluid {
+    padding: 0 15px;
+}
+
+#slider .slider-inner {
+    padding: 0;
+}
+
+.slider-inner .item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.slider-inner h1 {
+    color: purple;
+}
+</style>
 <!-- //special offers -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" type="text/javascript">
+</script>
+
+
 <script>
+$(function() {
+    var count = 0;
+    $('.owl-carousel').each(function() {
+        $(this).attr('id', 'owl-demo' + count);
+        $('#owl-demo' + count).owlCarousel({
+            navigation: true,
+            slideSpeed: 300,
+            pagination: true,
+            singleItem: true,
+            autoPlay: 2000,
+            autoHeight: true
+        });
+        count++;
+    });
+});
+
 function detailsModel(id) {
     $('#productdetil' + id).modal('show');
 }
