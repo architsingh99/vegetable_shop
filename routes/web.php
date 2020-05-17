@@ -22,6 +22,8 @@ Route::post('update_cart', 'VegetableEccomerce@update_cart')->middleware('auth')
 
 Route::post('getHash', 'VegetableEccomerce@getHash')->middleware('auth');
 
+Route::post('getHash2', 'VegetableEccomerce@getHash2')->middleware('auth');
+
 Route::get('remove_from_cart/{cart_id}', 'VegetableEccomerce@remove_from_cart')->middleware('auth');
 
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
@@ -29,6 +31,8 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('check_pincode/{pincode}', 'VegetableEccomerce@check_pincode');
 
 Route::post('post_orders', 'VegetableEccomerce@post_orders')->middleware('auth');
+
+Route::post('post_orders_subscription', 'VegetableEccomerce@post_orders_subscription')->middleware('auth');
 
 Route::post('paymentPayU', 'VegetableEccomerce@paymentPayU')->middleware('auth');
 
@@ -52,7 +56,11 @@ Route::get('payment/status', ['as' => 'payment.status', 'uses' => 'PaymentContro
 
 Route::get('cash_on_delivery/{id}', ['as' => 'cash_on_delivery', 'uses' => 'VegetableEccomerce@cashOnDelivery'])->middleware('auth');
 
+Route::get('cash_on_delivery_subscription/{id}', ['as' => 'cash_on_delivery_subscription', 'uses' => 'VegetableEccomerce@cashOnDeliverySubscription'])->middleware('auth');
+
 Route::get('payment_success/{id}', ['as' => 'payment_success', 'uses' => 'VegetableEccomerce@paymentSuccess'])->middleware('auth');
+
+Route::get('payment_success_subscription/{id}', ['as' => 'payment_success', 'uses' => 'VegetableEccomerce@paymentSuccessSubscription'])->middleware('auth');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

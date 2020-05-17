@@ -282,8 +282,6 @@ function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
 
 function checkPincode() {
     var pin = document.getElementById('pincode').value;
-    document.getElementById('verifyPincodeButton').style.display = 'none';
-    document.getElementById('preloaderPincode').style.display = 'block';
     if (pin == "" || pin == null) {
         swal({
             title: "Warning",
@@ -292,6 +290,8 @@ function checkPincode() {
         });
     } else {
         console.log(pin);
+        document.getElementById('verifyPincodeButton').style.display = 'none';
+    document.getElementById('preloaderPincode').style.display = 'block';
         $.ajax({
             type: "GET",
             url: "http://localhost:8000/check_pincode/" +
@@ -416,7 +416,7 @@ function getHash()
 	phone: $('#mobile').val(),
 	productinfo: $('#txnid').val(),
 	udf5: $('#udf5').val(),
-	surl : 'http://localhost:8000/post_orders',
+	surl : 'http://localhost:8000/post_orders?_token=' +  document.getElementById('token').value,
 	furl: 'http://localhost:8000/failed_payment',
 	mode: 'dropout'	
 },{ responseHandler: function(BOLT){

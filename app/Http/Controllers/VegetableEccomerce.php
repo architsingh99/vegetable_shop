@@ -13,6 +13,7 @@ use App\Cart;
 use App\Pincode;
 use App\Order;
 use App\Suborder;
+use App\Subscription;
 use App\Otp;
 use App\User;
 use App\TempOrder;
@@ -185,7 +186,7 @@ class VegetableEccomerce extends Controller
             {
                 $deliverTime =  ($checkout[0]->delivery_time / 60) . " hr and " . ($checkout[0]->delivery_time % 60) . " minutes.";
             }
-            $message = "Deliver available at " . $request->pincode . ". It will be delivered in approximately " . $deliverTime;
+            $message = "Deliver available at " . $request->pincode . ".";
         }
         else
         {
@@ -252,6 +253,59 @@ class VegetableEccomerce extends Controller
     }
     }
 
+    public function post_orders_subscription(Request $request)
+    {
+        //dd($request->input('image'));
+        
+        try{
+            // $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            // $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
+            $order_id =$request->input('txnid');
+            $payment_status = 'Successfull';
+            $payment_method = "Online Payment";
+
+            $order = new Subscription();
+            if((int)$request->input('payment_method') == 2)
+            {
+                $payment_status = 'Cash On Delivery';
+                $payment_method = "Cash On Delivery";
+                
+            }
+            $order->quantity_per_day= $request->input('quantity_in_grams');
+             $order->product_id= $request->input('product_id');
+              $order->user_id = auth()->user()->id;
+              $order->user_email = $request->input('email'); 
+              $order->name = $request->input('name'); 
+              $order->mobile = $request->input('mobile');  
+              $order->landmark = $request->input('landmark'); 
+              $order->town_city = $request->input('city'); 
+              $order->pincode = $request->input('deliveryPincode');  
+              $order->address_type = $request->input('address_type');  
+              $order->order_id = $order_id; 
+              $order->sub_total = $request->input('subtotalOrder'); 
+              $order->delivery_charge = $request->input('deliveryChargeOrder'); 
+              $order->total_price = $request->input('finalPriceOrder'); 
+              $order->address = $request->input('address'); 
+              $order->payment_status = $payment_status; 
+              $order->payment_method = $payment_method; 
+              $order->save();
+              if((int)$request->input('payment_method') == 2)
+              {
+                //$this->cashOnDelivery($order);
+                return redirect('cash_on_delivery_subscription/' . $order->id);
+              }
+              else
+              {
+               //$this->paymentPayUMoney($order);
+               return redirect('payment_success_subscription/' . $order->id);
+               //app('App\Http\Controllers\PaymentController')->payment($order);
+              }
+    }
+    catch(Exception $e) {
+        dd($e);
+    }
+    }
+
     public function cashOnDelivery(Request $request){
         try {
             $order = DB::table('orders')->where('id', $request->id)->first();
@@ -286,6 +340,19 @@ class VegetableEccomerce extends Controller
         }
      }
 
+     public function cashOnDeliverySubscription(Request $request){
+        try {
+            $order = DB::table('orders')->where('id', $request->id)->first();
+            $message = "Your subscription has been successfully recieved. Your subscription ID is " . $order->order_id .". Kindly pay Rs. ". $order->total_price." at the time of delivery.  Thank you for shopping with us.";
+            $this->getUserNumber($order->mobile, $message);
+            //$this->sendWhatsAppSMS($order->mobile, $message);
+            $categories = Category::all();
+            return view('success')->with('categories', $categories)->with('message', $message);
+         }catch (\Exception $e) {
+            dd($e);
+        }
+     }
+
      public function paymentSuccess(Request $request){
         try {
             $order = DB::table('orders')->where('id', $request->id)->first();
@@ -310,6 +377,19 @@ class VegetableEccomerce extends Controller
                 Cart::find($value->id)->delete();
             }
             $message = "Your order has been successfully recieved. Your ORDER ID is " . $order->order_id .".  Thank you for shopping with us.";
+            $this->getUserNumber($order->mobile, $message);
+            //$this->sendWhatsAppSMS($order->mobile, $message);
+            $categories = Category::all();
+            return view('success')->with('categories', $categories)->with('message', $message);
+         }catch (\Exception $e) {
+            dd($e);
+        }
+     }
+
+     public function paymentSuccessSubscription(Request $request){
+        try {
+            $order = DB::table('orders')->where('id', $request->id)->first();
+            $message = "Your subscription has been successfully recieved. Your subscription ID is " . $order->order_id .".  Thank you for shopping with us.";
             $this->getUserNumber($order->mobile, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
             $categories = Category::all();
@@ -625,6 +705,43 @@ class VegetableEccomerce extends Controller
     return $this->sendResponse($data, "hash value");
           
     }
+
+    public function getHash2(Request $request)
+    {
+        $order_id =$request->input('txnid');
+            $payment_status = 'PENDING';
+            $payment_method = "Online Payment";
+            $order = new TempOrder();
+              $order->user_id = auth()->user()->id;
+              $order->user_email = $request->input('email'); 
+              $order->name = $request->input('fname'); 
+              $order->mobile = $request->input('mobile');  
+              $order->landmark = $request->input('landmark'); 
+              $order->town_city = $request->input('city'); 
+              $order->pincode = $request->input('deliveryPincode');  
+              $order->address_type = $request->input('address_type'); 
+              //$order->total_items = DB::table('carts')->where('user_id', auth()->user()->id)->count();  
+              $order->order_id = $order_id; 
+              $order->address_type = $request->input('address'); 
+              $order->address_type = $request->input('quantity'); 
+              $order->address_type = $request->input('product_id'); 
+              $order->sub_total = $request->input('subtotalOrder'); 
+              $order->delivery_charge = $request->input('deliveryChargeOrder'); 
+              $order->total_price = $request->input('amount'); 
+              $order->payment_status = $payment_status; 
+              $order->payment_method = $payment_method; 
+              $order->save();
+              
+              
+        $hash=hash('sha512', $request->input('key').'|'.$request->input('txnid').'|'.$request->input('amount').'|'.$request->input('pinfo').'|'.$request->input('fname').'|'.$request->input('email').'|||||'.$request->input('udf5').'||||||'.$request->input('salt'));
+		$data = [
+            'status'                     => 200,
+            'message'                    => $hash
+     ];
+        //dd($data);
+    return $this->sendResponse($data, "hash value");
+          
+    }
     
     public function paymentPayU(Request $request)
     {
@@ -651,6 +768,36 @@ class VegetableEccomerce extends Controller
             $order->save();
             TempOrder::find($temporder->id)->delete();
             return redirect('payment_success/' . $order->id);
+    }
+
+    public function paymentPayUubscription(Request $request)
+    {
+        
+             $temporder = DB::table('temp_orders')->where('order_id', $request->input('txnid'))->orderBy('created_at', 'desc')->first();
+            $payment_status = 'SUCCESSFULL';
+            $payment_method = "Online Payment";
+            $order = new Subscription();
+            $order->user_id = $temporder->user_id;
+            $order->user_email = $temporder->user_email; 
+            $order->name = $temporder->name; 
+            $order->mobile = $temporder->mobile;  
+            $order->landmark = $temporder->landmark; 
+            $order->town_city = $temporder->town_city; 
+            $order->pincode = $temporder->pincode;  
+            $order->address_type = $temporder->address_type; 
+            //$order->total_items = $temporder->total_items;  
+            $order->order_id = $temporder->order_id; 
+            $order->sub_total = $temporder->sub_total; 
+            $order->delivery_charge = $temporder->delivery_charge; 
+            $order->total_price = $temporder->total_price; 
+            $order->quantity_per_day = $temporder->quantity; 
+            $order->product_id = $temporder->product_id; 
+            $order->address = $temporder->address;
+            $order->payment_status = $payment_status; 
+            $order->payment_method = $payment_method; 
+            $order->save();
+            TempOrder::find($temporder->id)->delete();
+            return redirect('payment_success_subscription/' . $order->id);
     }
 
     public function subscribe(Request $request)
