@@ -1684,7 +1684,15 @@ h3.agileits-icons-title {
         font-size: 14px!important;
     }
 }
+.ml-cat{
+   
+    margin: -44px 0px 0px 154px;
+}
 @media (max-width:768px){
+    .ml-cat
+    {
+         margin: 0;
+    }
 	h3.agileits-icons-title {
 		font-size: 28px;
 	}

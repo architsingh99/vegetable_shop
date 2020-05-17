@@ -213,6 +213,17 @@
 
 		}); //]]>
 	</script>
+	<script>
+$(document).ready(function(){
+  $('.dropdown a.test').on("click", function(e){
+    $(this).next('div').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
+
+
 	<!-- //price range (top products) -->
 
 	<!-- flexisel (for special offers) -->

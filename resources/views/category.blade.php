@@ -103,7 +103,7 @@
                                 <input type="hidden" id="product_id{{$key}}" value="{{$cat->id}}" />
                                 <input type="hidden" id="token" name="_token" value="{{csrf_token()}}">
                                 @if($cat->out_of_stock == 1)
-                                    Out Of Stock
+                                   <input style="background: #ff7919;" type="button" value="Out Of Stock" class="button" />
                                 @else
                                 @if (!Auth::check())
                                 <a href="{{url('login')}}"><input type="button" name="submit" value="Login Required"
