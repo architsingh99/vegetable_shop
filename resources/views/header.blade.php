@@ -124,7 +124,13 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
                                          
                                         @foreach($categories as $key => $cat)
                                             <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
-                                            
+                                            @if(isset($cat->subcategories) && strlen($cat->subcategories))
+                                            <div style="display: none;" class="dropdown-content ml-cat">
+                                            @foreach($cat->subcategories as $key1 => $cat1)
+                                            <a class="nav-stylehead">$cat1->name</a> 
+                                            @endforeach
+                                            </div>
+                                            @endif
                                             <!-- <a href="{{url('coming_soon')}}">{{$cat->name}}</a> -->
                                             @endforeach
                                             <a class="nav-stylehead test">Test</a>
