@@ -68,9 +68,8 @@
                                 <!-- <span class="product-new-top">New</span> -->
                         </div>
                         <img class="offer-image" src="{{ asset('images/offer.png') }}">
-                        <h3 class="offer-p">Our Price <br>{{$cat->price_per_kg}}
-                            {{($cat->quantity_in_grams == 1) ? "/kg" : ""}}</h3>
-                        <div class="item-info-product ">
+                        <h3 class="offer-p">Our Price <br>₹{{$cat->price_per_kg}}{{($cat->quantity_in_grams == 1)?"/kg":"/unit"}}</h3>
+                        <div style="height: 9em"  class="item-info-product ">
                             <h4 class="h4-design">
                                 <!-- <a href="single.html">Almonds, 100g</a> -->
                                 {{$cat->name}}
@@ -114,7 +113,7 @@
                                 <input type="button" id="addToCartButton{{$key}}" onclick="addToCart({{$key}})"
                                     value="Add to cart" class="button" />
                                     @if($cat->subscription_available)
-                                    <a href="{{url('subscribe', $cat->id)}}"><input type="button" value="Subscripe" class="button" /></a>
+                                    <a href="{{url('subscribe', $cat->id)}}"><input type="button" value="Subscripe" class="button sub-btn" /></a>
                                     @endif
                                 @endif
                                 @endif
@@ -158,7 +157,9 @@
                                                                 @endforeach                                                              
                                                                 @endif
                                                             </div>
-
+                                                        </div>
+                                                    </div>
+                                                </section>
                                             </td>
                                         </div>
 
@@ -304,25 +305,6 @@
 </div>
 @endif
 
-<style>
-#slider .container-fluid {
-    padding: 0 15px;
-}
-
-#slider .slider-inner {
-    padding: 0;
-}
-
-.slider-inner .item img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.slider-inner h1 {
-    color: purple;
-}
-</style>
 <!-- //special offers -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" type="text/javascript">
@@ -330,21 +312,6 @@
 
 
 <script>
-$(function() {
-    var count = 0;
-    $('.owl-carousel').each(function() {
-        $(this).attr('id', 'owl-demo' + count);
-        $('#owl-demo' + count).owlCarousel({
-            navigation: true,
-            slideSpeed: 300,
-            pagination: true,
-            singleItem: true,
-            autoPlay: 2000,
-            autoHeight: true
-        });
-        count++;
-    });
-});
 
 function detailsModel(id) {
     $('#productdetil' + id).modal('show');

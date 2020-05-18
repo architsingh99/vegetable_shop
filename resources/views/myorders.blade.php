@@ -10,47 +10,32 @@
                 <i></i>
             </span>
         </h3>
-        <div class="agileinfo-ads-display col-md-12">
+        <div style=" margin-top: 2em;" class="agileinfo-ads-display col-md-12">
             <div class="wrapper" style="overflow-x: scroll;">
-                <table id="ordersTable" class="table table-striped table-bordered" style="width:100%">
+                <table id="ordersTable" class="table table-striped table-bordered" style="width:100%; ">
         <thead>
             <tr>
             <th>Order Id</th>
-            <th>Transaction Id</th>
-                <th>Name</th>
-                <th>Contact Number</th>
-                <th>Landmark</th>
-                <th>Town/City</th>
-                <th>Pincode</th>
-                <th>Address Type</th>
+                <th>Delivery Address</th>
                 <th>Total Items</th>
-                <th>Sub Total</th>
-                <th>Delivery Charges</th>
-                <th>Final Price</th>
-                <th>Payment Status</th>
+               <th>Total Price</th>
+                <th>Payment Method</th>
                 <th>Delivery Status</th>
-                <th>View Details</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
         @foreach($orders as $key => $cat)
             <tr>
                 <td>{{$cat->order_id}}</td>
-                <td>{{$cat->transaction_id}}</td>
-                <td>{{$cat->name}}</td>
-                <td>{{$cat->mobile}}</td>
                 <td>{{$cat->landmark}}</td>
-                <td>{{$cat->town_city}}</td>
-                <td>{{$cat->pincode}}</td>
-                <td>{{$cat->address_type}}</td>
-                <td>{{$cat->total_items}}</td>
-
-                <td>{{$cat->sub_total}}</td>
-                <td>{{$cat->delivery_charge}}</td>
+               <td>{{$cat->total_items}}</td>
                 <td>{{$cat->total_price}}</td>
                 <td>{{$cat->payment_status}}</td>
                 <td>{{$cat->delivery_status}}</td>
-                <td><a href="{{url('sub_orders',$cat->order_id)}}"><i class="fa fa-eye" style="color:red"></i></a></td>
+                <td><a href="{{url('sub_orders',$cat->order_id)}}"><input style="    color: black;   background-color: #bfcc00;
+    font-weight: 700;" type="button" name="submit" value="Vew Details"
+                                        class="button" /></a></td>
             </tr>
             @endforeach
         </tbody>
@@ -65,27 +50,27 @@ $(document).ready(function() {
    var table = $('#ordersTable').DataTable({
     dom: 'lfBrtip',
     buttons: [
-        {
-          extend: 'excelHtml5',
-          exportOptions: {
-            columns: ':visible'
-          },
-          title: "Orders"
-        },
-        {
-          extend: 'pdfHtml5',
-          exportOptions: {
-            columns: ':visible'
-          },
-          title: "Orders"
-        },
-        {
-          extend: 'csvHtml5',
-          exportOptions: {
-            columns: ':visible',
-          },
-          title: "Orders"
-        }
+        // {
+        //   extend: 'excelHtml5',
+        //   exportOptions: {
+        //     columns: ':visible'
+        //   },
+        //   title: "Orders"
+        // },
+        // {
+        //   extend: 'pdfHtml5',
+        //   exportOptions: {
+        //     columns: ':visible'
+        //   },
+        //   title: "Orders"
+        // }
+        // {
+        //   extend: 'csvHtml5',
+        //   exportOptions: {
+        //     columns: ':visible',
+        //   },
+        //   title: "Orders"
+        // }
     ]
     });
 } );

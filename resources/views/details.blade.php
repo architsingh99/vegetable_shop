@@ -6,18 +6,18 @@
     <!-- //banner-2 -->
     <!-- page -->
     <div class="services-breadcrumb">
-        <div class="agile_inner_breadcrumb">
-            <div class="container">
-                <ul class="w3_short">
-                    <li>
-                        <a href="index.html">Home</a>
-                        <i>|</i>
-                    </li>
-                    <li>{{$product->name}}</li>
-                </ul>
-            </div>
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="{{url('/')}}">Home</a>
+                    <i>|</i>
+                </li>
+                <li>{{$product->name}}</li>
+            </ul>
         </div>
     </div>
+</div>
     <!-- //page -->
     <!-- Single Page -->
     <div class="banner-bootom-w3-agileits">
@@ -32,41 +32,38 @@
 			</h3> -->
             <!-- //tittle heading -->
             <div class="col-md-5 single-right-left ">
-                <div class="grid images_3_of_2">
-                    <div class="flexslider">
-                        <ul class="slides">
-                            <li
-                                data-thumb="{{ Storage::disk(config('voyager.storage.disk'))->url($product->main_image) }}">
-                                <div class="thumb-image">
-                                    <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($product->main_image) }}"
-                                        data-imagezoom="true" class="img-responsive" alt=""> </div>
-                            </li>
-                            @if($product->other_images)
-                            @foreach (json_decode($product->other_images) as $image)
-                            <li data-thumb="images/se2.jpg">
-                                <div class="thumb-image">
-                                    <img src="images/se2.jpg" data-imagezoom="true" class="img-responsive" alt="">
+
+                    <section id="slider">
+                        <div class="container-fluid">
+                            <div style="width: 16em;    margin: auto;" class="slider-inner">
+                                <div id="owl-demo" class="owl-carousel owl-theme" style="margin-top: 20px;">
+                                    <div class="item">
+                                        <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($product->main_image) }}"
+                                            alt="sliderimg1">
+                                    </div>
+                                    @if($product->other_images)
+                                    @foreach (json_decode($product->other_images) as $image)
+
+                                    <div class="item">
+                                        <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($image) }}"
+                                            alt="sliderimg1">
+                                    </div>
+                                    @endforeach
+                                    @endif
                                 </div>
-                            </li>
-                            <!-- <li data-thumb="images/se3.jpg">
-								<div class="thumb-image">
-									<img src="images/se3.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
-                            </li> -->
-                            @endforeach
-                            @endif
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
+                            </div>
+                        </div>
+                    </section>
             </div>
             <div class="col-md-7 single-right-left simpleCart_shelfItem">
                 <h3>{{$product->name}} </h3>
                 <p>
 
-                    <span class="item_price">₹{{$product->monthly_charge}} @if($product->quantity_in_grams == 1) Per Month
+                    <span class="item_price">₹{{$product->monthly_charge}} @if($product->quantity_in_grams == 1) Per
+                        Month
                         @else Per Month @endif </span> <br>
                     @if($product->mrp_per_kg * 30 > $product->monthly_charge)
-                    <del id="delprice">₹{{$product->mrp_per_kg * 30}}</del>
+                    <del id="delprice">₹{{$product->mrp_per_kg }}</del>
                     @endif
                     @if($product->discount_percentage_delivery_subscription == 0)
                     <label>Free delivery</label>
@@ -161,8 +158,8 @@
                                                 </div>
                                                 <div class="w3_agileits_card_number_grid_right">
                                                     <div class="controls">
-                                                        <input type="textarea" id="address" placeholder="Full Address" name="address"
-                                                            required="">
+                                                        <input type="textarea" id="address" placeholder="Full Address"
+                                                            name="address" required="">
                                                     </div>
                                                 </div>
                                                 <div class="w3_agileits_card_number_grid_right">
@@ -189,8 +186,9 @@
                                             <div class="clear"> </div>
                                             <div class="controls">
                                                 <h4>Comfirm your order</h4>
-                                                <h5 style="    color: #ff7600; margin-bottom: 10px;">*For the Subscription you have to pay the amount in Advance</h5>
-                                                                                               
+                                                <h5 style="    color: #ff7600; margin-bottom: 10px;">*For the
+                                                    Subscription you have to pay the amount in Advance</h5>
+
                                             </div>
                                             <?php
                                     if($product->quantity_in_grams == 1)
@@ -202,7 +200,8 @@
                                             Quantity: <span id="quantityDisplayText"></span><br>
                                             Delivery Charge: <span id="deliveryChargeText">0</span><br>
 
-                                           <h4 style="    margin-bottom: 2px; font-size: 18px;"> Final Value: <span id="finalPriceText"></span> </h4><br>
+                                            <h4 style="    margin-bottom: 2px; font-size: 18px;"> Final Value: <span
+                                                    id="finalPriceText"></span> </h4><br>
                                         </div>
                                         <input type="hidden" id="monthly_charge" name="monthly_charge"
                                             value="{{$product->monthly_charge}}">
@@ -240,8 +239,49 @@
             <div class="clearfix"> </div>
         </div>
     </div>
+
+    <style>
+#slider .container-fluid {
+    padding: 0 15px;
+}
+
+#slider .slider-inner {
+    padding: 0;
+}
+
+.slider-inner .item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.slider-inner h1 {
+    color: purple;
+}
+    </style>
+    <!-- //special offers -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" type="text/javascript">
+    </script>
+
     <!-- //Single Page -->
     <script>
+        $(function() {
+    var count = 0;
+    $('.owl-carousel').each(function() {
+        $(this).attr('id', 'owl-demo' + count);
+        $('#owl-demo' + count).owlCarousel({
+            navigation: true,
+            slideSpeed: 300,
+            pagination: true,
+            singleItem: true,
+            autoPlay: 2000,
+            autoHeight: true
+        });
+        count++;
+    });
+});
+
 function quantityPriceCalculation(n) {
     var quantityInGrams = document.getElementById('quantity_in_grams').value;
     var monthlyCharge = document.getElementById('monthly_charge').value;
