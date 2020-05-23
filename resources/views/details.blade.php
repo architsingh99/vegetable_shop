@@ -239,7 +239,7 @@
             <div class="clearfix"> </div>
         </div>
     </div>
-
+<input type="hidden" id="token" name="_token" value="{{csrf_token()}}">
     <style>
 #slider .container-fluid {
     padding: 0 15px;
@@ -317,7 +317,7 @@ function checkPincode() {
         console.log(pin);
         $.ajax({
             type: "GET",
-            url: "http://localhost:8000/check_pincode/" +
+            url: "http://127.0.0.1/check_pincode/" +
                 pin, // You add the id of the post and the update datetime to the url as well
             success: function(response) {
                 var deliveryPrice = response.data.delivery_charge * (deliveryDiscount / 100);
@@ -370,7 +370,7 @@ function getHash() {
     console.log("332")
     var s2 = ($('#txnid').val()).substr(1)
     $.ajax({
-        url: 'http://localhost:8000/getHash2',
+        url: 'http://127.0.0.1/getHash2',
         type: 'post',
         data: {
             _token: document.getElementById('token').value,
@@ -406,9 +406,9 @@ function getHash() {
                 phone: $('#mobile').val(),
                 productinfo: $('#txnid').val(),
                 udf5: $('#udf5').val(),
-                surl: 'http://localhost:8000/post_orders_subscription?_token=' + document
+                surl: 'http://127.0.0.1/paymentPayUSubscription?_token=' + document
                     .getElementById('token').value,
-                furl: 'http://localhost:8000/failed_payment',
+                furl: 'http://127.0.0.1/failed_payment',
                 mode: 'dropout'
             }, {
                 responseHandler: function(BOLT) {
@@ -431,20 +431,28 @@ function getHash() {
 }
 
 async function makePaymentHideButton() {
-    document.getElementById('preloadermakePaymentButton').style.display = 'block';
-    document.getElementById('makePaymentButton').style.display = 'none';
-    var paymentMethod = 2;
-    var ele = document.getElementsByName('payment_method');
+  
+     if ($("#name").val() && $("#mobile").val() && $("#address").val() && $("#city").val() && $("#landmark").val() && $("#email").val()) 
+     {
+    //document.getElementById('preloadermakePaymentButton').style.display = 'block';
+   // document.getElementById('makePaymentButton').style.display = 'none';
+   // var paymentMethod = 2;
+    // var ele = document.getElementsByName('payment_method');
 
-    for (i = 0; i < ele.length; i++) {
-        if (ele[i].checked)
-            paymentMethod = ele[i].value;
-    }
-    if (Number(paymentMethod) == 1) {
+    // for (i = 0; i < ele.length; i++) {
+    //     if (ele[i].checked)
+    //         paymentMethod = ele[i].value;
+    // }
+    // if (Number(paymentMethod) == 1) {
         let hashValue = await getHash();
-        //this.launchBOLT(hashValue);
-    } else
-        document.getElementById('paymentForm').submit();
+     }
+        else{
+            swal({
+                title: "Add complete address details",
+                text: "Please fill up the complete address details form",
+                icon: "error",
+            });
+        }
 }
     </script>
     @include('footer')

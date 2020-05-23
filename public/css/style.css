@@ -941,6 +941,7 @@ h3.heading-tittle {
     text-align: center;
 }
 .item-info-product {
+        height: 170px;
     margin-top: 40px;
     text-align: center;
 }
@@ -1684,15 +1685,7 @@ h3.agileits-icons-title {
         font-size: 14px!important;
     }
 }
-.ml-cat{
-   
-    margin: -44px 0px 0px 154px;
-}
 @media (max-width:768px){
-    .ml-cat
-    {
-         margin: 0;
-    }
 	h3.agileits-icons-title {
 		font-size: 28px;
 	}
@@ -1707,19 +1700,37 @@ h3.agileits-icons-title {
 		margin: 0;
 	}
 }
-
-@media all and (min-width: 385px) and (max-width: 640px){
+@media all and (min-width: 415px) and (max-width: 640px){
 .offer-p {
     margin: -17px 0px 0 0!important;
     font-size: 11px!important;
 }
+}
+@media all and (min-width: 384px) and (max-width: 414px){
+    .offer-p{
+       font-size: 12px!important;
+    margin: -19px -3px 0 0!important;
+    }
     .offer-image
 {
-    margin: -42px 0 0 74px!important;
-    width:88px!important; 
+    margin: -47px 0 0 58px!important;
+    width:96px!important; 
 }
 }
-
+@media all and (min-width: 395px) and (max-width: 439px){
+    .offer-image
+{
+    margin: -42px 0 0 70px!important;
+    width:90px!important; 
+}
+}
+@media all and (min-width: 440px) and (max-width: 640px){
+    .offer-image
+{
+    margin: -42px 0 0 70px!important;
+    width:90px!important; 
+}
+}
 @media (max-width: 640px){
 	.icon-box {
 		float: left;
@@ -1732,9 +1743,7 @@ h3.agileits-icons-title {
 	}
 }
 @media (max-width: 414px){
-    .offer-p{
-        margin: -95px -90px 0 0!important;
-    }
+
     
 	h3.agileits-icons-title {
 		font-size: 23px;
@@ -1748,8 +1757,8 @@ h3.agileits-icons-title {
 }
 @media (max-width: 384px){
     .offer-p{
-        margin: -13px -4px 0 0!important;
-        font-size: 11px!important;
+       margin: -8px -7px 0 0!important;
+    font-size: 10px!important;
     }
     .offer-image
     {
@@ -3571,6 +3580,7 @@ input[type="radio"], input[type="checkbox"] {
         padding: 11px 13px;
     }
     .item-info-product {
+        height: 135px;
         margin-top: 20px;
     }
     .inner-men-cart-pro .link-product-add-cart {
@@ -3787,6 +3797,11 @@ input[type="radio"], input[type="checkbox"] {
     }
 }
 @media(max-width: 600px){
+      .subsc-btn{
+      font-size: 10px!important;
+    padding: 4px!important;
+    margin-top: 4px!important;
+      }
     .img-deals {
         width: 23%;
     }
@@ -5107,7 +5122,7 @@ color: #000;
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #e96c1d;}
+.dropdown-content a:hover {color: #e96c1d;}
 
 .dropdown:hover .dropdown-content {display: block;}
 
@@ -5133,8 +5148,6 @@ color: #000;
     font-weight: 600;
     color: #ce4200;
 }
-
-
 
 .mySlides {
     display: none;
@@ -5176,8 +5189,19 @@ color: #000;
     background-color: #15bdff;
     color: #000;
   }
-  .sub-btn{
-    background-color: #f77070;
+  .subsc-btn{    
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    text-transform: uppercase;
+    outline: none;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-size: 12px;
+    background: #f1741b;
     padding: 9px;
-    margin-top: 4px;
+    margin-top: 6px;
   }

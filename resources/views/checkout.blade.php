@@ -133,7 +133,7 @@
 
         @if(count($checkout) > 0)
         <div class="pincode-div pincode-box ">
-            <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only</h4>
+            <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only (785001)</h4>
 
             <input class="pincode-field" type="number" name="pincode" id="pincode" placeholder="Enter your Jorhat area pincode" required="">
 
@@ -180,6 +180,11 @@
                                     </div>
                                     <div class="w3_agileits_card_number_grid_right">
                                         <div class="controls">
+                                            <input type="textarea" id="address" placeholder="Full Address" name="address" required="">
+                                        </div>
+                                    </div>
+                                    <div class="w3_agileits_card_number_grid_right">
+                                        <div class="controls">
                                             <input id="landmark" type="text" placeholder="Landmark" name="landmark" required="">
                                         </div>
                                     </div>
@@ -193,7 +198,7 @@
                                         <option default disabled>Select Address type</option>
                                         <option value="Home">Home</option>
                                         <option value="Office">Office</option>
-                                        <option value="Commercial">Commercial</option>
+                                        <option value="Commercial">Commercial</option>l
 
                                     </select>
                                 </div>
@@ -243,7 +248,7 @@ function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8000/update_cart",
+        url: "http://127.0.0.1/update_cart",
         data: {
             _token: document.getElementById('token').value,
             cart_id: cart_id,
@@ -282,6 +287,8 @@ function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
 
 function checkPincode() {
     var pin = document.getElementById('pincode').value;
+    document.getElementById('verifyPincodeButton').style.display = 'none';
+    document.getElementById('preloaderPincode').style.display = 'block';
     if (pin == "" || pin == null) {
         swal({
             title: "Warning",
@@ -290,11 +297,9 @@ function checkPincode() {
         });
     } else {
         console.log(pin);
-        document.getElementById('verifyPincodeButton').style.display = 'none';
-    document.getElementById('preloaderPincode').style.display = 'block';
         $.ajax({
             type: "GET",
-            url: "http://localhost:8000/check_pincode/" +
+            url: "http://127.0.0.1/check_pincode/" +
                 pin, // You add the id of the post and the update datetime to the url as well
             success: function(response) {
                 document.getElementById('pincodeStatus').innerText = response.data.message;
@@ -349,18 +354,21 @@ function editPincode() {
 }
 
 async function makePaymentHideButton() {
-    if(Number(document.getElementById('finalPriceOrder').value) < 250)
+     if ($("#name").val() && $("#mobile").val() && $("#city").val() && $("#landmark").val() && $("#address").val() && $("#email").val()) 
+     {
+
+    if(Number(document.getElementById('finalPriceOrder').value) < 220)
     {
         swal({
-                    title: "Error",
-                    text: "Minimum cart value should be Rs.250.",
+                    title: "Your order value is too low",
+                    text: "Minimum cart value should be atleast Rs.200",
                     icon: "error",
                 });
     }
     else
     {
-    document.getElementById('preloadermakePaymentButton').style.display = 'block';
-    document.getElementById('makePaymentButton').style.display = 'none';
+    // document.getElementById('preloadermakePaymentButton').style.display = 'block';
+    // document.getElementById('makePaymentButton').style.display = 'none';
     var paymentMethod = 2;
     var ele = document.getElementsByName('payment_method'); 
               
@@ -376,14 +384,23 @@ async function makePaymentHideButton() {
     else
         document.getElementById('paymentForm').submit();
     }
+     }
+        else{
+            swal({
+                title: "Add complete address details",
+                text: "Please fill up the complete address details form",
+                icon: "error",
+            });
+        }
 }
 
 function getHash()
 {
     console.log("332")
     var s2 = ($('#txnid').val()).substr(1)
+    var token=document.getElementById('token').value
     $.ajax({
-          url: 'http://localhost:8000/getHash',
+          url: 'http://127.0.0.1/getHash',
           type: 'post',
           data: { 
             _token: document.getElementById('token').value,
@@ -395,7 +412,8 @@ function getHash()
             fname: $('#name').val(),
 			email: $('#email').val(),
 			mobile: $('#mobile').val(),
-            udf5: $('#udf5').val(),
+			address: $('#address').val(),
+			udf5: $('#udf5').val(),
 			landmark: $('#landmark').val(),
             city: $('#city').val(),
             deliveryPincode: $('#deliveryPincode').val(),
@@ -416,18 +434,14 @@ function getHash()
 	phone: $('#mobile').val(),
 	productinfo: $('#txnid').val(),
 	udf5: $('#udf5').val(),
-	surl : 'http://localhost:8000/post_orders?_token=' +  document.getElementById('token').value,
-	furl: 'http://localhost:8000/failed_payment',
+	surl : 'http://127.0.0.1/paymentPayU?_token='+token,
+	furl: 'http://127.0.0.1/failed_payment',
 	mode: 'dropout'	
 },{ responseHandler: function(BOLT){
 	console.log( BOLT.response.txnStatus );		
 	if(BOLT.response.txnStatus != 'CANCEL')
 	{
-		//Salt is passd here for demo purpose only. For practical use keep salt at server side only.
-		console.log(BOLT.response);
-		var form = jQuery(fr);
-		// jQuery('body').append(form);								
-		// form.submit();
+		
 	}
 },
 	catchException: function(BOLT){

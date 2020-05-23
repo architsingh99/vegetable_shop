@@ -10,9 +10,9 @@
                 <i></i>
             </span>
         </h3>
-        <div style=" margin-top: 2em;" class="agileinfo-ads-display col-md-12">
+        <div style=" margin-top: 2em;"  class="agileinfo-ads-display col-md-12">
             <div class="wrapper" style="overflow-x: scroll;">
-                <table id="ordersTable" class="table table-striped table-bordered" style="width:100%; ">
+                <table id="ordersTable" class="table table-striped table-bordered" style="width:100%;     margin-top: 2em;">
         <thead>
             <tr>
             <th>Order Id</th>
@@ -21,7 +21,7 @@
                <th>Total Price</th>
                 <th>Payment Method</th>
                 <th>Delivery Status</th>
-                <th>Action</th>
+                <th>action</th>
             </tr>
         </thead>
         <tbody>

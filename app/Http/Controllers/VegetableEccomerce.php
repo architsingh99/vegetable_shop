@@ -75,33 +75,30 @@ class VegetableEccomerce extends Controller
 
     public function get(Request $request)
     {
-        $categories = Category::with('subcategories')->get();
-        $categoriesCount = DB::table('products')
-        ->join('categories', 'categories.id', '=', 'products.category')
-        ->select('categories.name', 'category', DB::raw('count(*) as total'))
-        ->groupBy('category', 'categories.name')
-        ->pluck('categories.name', 'total','category')->all();
-        //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
+        $categories = Category::all();
         $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(10);
         $msg = "Welcome To Bazaar24x7";
         //dd($products[0]->categories);
-       return view('welcome')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('products', $products)->with('msg', $msg);
+       return view('welcome')->with('categories', $categories)->with('products', $products)->with('msg', $msg);
     }
 
     public function categoriesGet(Request $request)
     {
         $categories = Category::all();
         $categoryData = Category::where('id', (int)$request->id)->get();
-        $categoriesCount = DB::table('products')
-        ->join('categories', 'categories.id', '=', 'products.category')
-        ->select('categories.name', 'category', DB::raw('count(*) as total'))
-        ->groupBy('category', 'categories.name')
-        ->pluck('categories.name', 'total','category')->all();
-        //$jobs = DB::table('job_details')->orderByRaw('updated_at - created_at DESC')->get();
         $products = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->get();
         $productsSlider = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->paginate(10);
         //dd($products);
-       return view('category')->with('categories', $categories)->with('categoriesCount', $categoriesCount)->with('productsSlider', $productsSlider)->with('products', $products)->with('categoryData', $categoryData);
+         $subcategory = SubCategory::where('category_id', (int)$request->id)->get();
+        // if(isset($subcategory) && strlen($subcategory) > 0)
+        // {
+        //     $msg = $categoryData[0]->name;
+        //     return view('welcome')->with('categories', $categories)->with('categories2', $subcategory)->with('productsSlider', $productsSlider)->with('products', $products)->with('msg', $msg);
+   
+        // }
+        // else
+        // {
+            return view('category')->with('categories', $categories)->with('subcategory', $subcategory)->with('productsSlider', $productsSlider)->with('products', $products)->with('categoryData', $categoryData);
     }
 
     public function addToCart(Request $request)
@@ -224,6 +221,7 @@ class VegetableEccomerce extends Controller
               $order->user_email = $request->input('email'); 
               $order->name = $request->input('name'); 
               $order->mobile = $request->input('mobile');  
+              $order->address = $request->input('address');
               $order->landmark = $request->input('landmark'); 
               $order->town_city = $request->input('city'); 
               $order->pincode = $request->input('deliveryPincode');  
@@ -388,7 +386,7 @@ class VegetableEccomerce extends Controller
 
      public function paymentSuccessSubscription(Request $request){
         try {
-            $order = DB::table('orders')->where('id', $request->id)->first();
+            $order = DB::table('subscriptions')->where('id', $request->id)->first();
             $message = "Your subscription has been successfully recieved. Your subscription ID is " . $order->order_id .".  Thank you for shopping with us.";
             $this->getUserNumber($order->mobile, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
@@ -486,37 +484,38 @@ class VegetableEccomerce extends Controller
 
      public function getUserNumber($number, $msg)
     {
-            $curl = curl_init();
-            $num = $number;
-            if(strlen($number) > 10)
-                $num = substr($number, -10);
-			curl_setopt_array($curl, array(
-				CURLOPT_URL => "https://api.msg91.com/api/v2/sendsms?country=91",
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_ENCODING => "",
-				CURLOPT_MAXREDIRS => 10,
-				CURLOPT_TIMEOUT => 30,
-				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-				CURLOPT_CUSTOMREQUEST => "POST",
-				CURLOPT_POSTFIELDS => "{ \"sender\": \"BAZAAR\", \"route\": \"4\", \"country\": \"91\", \"sms\": [ { \"message\": \"".$msg."\", \"to\": [ \"".$num."\" ] }] }",
-				CURLOPT_SSL_VERIFYHOST => 0,
-				CURLOPT_SSL_VERIFYPEER => 0,
-				CURLOPT_HTTPHEADER => array(
-				    "authkey: 328588AuWJtGIqx4d5eb43c63P1",
-				    "content-type: application/json"
-				),
-			));
+//             $curl = curl_init();
+//             $num = $number;
+//             if(strlen($number) > 10)
+//                 $num = substr($number, -10);
+// 			curl_setopt_array($curl, array(
+// 				CURLOPT_URL => "https://api.msg91.com/api/v2/sendsms?country=91",
+// 				CURLOPT_RETURNTRANSFER => true,
+// 				CURLOPT_ENCODING => "",
+// 				CURLOPT_MAXREDIRS => 10,
+// 				CURLOPT_TIMEOUT => 30,
+// 				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+// 				CURLOPT_CUSTOMREQUEST => "POST",
+// 				CURLOPT_POSTFIELDS => "{ \"sender\": \"BAZAAR\", \"route\": \"4\", \"country\": \"91\", \"sms\": [ { \"message\": \"".$msg."\", \"to\": [ \"".$num."\" ] }] }",
+// 				CURLOPT_SSL_VERIFYHOST => 0,
+// 				CURLOPT_SSL_VERIFYPEER => 0,
+// 				CURLOPT_HTTPHEADER => array(
+// 				    "authkey: 329899ARjqT6jMhj85ec75c8fP1",
+// 				    "content-type: application/json"
+// 				),
+// 			));
 
-			$response = curl_exec($curl);
-			$err = curl_error($curl);
+// 			$response = curl_exec($curl);
+// 			$err = curl_error($curl);
 
-			curl_close($curl);
+// 			curl_close($curl);
 
-			// if ($err) {
-			// 	dd("SMS couldn't send");
-			// } else {
-			// 	dd("message sent");
-			// }
+
+// 			if ($err) {
+// 				dd("SMS couldn't send". $err);
+// 			} else {
+// 				dd("message sent". $response);
+// 			}
     }
 
     public function test(Request $request)
@@ -682,6 +681,7 @@ class VegetableEccomerce extends Controller
               $order->user_email = $request->input('email'); 
               $order->name = $request->input('fname'); 
               $order->mobile = $request->input('mobile');  
+              $order->address = $request->input('address'); 
               $order->landmark = $request->input('landmark'); 
               $order->town_city = $request->input('city'); 
               $order->pincode = $request->input('deliveryPincode');  
@@ -722,9 +722,9 @@ class VegetableEccomerce extends Controller
               $order->address_type = $request->input('address_type'); 
               //$order->total_items = DB::table('carts')->where('user_id', auth()->user()->id)->count();  
               $order->order_id = $order_id; 
-              $order->address_type = $request->input('address'); 
-              $order->address_type = $request->input('quantity'); 
-              $order->address_type = $request->input('product_id'); 
+              $order->address = $request->input('address'); 
+              $order->quantity = $request->input('quantity'); 
+              $order->product_id = $request->input('product_id'); 
               $order->sub_total = $request->input('subtotalOrder'); 
               $order->delivery_charge = $request->input('deliveryChargeOrder'); 
               $order->total_price = $request->input('amount'); 
@@ -754,6 +754,7 @@ class VegetableEccomerce extends Controller
             $order->user_email = $temporder->user_email; 
             $order->name = $temporder->name; 
             $order->mobile = $temporder->mobile;  
+            $order->address = $temporder->address; 
             $order->landmark = $temporder->landmark; 
             $order->town_city = $temporder->town_city; 
             $order->pincode = $temporder->pincode;  
@@ -770,10 +771,10 @@ class VegetableEccomerce extends Controller
             return redirect('payment_success/' . $order->id);
     }
 
-    public function paymentPayUubscription(Request $request)
+    public function paymentPayUSubscription(Request $request)
     {
         
-             $temporder = DB::table('temp_orders')->where('order_id', $request->input('txnid'))->orderBy('created_at', 'desc')->first();
+            $temporder = DB::table('temp_orders')->where('order_id', $request->input('txnid'))->orderBy('created_at', 'desc')->first();
             $payment_status = 'SUCCESSFULL';
             $payment_method = "Online Payment";
             $order = new Subscription();

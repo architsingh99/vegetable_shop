@@ -35,7 +35,8 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
-    
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
+
     <!-- <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-
 color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script> -->
    <script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>
@@ -49,11 +50,6 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
-    
-    
-<link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" rel="stylesheet" type="text/css"/>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" rel="stylesheet" type="text/css"/>
-
     <style>
     .dataTables_wrapper .dt-buttons {
         float: none;
@@ -121,35 +117,16 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
                                     <div class="dropdown nav-stylehead">
                                         <a class="nav-stylehead dropbtn ">Categories</a>
                                         <div class="dropdown-content">
-                                         
                                         @foreach($categories as $key => $cat)
                                             <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
                                             <!-- <a href="{{url('coming_soon')}}">{{$cat->name}}</a> -->
                                             @endforeach
-                                            @else                                            
+                                           
                                         </div>
                                     </div>
                                 </li>
                                 @endif
-                                <!-- <li class="dropdown">
-									<a href="#" class="dropdown-toggle nav-stylehead" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories
-										<span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu multi-column columns-3">
-										<div class="agile_inner_drop_nav_info">
-											<div class="col-sm-4 multi-gd-img">
-												<ul class="multi-column-dropdown">
-													<li>
-                                                    <a href="{{url('categories/2')}}">Vegetables</a>
-													</li>
-													<li>
-                                                        <a href="{{url('categories/1')}}">Fruits</a>
-													</li>
-												</ul>
-											</div>
-										</div>
-									</ul>
-								</li> -->
+                               
                                 <li class="">
                                     <a class="nav-stylehead" href="#">Faqs</a>
                                 </li>

@@ -1,47 +1,17 @@
 @include('header')
 <!-- banner -->
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators-->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1" class=""></li>
-        <!-- <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-			<li data-target="#myCarousel" data-slide-to="3" class=""></li> -->
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>Fresh
-                        <span>Vegetables</span>
-                    </h3>
-                    <p>Order
-                        <span>Now</span> </p>
-                    <a class="button2" href="{{url('categories/2')}}">Shop Now </a>
-                </div>
-            </div>
-        </div>
-        <div class="item item2">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>Healthy
-                        <span>Fruits</span>
-                    </h3>
-                    <p>Order
-                        <span>Now</p>
-                    <a class="button2" href="{{url('categories/1')}}">Shop Now </a>
-                </div>
-            </div>
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="{{url('/')}}">Home</a>
+                    <i>|</i>
+                </li>
+                <li>{{$categoryData[0]->name}}</li>
+            </ul>
         </div>
     </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
 </div>
 <!-- //banner -->
 
@@ -80,10 +50,8 @@
                         <div class="col-md-4 men-thumb-item-sale product-men">
                             <div class="men-pro-item simpleCart_shelfItem">
                                 <div class="front-item">
-                                    <a href="{{url('categories', $cat->id)}}">
                                     <img  src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->image) }}"
                                         alt="">
-                                        </a>
                                     <!-- <div class="men-cart-pro">
 										<div class="inner-men-cart-pro">
 											<a href="single.html" class="link-product-add-cart">Quick View</a>
@@ -91,7 +59,7 @@
 									</div> -->
                                     <!-- <span class="product-new-top">New</span> -->
                                 </div>
-                                <div style="height: 100px;" class="item-info-product ">
+                                <div class="item-info-product ">
                                     <h4 class="h4-design">
                                         <!-- <a href="single.html">Almonds, 100g</a> -->
                                         {{$cat->name}}
@@ -129,8 +97,7 @@
                         </div>
                         <h3 class="w3l-nut-middle">Same day Delivery</h3>
                         <div class="col-xs-5 bg-right-nut">
-                            <img class="welcome-img-banner" src="{{ asset('images/fruit_veg.png')}}" alt="" >
-                        </div>
+                        <img class="welcome-img-banner" src="{{ asset('images/fruit_veg.png')}}" alt="" >                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <!-- //fourth section (noodles) -->
@@ -165,10 +132,10 @@
                                 <!-- </a> -->
                             </div>
                             <div class="product-name-w3l">
-                                <h4 class="h4-design">
-                                        <!-- <a href="single.html">Almonds, 100g</a> -->
-                                        {{$cat->name}}
-                                    </h4>
+                                <h4>
+                                    <!-- <a href="single.html">Aashirvaad, 5g</a> -->
+
+                                </h4>
                                 <div class="w3l-pricehkj">
                                     <h6>₹{{$cat->price_per_kg}} {{($cat->quantity_in_grams == 1) ? "per kg" : "" }}</h6>
                                     <!-- <img class="offer-image" src="{{ asset('images/offer.png') }}"> -->
@@ -194,9 +161,6 @@
 
 								<input type="hidden" id="product_id{{$key}}" value="{{$cat->id}}" />
                                     <input type="hidden" id="token" name="_token" value="{{csrf_token()}}">
-                                    @if($cat->out_of_stock == 1)
-                                   <input style="background: #ff7919;" type="button" value="Out Of Stock" class="button" />
-                                @else
                                     @if (!Auth::check())
                                     <a href="{{url('login')}}"><input type="button" name="submit" value="Login Required"
                                             class="button" /></a>
@@ -206,7 +170,7 @@
                                     <input type="button" id="addToCartButton{{$key}}" onclick="addToCart({{$key}})"
                                         value="Add to cart" class="button" />
                                     @endif
-                                    @endif
+
                                     <input type="hidden" name="cmd" value="_cart" />
                                     <input type="hidden" name="add" value="1" />
                                     <input type="hidden" name="business" value=" " />
@@ -233,7 +197,7 @@
         document.getElementById('addToCartButton' + index).style.display = 'none';
         $.ajax({
             type: "POST",
-            url: "http://127.0.0.1/add_to_cart", // You add the id of the post and the update datetime to the url as well
+            url: "http://localhost:8000/add_to_cart", // You add the id of the post and the update datetime to the url as well
             data: {
                 _token: document.getElementById('token').value,
                 product_id: document.getElementById('product_id' + index).value,

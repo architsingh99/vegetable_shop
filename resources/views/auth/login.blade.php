@@ -20,9 +20,9 @@
                 </div>
 
                 <div class="card-body phonebtn">
-                    <button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-primary phonelog">
-                        Sign in with Phone Number
-                    </button>
+                    <!--<button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-primary phonelog">-->
+                    <!--    Sign in with Phone Number-->
+                    <!--</button>-->
                 </div>
             </div>
             <br>
@@ -38,10 +38,10 @@
                 {{ $message }}
                 @endif
                 <div class="form-group row">
-                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number / Email Address') }}</label>
 
                     <div class="col-md-6">
-                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                        <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
                             name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                         @error('email')
@@ -146,7 +146,7 @@
                      <button  type="button" onclick="loginOtp()" id="loginButton" class="btn btn-primary">
                             Login
                         </button>
-                        <img src="{{asset('images/25.gif')}}" id="preloaderLogin" style="display: none; height: 30px;">
+                        <img src="{{asset('images/25.gif')}}" id="preloaderLogin" style="text-align: center; display: none; height: 30px;">
                     </div>
                 </div>
             </div>
@@ -175,7 +175,7 @@
     document.getElementById('preloaderOTP').style.display = 'block';
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1:8000/send_otp/" +
+        url: "http://127.0.0.1/send_otp/" +
                 mobile + "/" + key,
         success: function(response) {
             document.getElementById('phone').readOnly = true;
@@ -221,7 +221,7 @@ function loginOtp()
     document.getElementById('preloaderLogin').style.display = 'block';
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1:8000/loginViaOtp/" +
+        url: "http://127.0.0.1/loginViaOtp/" +
                 mobile + "/" + otp,
                 success: function(response) {
                     if(response.data.status == 400) {
@@ -233,7 +233,7 @@ function loginOtp()
                     }
                     else
                     {
-                            let url = "http://127.0.0.1:8000/";
+                            let url = "http://bazaar24x7.in/";
                             // url = url.replace(':id', id);
                             document.location.href=url;
                     }
