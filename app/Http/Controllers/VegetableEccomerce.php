@@ -414,7 +414,7 @@ class VegetableEccomerce extends Controller
     //             "send_email" => true,
     //             "email" => "$data->user_email",
     //             "phone" => "$data->mobile",
-    //             "redirect_url" => "http://127.0.0.1/pay-success/".$str1
+    //             "redirect_url" => "http://127.0.0.1:8000/pay-success/".$str1
     //             ));
                  
     //             header('Location: ' . $response['longurl']);

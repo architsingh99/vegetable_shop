@@ -34,7 +34,8 @@
             <h4>Your shopping cart contains:
                 <span>{{count($checkout)}} Products</span>
             </h4>
-            <?php $total = 0; ?>
+            <?php $total = 0;
+            $catCheck=0; ?>
             <div class="table-responsive">
                 <table class="timetable_sub table-hover">
                     @if(count($checkout) > 0)
@@ -54,6 +55,9 @@
 
 
                         @foreach($checkout as $key => $value)
+                        @if($value->product->category == '2')
+                            {{$catCheck = 1}}
+                            @endif
                         <tr class="rem{{($key % 2) + 1}}">
                             <td class="invert">{{$key + 1}}</td>
                             <td class="invert-image">
@@ -75,13 +79,12 @@
                                         if($value->product->quantity_in_grams == 1)
                                              $dividedBy = 1000;
                                         $total = $total + (int)($value->product->price_per_kg * $value->quantity / $dividedBy); ?>
-                                        <input type="hidden" id="old_quantity{{$value->id}}" value="{{$value->quantity}}">
-                                        <select class="form-control"
-                                            onchange="changeQuantity({{$value->id}}, this.value, {{$value->product->price_per_kg}}, 
-                                            {{$value->product->quantity_in_grams}})"
-                                            name="quantity{{$value->id}}" id="quantity{{$value->id}}">
-                                            @for($i=1;$i<=100;$i++) {{$value->product}} 
-                                            <option
+                                        <input type="hidden" id="old_quantity{{$value->id}}"
+                                            value="{{$value->quantity}}">
+                                        <select class="form-control" onchange="changeQuantity({{$value->id}}, this.value, {{$value->product->price_per_kg}}, 
+                                            {{$value->product->quantity_in_grams}})" name="quantity{{$value->id}}"
+                                            id="quantity{{$value->id}}">
+                                            @for($i=1;$i<=100;$i++) {{$value->product}} <option
                                                 value="{{($value->product->minimum_quantity * $i)}}"
                                                 {{($value->quantity == $value->product->minimum_quantity * $i) ? "selected" : ""}}>
                                                 <?php
@@ -90,13 +93,14 @@
                                                     else
                                                         $valueForDisplay = $value->product->minimum_quantity * $i;
                                                     ?>
-                                                    {{$valueForDisplay}}
-                                                 </option>
+                                                {{$valueForDisplay}}
+                                                </option>
                                                 @endfor
                                         </select>
                                     </div>
                                 </div>
                             </td>
+                            
 
                             <td class="text-al-left invert" id="price{{$value->id}}">
                                 ₹{{$value->product->price_per_kg * $value->quantity / $dividedBy}}</td>
@@ -135,15 +139,16 @@
         <div class="pincode-div pincode-box ">
             <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only (785001)</h4>
 
-            <input class="pincode-field" type="number" name="pincode" id="pincode" placeholder="Enter your Jorhat area pincode" required="">
+            <input class="pincode-field" type="number" name="pincode" id="pincode"
+                placeholder="Enter your Jorhat area pincode" required="">
 
             <button class="pincode-field-button" onclick="checkPincode()" id="verifyPincodeButton">Verify</button>
             <button class="pincode-field-button" onclick="editPincode()" id="editPincodeButton"
                 style="display: none;">Edit Pincode</button>
-                <img src="{{asset('images/25.gif')}}" id="preloaderPincode" style="display: none; height: 30px;">
+            <img src="{{asset('images/25.gif')}}" id="preloaderPincode" style="display: none; height: 30px;">
 
             <p style="color: red; display:none;" id="pincodeStatus"></p>
-		</div>
+        </div>
         <?php
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
@@ -152,25 +157,27 @@
         <div class="checkout-left" id="addressPayment" style="display: none;">
             <div class="address_form_agile">
                 <h4>Add a new Details</h4>
-                <form action="{{url('post_orders')}}" method="post" id="paymentForm" class="creditly-card-form agileinfo_form">
-                @csrf
-                <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" />
-                <input type="hidden" id="key" name="key" value="TOQkozk8" />
-                <input type="hidden" id="salt" name="salt" value="azZk130FkV" />
-                <input type="hidden" id="txnid" name="txnid" value="{{$order_id}}" />
-                <input type="hidden" id="hash" name="hash" value=""/>
-                <input type="hidden" id="userId" name="userId" value="{{auth()->user()->id}}"/>
+                <form action="{{url('post_orders')}}" method="post" id="paymentForm"
+                    class="creditly-card-form agileinfo_form">
+                    @csrf
+                    <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" />
+                    <input type="hidden" id="key" name="key" value="TOQkozk8" />
+                    <input type="hidden" id="salt" name="salt" value="azZk130FkV" />
+                    <input type="hidden" id="txnid" name="txnid" value="{{$order_id}}" />
+                    <input type="hidden" id="hash" name="hash" value="" />
+                    <input type="hidden" id="userId" name="userId" value="{{auth()->user()->id}}" />
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
                         <div class="information-wrapper">
                             <div class="first-row">
                                 <div class="controls">
-                                    <input class="billing-address-name" type="text" name="name" id="name" placeholder="Full Name"
-                                        required="">
+                                    <input class="billing-address-name" type="text" name="name" id="name"
+                                        placeholder="Full Name" required="">
                                 </div>
                                 <div class="w3_agileits_card_number_grids">
                                     <div class="w3_agileits_card_number_grid_left">
                                         <div class="controls">
-                                            <input type="text" placeholder="Mobile Number" id="mobile" name="mobile" required="">
+                                            <input type="text" placeholder="Mobile Number" id="mobile" name="mobile"
+                                                required="">
                                         </div>
                                     </div>
                                     <div class="w3_agileits_card_number_grid_left">
@@ -180,12 +187,14 @@
                                     </div>
                                     <div class="w3_agileits_card_number_grid_right">
                                         <div class="controls">
-                                            <input type="textarea" id="address" placeholder="Full Address" name="address" required="">
+                                            <input type="textarea" id="address" placeholder="Full Address"
+                                                name="address" required="">
                                         </div>
                                     </div>
                                     <div class="w3_agileits_card_number_grid_right">
                                         <div class="controls">
-                                            <input id="landmark" type="text" placeholder="Landmark" name="landmark" required="">
+                                            <input id="landmark" type="text" placeholder="Landmark" name="landmark"
+                                                required="">
                                         </div>
                                     </div>
                                     <div class="clear"> </div>
@@ -204,19 +213,31 @@
                                 </div>
                                 <div class="clear"> </div>
                                 <div class="controls">
-                                <h4>Payment Method</h4>
-                                <h5 style="    color: #ff7600;
-    margin-bottom: 10px;">*Pay online to get faster processing of your order</h5>
-                                    <input type="radio" style="width: auto;" name="payment_method" id="payment_method" required="" value="1" checked>Pay Now
-                                    <br><input type="radio" style="width: auto;" name="payment_method" id="payment_method" required="" value="2">Cash On Delivery
+                                    <h4>Payment Method</h4>
+                                    <h5 style="    color: #ff7600;  margin-bottom: 10px;">*Pay online to get faster processing of your order</h5>
+                                    <input type="radio" style="width: auto;" name="payment_method" id="payment_method"
+                                        required="" value="1" checked>Pay Now
+                                    
+                                        <br>
+                                    @if($catCheck == 0)
+                                        <input type="radio" style="width: auto;" name="payment_method"
+                                        id="payment_method" required="" value="2">Cash On Delivery
+                                        @else
+                                        <h5 style="    color: #ff0000;    font-size: 16px;    margin-top: 10px;">#Cash on delivery is not available when you order <b>Resturant Food </b></h5>
+                                        @endif
+                                        
                                 </div>
                             </div>
+
                             <input type="hidden" value="" name="deliveryPincode" id="deliveryPincode">
                             <input type="hidden" id="subtotalOrder" name="subtotalOrder" value="{{$total}}">
                             <input type="hidden" id="deliveryChargeOrder" name="deliveryChargeOrder" value="0">
                             <input type="hidden" id="finalPriceOrder" name="finalPriceOrder" value="0">
-                            <button type="button"class="submit check_out" id="makePaymentButton" onclick="makePaymentHideButton()">Place Order <span class="fa fa-hand-o-right" aria-hidden="true"></span></button>
-                            <img src="{{asset('images/25.gif')}}" id="preloadermakePaymentButton" style="display: none; height: 30px;">
+                            <button type="button" class="submit check_out" id="makePaymentButton"
+                                onclick="makePaymentHideButton()">Place Order <span class="fa fa-hand-o-right"
+                                    aria-hidden="true"></span></button>
+                            <img src="{{asset('images/25.gif')}}" id="preloadermakePaymentButton"
+                                style="display: none; height: 30px;">
                         </div>
                     </div>
                 </form>
@@ -239,16 +260,15 @@ function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
     var old_quantity = document.getElementById(y).value;
     var oldprice = (old_quantity * price_per_kg);
     var newprice = (quantity * price_per_kg);
-    if(Number(quantity_type) == 1)
-    {
-         oldprice = oldprice / 1000;
-         newprice = newprice / 1000;
+    if (Number(quantity_type) == 1) {
+        oldprice = oldprice / 1000;
+        newprice = newprice / 1000;
     }
     var z = 'price' + cart_id;
 
     $.ajax({
         type: "POST",
-        url: "http://127.0.0.1/update_cart",
+        url: "http://127.0.0.1:8000/update_cart",
         data: {
             _token: document.getElementById('token').value,
             cart_id: cart_id,
@@ -259,16 +279,17 @@ function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
                 'subtotal').value) - oldprice + newprice);
             document.getElementById('subtotal').value = Number(document.getElementById('subtotal').value) -
                 oldprice + newprice;
-            document.getElementById('subtotalOrder').value =  document.getElementById('subtotal').value;
-                    
+            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
+
             if (Number(document.getElementById('deliveryCharge').value) > 0) {
                 document.getElementById('finalPriceText').innerText = '₹' + ((Number(document
                     .getElementById('subtotal').value)) + (Number(document.getElementById(
                     'deliveryCharge').value)));
                 document.getElementById('finalPrice').value = (Number(document.getElementById('subtotal')
                     .value)) + (Number(document.getElementById('deliveryCharge').value));
-                document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
-                
+                document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice')
+                    .value;
+
             }
             document.getElementById(z).innerText = '₹' + newprice;
             document.getElementById(y).value = quantity;
@@ -299,7 +320,7 @@ function checkPincode() {
         console.log(pin);
         $.ajax({
             type: "GET",
-            url: "http://127.0.0.1/check_pincode/" +
+            url: "http://127.0.0.1:8000/check_pincode/" +
                 pin, // You add the id of the post and the update datetime to the url as well
             success: function(response) {
                 document.getElementById('pincodeStatus').innerText = response.data.message;
@@ -320,10 +341,12 @@ function checkPincode() {
                     document.getElementById('preloaderPincode').style.display = 'none';
                     document.getElementById('deliveryPincode').value = pin;
 
-                    document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice').value;
-                    document.getElementById('subtotalOrder').value =  document.getElementById('subtotal').value;
-                    document.getElementById('deliveryChargeOrder').value =  response.data.delivery_charge;
-                    
+                    document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice')
+                        .value;
+                    document.getElementById('subtotalOrder').value = document.getElementById('subtotal')
+                        .value;
+                    document.getElementById('deliveryChargeOrder').value = response.data.delivery_charge;
+
                 } else {
                     document.getElementById('deliveryChargeText').innerText = 'Enter Pincode First';
                     document.getElementById('deliveryCharge').value = 0;
@@ -334,7 +357,7 @@ function checkPincode() {
                     document.getElementById('preloaderPincode').style.display = 'none';
 
                     document.getElementById('finalPriceOrder').value = 0;
-                    document.getElementById('deliveryChargeOrder').value =  0;
+                    document.getElementById('deliveryChargeOrder').value = 0;
                 }
                 // swal({
                 //     title: response.data.status,
@@ -354,103 +377,96 @@ function editPincode() {
 }
 
 async function makePaymentHideButton() {
-     if ($("#name").val() && $("#mobile").val() && $("#city").val() && $("#landmark").val() && $("#address").val() && $("#email").val()) 
-     {
+    if ($("#name").val() && $("#mobile").val() && $("#city").val() && $("#landmark").val() && $("#address").val() &&
+        $("#email").val()) {
 
-    if(Number(document.getElementById('finalPriceOrder').value) < 220)
-    {
-        swal({
-                    title: "Your order value is too low",
-                    text: "Minimum cart value should be atleast Rs.200",
-                    icon: "error",
-                });
-    }
-    else
-    {
-    // document.getElementById('preloadermakePaymentButton').style.display = 'block';
-    // document.getElementById('makePaymentButton').style.display = 'none';
-    var paymentMethod = 2;
-    var ele = document.getElementsByName('payment_method'); 
-              
-              for(i = 0; i < ele.length; i++) { 
-                  if(ele[i].checked) 
-                     paymentMethod = ele[i].value;
-              } 
-    if(Number(paymentMethod) == 1)
-    {
-        let hashValue = await getHash();
-        //this.launchBOLT(hashValue);
-    }
-    else
-        document.getElementById('paymentForm').submit();
-    }
-     }
-        else{
+        if (Number(document.getElementById('finalPriceOrder').value) < 220) {
             swal({
-                title: "Add complete address details",
-                text: "Please fill up the complete address details form",
+                title: "Your order value is too low",
+                text: "Minimum cart value should be atleast Rs.200",
                 icon: "error",
             });
+        } else {
+            // document.getElementById('preloadermakePaymentButton').style.display = 'block';
+            // document.getElementById('makePaymentButton').style.display = 'none';
+            var paymentMethod = 2;
+            var ele = document.getElementsByName('payment_method');
+
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    paymentMethod = ele[i].value;
+            }
+            if (Number(paymentMethod) == 1) {
+                let hashValue = await getHash();
+                //this.launchBOLT(hashValue);
+            } else
+                document.getElementById('paymentForm').submit();
         }
+    } else {
+        swal({
+            title: "Add complete address details",
+            text: "Please fill up the complete address details form",
+            icon: "error",
+        });
+    }
 }
 
-function getHash()
-{
+function getHash() {
     console.log("332")
     var s2 = ($('#txnid').val()).substr(1)
-    var token=document.getElementById('token').value
+    var token = document.getElementById('token').value
     $.ajax({
-          url: 'http://127.0.0.1/getHash',
-          type: 'post',
-          data: { 
+        url: 'http://127.0.0.1:8000/getHash',
+        type: 'post',
+        data: {
             _token: document.getElementById('token').value,
             key: $('#key').val(),
-			salt: $('#salt').val(),
-			txnid: $('#txnid').val(),
-			amount: $('#finalPriceOrder').val(),
-		    pinfo: $('#txnid').val(),
+            salt: $('#salt').val(),
+            txnid: $('#txnid').val(),
+            amount: $('#finalPriceOrder').val(),
+            pinfo: $('#txnid').val(),
             fname: $('#name').val(),
-			email: $('#email').val(),
-			mobile: $('#mobile').val(),
-			address: $('#address').val(),
-			udf5: $('#udf5').val(),
-			landmark: $('#landmark').val(),
+            email: $('#email').val(),
+            mobile: $('#mobile').val(),
+            address: $('#address').val(),
+            udf5: $('#udf5').val(),
+            landmark: $('#landmark').val(),
             city: $('#city').val(),
             deliveryPincode: $('#deliveryPincode').val(),
             address_type: $('#address_type').val(),
             subtotalOrder: $('#subtotalOrder').val(),
             deliveryChargeOrder: $('#deliveryChargeOrder').val()
-          },
-          success: function(json) {
+        },
+        success: function(json) {
             console.log(json)
             document.getElementById('hash').value = json.data.message;
             bolt.launch({
-	key: $('#key').val(),
-	txnid: $('#txnid').val(), 
-	hash: json.data.message,
-	amount: $('#finalPriceOrder').val(),
-	firstname: $('#name').val(),
-	email: $('#email').val(),
-	phone: $('#mobile').val(),
-	productinfo: $('#txnid').val(),
-	udf5: $('#udf5').val(),
-	surl : 'http://127.0.0.1/paymentPayU?_token='+token,
-	furl: 'http://127.0.0.1/failed_payment',
-	mode: 'dropout'	
-},{ responseHandler: function(BOLT){
-	console.log( BOLT.response.txnStatus );		
-	if(BOLT.response.txnStatus != 'CANCEL')
-	{
-		
-	}
-},
-	catchException: function(BOLT){
-        console.log("error ", BOLT);
- 		alert( BOLT.message );
-	}
-});
-          }
-        }); 
+                key: $('#key').val(),
+                txnid: $('#txnid').val(),
+                hash: json.data.message,
+                amount: $('#finalPriceOrder').val(),
+                firstname: $('#name').val(),
+                email: $('#email').val(),
+                phone: $('#mobile').val(),
+                productinfo: $('#txnid').val(),
+                udf5: $('#udf5').val(),
+                surl: 'http://127.0.0.1:8000/paymentPayU?_token=' + token,
+                furl: 'http://127.0.0.1:8000/failed_payment',
+                mode: 'dropout'
+            }, {
+                responseHandler: function(BOLT) {
+                    console.log(BOLT.response.txnStatus);
+                    if (BOLT.response.txnStatus != 'CANCEL') {
+
+                    }
+                },
+                catchException: function(BOLT) {
+                    console.log("error ", BOLT);
+                    alert(BOLT.message);
+                }
+            });
+        }
+    });
 }
 
 // function launchBOLT(hasValue)

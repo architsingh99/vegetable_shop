@@ -317,7 +317,7 @@ function checkPincode() {
         console.log(pin);
         $.ajax({
             type: "GET",
-            url: "http://127.0.0.1/check_pincode/" +
+            url: "http://127.0.0.1:8000/check_pincode/" +
                 pin, // You add the id of the post and the update datetime to the url as well
             success: function(response) {
                 var deliveryPrice = response.data.delivery_charge * (deliveryDiscount / 100);
@@ -370,7 +370,7 @@ function getHash() {
     console.log("332")
     var s2 = ($('#txnid').val()).substr(1)
     $.ajax({
-        url: 'http://127.0.0.1/getHash2',
+        url: 'http://127.0.0.1:8000/getHash2',
         type: 'post',
         data: {
             _token: document.getElementById('token').value,
@@ -406,9 +406,9 @@ function getHash() {
                 phone: $('#mobile').val(),
                 productinfo: $('#txnid').val(),
                 udf5: $('#udf5').val(),
-                surl: 'http://127.0.0.1/paymentPayUSubscription?_token=' + document
+                surl: 'http://127.0.0.1:8000/paymentPayUSubscription?_token=' + document
                     .getElementById('token').value,
-                furl: 'http://127.0.0.1/failed_payment',
+                furl: 'http://127.0.0.1:8000/failed_payment',
                 mode: 'dropout'
             }, {
                 responseHandler: function(BOLT) {

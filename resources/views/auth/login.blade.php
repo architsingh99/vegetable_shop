@@ -175,7 +175,7 @@
     document.getElementById('preloaderOTP').style.display = 'block';
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1/send_otp/" +
+        url: "http://127.0.0.1:8000/send_otp/" +
                 mobile + "/" + key,
         success: function(response) {
             document.getElementById('phone').readOnly = true;
@@ -221,7 +221,7 @@ function loginOtp()
     document.getElementById('preloaderLogin').style.display = 'block';
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1/loginViaOtp/" +
+        url: "http://127.0.0.1:8000/loginViaOtp/" +
                 mobile + "/" + otp,
                 success: function(response) {
                     if(response.data.status == 400) {
