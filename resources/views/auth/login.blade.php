@@ -20,9 +20,9 @@
                 </div>
 
                 <div class="card-body phonebtn">
-                    <!--<button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-primary phonelog">-->
-                    <!--    Sign in with Phone Number-->
-                    <!--</button>-->
+                    <button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-primary phonelog">
+                        Sign in with Phone Number
+                    </button>
                 </div>
             </div>
             <br>
@@ -38,7 +38,8 @@
                 {{ $message }}
                 @endif
                 <div class="form-group row">
-             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number / Email Address') }}</label>
+                    <label for="email"
+                        class="col-md-4 col-form-label text-md-right">{{ __('Phone Number / Email Address') }}</label>
 
                     <div class="col-md-6">
                         <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
@@ -124,29 +125,32 @@
                     </div>
 
                     <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
-                        <button onclick="sendOTP(0)" type="button" id="sendOtpButton" class="btn btn-primary">
+                        <button onclick="sendOTP(0)" type="button" id="sendOtpButton" class="btn btn-primary" style="margin: auto;">
                             Send OTP
                         </button>
-                        <button  onclick="editNumber()" type="button" id="editNumberButton" class="btn btn-primary" style="margin: auto;display: none;">
+                        <button onclick="editNumber()" type="button" id="editNumberButton" class="btn btn-primary"
+                            style="margin: auto;display: none;">
                             Edit Number
                         </button>
-                        <button  onclick="sendOTP(1)" type="button" id="resendOtpButton" class="btn btn-primary" style="margin: auto; display: none;">
+                        <button onclick="sendOTP(1)" type="button" id="resendOtpButton" class="btn btn-primary"
+                            style="margin: auto; display: none;">
                             Resend OTP
                         </button>
-                        <img src="{{asset('images/25.gif')}}" id="preloaderOTP" style="display: none; height: 30px;">
+                        <img src="{{asset('images/25.gif')}}" id="preloaderOTP" style="display: none;margin: auto; height: 36px;">
                     </div>
                 </div>
                 <div class="form-group row" style="display: none;" id="otpForm">
                     <div style=" margin: auto; float: inherit;" class="col-md-4">
-                        <input id="otp" type="phone" class="form-control" name="phone"
-                            required autocomplete="phone" autofocus placeholder="Enter OTP">
+                        <input id="otp" type="phone" class="form-control" name="phone" required autocomplete="phone"
+                            autofocus placeholder="Enter OTP">
                     </div>
 
                     <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
-                     <button  type="button" onclick="loginOtp()" id="loginButton" class="btn btn-primary">
+                        <button type="button" onclick="loginOtp()" id="loginButton" class="btn btn-primary">
                             Login
                         </button>
-                        <img src="{{asset('images/25.gif')}}" id="preloaderLogin" style="text-align: center; display: none; height: 30px;">
+                        <img src="{{asset('images/25.gif')}}" id="preloaderLogin"
+                            style="text-align: center; display: none; height: 30px;">
                     </div>
                 </div>
             </div>
@@ -158,87 +162,83 @@
     </div>
 
     <script>
-        function sendOTP(key) {
-    //alert(cart_id)
-    var mobile = document.getElementById('phone').value;
-    if(mobile == "" || mobile == null || mobile.length < 10)
-    {
-        swal({
-                    title: "Error",
-                    text: "Please enter valid mobile number",
-                    icon: "error",
-                });
-    }
-    else
-    {
-        document.getElementById('sendOtpButton').style.display = 'none';
-    document.getElementById('preloaderOTP').style.display = 'block';
-    $.ajax({
-        type: "GET",
-        url: "http://127.0.0.1:8000/send_otp/" +
-                mobile + "/" + key,
-        success: function(response) {
-            document.getElementById('phone').readOnly = true;
-            document.getElementById('editNumberButton').style.display = 'block';
-    document.getElementById('preloaderOTP').style.display = 'none';
-    document.getElementById('resendOtpButton').style.display = 'block';
-    document.getElementById('otpForm').style.display = 'block';
+    function sendOTP(key) {
+        //alert(cart_id)
+        var mobile = document.getElementById('phone').value;
+        if (mobile == "" || mobile == null || mobile.length < 10) {
             swal({
-                    title: "Success",
-                    text: "OTP sent to your mobile.",
-                    icon: "success",
-                });
-        }
-    });
-    }
-}
-
-function editNumber()
-{
-    document.getElementById('phone').readOnly = false;
-            document.getElementById('editNumberButton').style.display = 'none';
-    document.getElementById('preloaderOTP').style.display = 'none';
-    document.getElementById('resendOtpButton').style.display = 'none';
-    document.getElementById('otpForm').style.display = 'none';
-    document.getElementById('sendOtpButton').style.display = 'block';
-}
-
-function loginOtp()
-{
-    var mobile = document.getElementById('phone').value;
-    var otp = document.getElementById('otp').value;
-    if(otp == "" || otp == null)
-    {
-        swal({
-                    title: "Error",
-                    text: "Please enter valid otp.",
-                    icon: "error",
-                });
-    }
-    else
-    {
-        document.getElementById('loginButton').style.display = 'none';
-    document.getElementById('preloaderLogin').style.display = 'block';
-    $.ajax({
-        type: "GET",
-        url: "http://127.0.0.1:8000/loginViaOtp/" +
-                mobile + "/" + otp,
+                title: "Error",
+                text: "Please enter valid mobile number",
+                icon: "error",
+            });
+        } else {
+            document.getElementById('sendOtpButton').style.display = 'none';
+            document.getElementById('preloaderOTP').style.display = 'block';
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8000/send_otp/" +
+                    mobile + "/" + key,
                 success: function(response) {
-                    if(response.data.status == 400) {
-                    swal({
-                    title: "Error",
-                    text: "Please enter valid otp.",
-                    icon: "error",
-                });
-                    }
-                    else
-                    {
-                            let url = "http://bazaar24x7.in/";
-                            // url = url.replace(':id', id);
-                            document.location.href=url;
-                    }
+                    console.log("181", response)
+                }
+
+            });
+            document.getElementById('phone').readOnly = true;
+            
+            setTimeout(function(){
+            document.getElementById('preloaderOTP').style.display = 'none';
+            document.getElementById('editNumberButton').style.display = 'block';
+            document.getElementById('resendOtpButton').style.display = 'block';
+            document.getElementById('otpForm').style.display = 'block';
+            swal({
+                title: "Success",
+                text: "OTP sent to your mobile.",
+                icon: "success",
+            });    
+        },7000);
+            
         }
-    });
     }
-}
+
+    function editNumber() {
+        document.getElementById('phone').readOnly = false;
+        document.getElementById('editNumberButton').style.display = 'none';
+        document.getElementById('preloaderOTP').style.display = 'none';
+        document.getElementById('resendOtpButton').style.display = 'none';
+        document.getElementById('otpForm').style.display = 'none';
+        document.getElementById('sendOtpButton').style.display = 'block';
+    }
+
+    function loginOtp() {
+        var mobile = document.getElementById('phone').value;
+        var otp = document.getElementById('otp').value;
+        if (otp == "" || otp == null) {
+            swal({
+                title: "Error",
+                text: "Please enter valid otp.",
+                icon: "error",
+            });
+        } else {
+            document.getElementById('loginButton').style.display = 'none';
+            document.getElementById('preloaderLogin').style.display = 'block';
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/loginViaOtp/" +
+                    mobile + "/" + otp,
+                success: function(response) {
+                    if (response.data.status == 400) {
+                        swal({
+                            title: "Error",
+                            text: "Please enter valid otp.",
+                            icon: "error",
+                        });
+                    } else {
+                        let url = "http://bazaar24x7.in/";
+                        // url = url.replace(':id', id);
+                        document.location.href = url;
+                    }
+                }
+            });
+        }
+    }
     </script>

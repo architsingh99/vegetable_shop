@@ -127,6 +127,59 @@
         ]
     },
     {
+        "name": "clicksend/clicksend-php",
+        "version": "v5.0.57",
+        "version_normalized": "5.0.57.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ClickSend/clicksend-php.git",
+            "reference": "4347e268b7a57749e23fbd434f7fe40e96f39b2c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ClickSend/clicksend-php/zipball/4347e268b7a57749e23fbd434f7fe40e96f39b2c",
+            "reference": "4347e268b7a57749e23fbd434f7fe40e96f39b2c",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-json": "*",
+            "ext-mbstring": "*",
+            "guzzlehttp/guzzle": "^6.2",
+            "php": ">=5.5"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "~2.12",
+            "phpunit/phpunit": "^4.8",
+            "squizlabs/php_codesniffer": "~2.6"
+        },
+        "time": "2020-02-05T02:09:06+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "ClickSend\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "proprietary"
+        ],
+        "authors": [
+            {
+                "name": "Swagger and contributors",
+                "homepage": "https://github.com/swagger-api/swagger-codegen"
+            }
+        ],
+        "homepage": "http://swagger.io",
+        "keywords": [
+            "api",
+            "php",
+            "sdk",
+            "swagger"
+        ]
+    },
+    {
         "name": "composer/ca-bundle",
         "version": "1.2.7",
         "version_normalized": "1.2.7.0",
