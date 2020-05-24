@@ -18,6 +18,9 @@ use App\Otp;
 use App\User;
 use App\TempOrder;
 
+use ClickSend;
+use GuzzleHttp;
+
 use GuzzleHttp\Exception\GuzzleException;
 //use GuzzleHttp\Client;
 use Twilio\Rest\Client;
@@ -482,12 +485,12 @@ class VegetableEccomerce extends Controller
 
 
 
-     public function getUserNumber($number, $msg)
+     public function getUserNumber($number, $message)
     {
 //             $curl = curl_init();
-//             $num = $number;
-//             if(strlen($number) > 10)
-//                 $num = substr($number, -10);
+            $num = $number;
+            if(strlen($number) > 10)
+                $num = substr($number, -10);
 // 			curl_setopt_array($curl, array(
 // 				CURLOPT_URL => "https://api.msg91.com/api/v2/sendsms?country=91",
 // 				CURLOPT_RETURNTRANSFER => true,
@@ -516,6 +519,28 @@ class VegetableEccomerce extends Controller
 // 			} else {
 // 				dd("message sent". $response);
 // 			}
+
+$config = ClickSend\Configuration::getDefaultConfiguration()
+              ->setUsername('techservicedock@gmail.com')
+              ->setPassword('1C5ADE71-92BC-D958-E650-DA519C77D317');
+
+
+$apiInstance = new ClickSend\Api\SMSApi(new GuzzleHttp\Client(),$config);
+$msg = new \ClickSend\Model\SmsMessage();
+$msg->setBody($message); 
+$msg->setTo($num);
+$msg->setSource("sdk");
+
+// \ClickSend\Model\SmsMessageCollection | SmsMessageCollection model
+$sms_messages = new \ClickSend\Model\SmsMessageCollection(); 
+$sms_messages->setMessages([$msg]);
+
+try {
+$result = $apiInstance->smsSendPost($sms_messages);
+print_r($result);
+} catch (Exception $e) {
+echo 'Exception when calling SMSApi->smsSendPost: ', $e->getMessage(), PHP_EOL;
+}
     }
 
     public function test(Request $request)

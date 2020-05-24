@@ -20,9 +20,9 @@
                 </div>
 
                 <div class="card-body phonebtn">
-                    <!--<button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-primary phonelog">-->
-                    <!--    Sign in with Phone Number-->
-                    <!--</button>-->
+                    <button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-primary phonelog">-->
+                       Sign in with Phone Number
+                    </button>
                 </div>
             </div>
             <br>
@@ -175,9 +175,10 @@
     document.getElementById('preloaderOTP').style.display = 'block';
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1/send_otp/" +
+        url: "http://localhost:8000/send_otp/" +
                 mobile + "/" + key,
         success: function(response) {
+            console.log("181", response)
             document.getElementById('phone').readOnly = true;
             document.getElementById('editNumberButton').style.display = 'block';
     document.getElementById('preloaderOTP').style.display = 'none';
