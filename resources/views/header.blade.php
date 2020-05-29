@@ -158,7 +158,7 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
                 </nav>
             </div>
         </div>
-        <div class="col-md-1 ">
+        <div  class="col-md-1 pd-0">
 
             <div class="cart-padding top_nav_right">
                 <div class="wthreecartaits wthreecartaits2 cart cart box_1">
@@ -166,7 +166,7 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
                     <input type="hidden" name="cmd" value="_cart">
                     <input type="hidden" name="display" value="1">
                     <a href="{{url('check_out')}}"><button class="w3view-cart" name="submit" value="">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <i class="fa fa-shopping-cart" aria-hidden="true">&nbsp;view cart</i>
                         </button></a>
                     <!-- </form> -->
                 </div>

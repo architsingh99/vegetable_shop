@@ -1,8 +1,10 @@
 @include('../../header')
-<div class="container">
-    <div class="row justify-content-center" style="padding-left: 30%;">
-        <div class="col-md-8">
-            <div class="card">
+
+<div style="    padding-top: 2em;" class="container">
+    <div class="row justify-content-center">
+        <div style="    margin: auto;
+    float: initial;" class="col-md-8">
+            <div class="card" style="text-align:center">
             <h2><div class="card-header">{{ __('Reset Password') }}</div></h2>
             <br><br>
                 <div class="card-body">

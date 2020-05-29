@@ -40,6 +40,10 @@ Route::post('failed_payment', function () {
     return view('failed_payment');
 });
 
+Route::get('utilites', function () {
+    return view('utilities');
+});
+
 Route::get('pay-success/{order_id}', 'VegetableEccomerce@success');
 
 Route::get('send_message/{number}', 'VegetableEccomerce@getUserNumber');
