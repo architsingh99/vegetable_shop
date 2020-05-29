@@ -29,18 +29,19 @@
         </h3>
         <div class="agileinfo-ads-display col-md-12">
             <div class="wrapper">
+            @foreach($utilities as $key => $cat)
                 <div class="col-md-3 men-thumb-item-sale product-men">
                     <div class="men-pro-item simpleCart_shelfItem">
                         <div class="front-item">
-                            <img src="images/k1.jpg" alt="">
+                            <img src="{{ Storage::disk(config('voyager.storage.disk'))->url($cat->image) }}" alt="">
                         </div>
                         <div style="    height: 94px;" class="item-info-product ">
                             <h4 class="h4-design">
-                                Plumber
+                                {{$cat->name}}
                             </h4>
                             <br>
                             <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                <input type="button" data-toggle="modal" data-target="#utilModal" value="View Products"
+                                <input type="button" onclick="saveUtilityId({{$cat->id}})" data-toggle="modal" data-target="#{{$cat->locationRequired ? 'carModal' : 'utilModal' }}" value="View Products"
                                     class="button" />
 
 
@@ -48,7 +49,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 men-thumb-item-sale product-men">
+                @endforeach
+                <!-- <div class="col-md-3 men-thumb-item-sale product-men">
                     <div class="men-pro-item simpleCart_shelfItem">
                         <div class="front-item">
                             <img src="images/k1.jpg" alt="">
@@ -104,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="clearfix"></div>
                 <div class="product-sec1 product-sec2">
                     <div class="col-xs-7 effect-bg">
@@ -132,6 +134,12 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title details">Please fill the all details</h4>
                 </div>
+                <form action="{{url('save_utilities')}}" method="post">
+                @csrf
+                <input type="hidden" id="utility" name="utility">
+                 <input type="hidden" name="pick_location" value="">
+                <input type="hidden" name="drop_location" value="">
+                    
                 <div class="modal-body">
                     <div class="form-group row">
 
@@ -167,11 +175,11 @@
                         <label style="text-align:right" class="col-md-4 col-form-label text-md-right">Messages</label>
 
                         <div class="col-md-6">
-                            <textarea class="form-control" name="" value="" required autocomplete=""></textarea>
+                            <textarea class="form-control" name="message" value="" required autocomplete=""></textarea>
                         </div>
 
                         <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
-                            <button type="button" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary">
                                 Submit
                             </button>
                         </div>
@@ -181,6 +189,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pupup-close" data-dismiss="modal">Close</button>
                 </div>
+                </form>
             </div>
         </div>
 
@@ -198,9 +207,11 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title details">Please fill the all details</h4>
                 </div>
+                <form action="{{url('save_utilities')}}" method="post">
+                @csrf
                 <div class="modal-body">
                     <div class="form-group row">
-
+                    <input type="hidden" id="utility2" name="utility">
                         <label style="text-align:right" class="col-md-4 col-form-label text-md-right">Pick up
                             location</label>
 
@@ -258,9 +269,18 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pupup-close" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-default pupup-close" data-dismiss="modal">Close</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+
+    <script>
+        function saveUtilityId(id)
+        {
+            document.getElementById("utility").value=id;
+            document.getElementById("utility2").value=id;
+        }
+    </script>
     @include('footer')

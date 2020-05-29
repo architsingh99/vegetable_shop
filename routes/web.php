@@ -40,9 +40,11 @@ Route::post('failed_payment', function () {
     return view('failed_payment');
 });
 
-Route::get('utilites', function () {
-    return view('utilities');
-});
+Route::get('utilites', 'VegetableEccomerce@getUtilities');
+
+Route::post('save_utilities', 'VegetableEccomerce@saveUtilities')->middleware('auth');
+
+Route::get('accept', 'VegetableEccomerce@accept')->name('accept');
 
 Route::get('pay-success/{order_id}', 'VegetableEccomerce@success');
 

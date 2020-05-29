@@ -17,6 +17,8 @@ use App\Subscription;
 use App\Otp;
 use App\User;
 use App\TempOrder;
+use App\Utility;
+use App\BookingUtility;
 
 use ClickSend;
 use GuzzleHttp;
@@ -831,6 +833,49 @@ class VegetableEccomerce extends Controller
         $product = DB::table('products')->where('id', $request->id)->first();
         $categories = Category::all();
         return view('details')->with('categories', $categories)->with('product', $product);   
+    }
+
+    public function getUtilities(Request $request)
+    {
+       $utilities = Utility::all();
+           // dd($orders);
+           $categories = Category::all();
+    return view('utilities')->with('categories', $categories)->with('utilities', $utilities);
+          
+    }
+
+    public function saveUtilities(Request $request)
+    {
+            $order = new BookingUtility();
+            $order->name = $request->input('name');
+            $order->phone_number = $request->input('ph_num'); 
+            $order->message = $request->input('message'); 
+            $order->pickup_location = $request->input('pick_location');  
+            $order->drop_location = $request->input('drop_location'); 
+            $order->utility = $request->input('utility');
+            $order->address = $request->input('add');
+            $order->save();
+
+            $message = "Your request has been recieved. Our executive will get in touch with you soon.";
+            $this->getUserNumber($order->phone_number, $message);
+            //$this->sendWhatsAppSMS($order->mobile, $message);
+            $categories = Category::all();
+            return view('success')->with('categories', $categories)->with('message', $message);
+    }
+
+    public function accept(Request $request)
+    {
+        $utilities = DB::table('booking_utilities')
+        ->where('id', $request->id)->get();
+
+        DB::table('booking_utilities')
+            ->where('id', $request->id)
+            ->update(['booking_status' =>'ACCEPTED']);
+        //\Mail::to($orders[0]->user_email)->send(new SendMailable($orders[0]->name, $request->order_id));
+        $message = "Your request has accepted. Thank your for choosing.";
+        $this->getUserNumber($utilities[0]->phone_number, $message);
+        //$this->sendWhatsAppSMS($orders[0]->mobile, $message);
+        return \Redirect::to(URL::previous());    
     }
 
 }

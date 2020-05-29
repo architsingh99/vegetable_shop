@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2020 at 11:39 AM
+-- Generation Time: May 29, 2020 at 10:11 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -21,6 +21,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `vegetables_eccomerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking_utilities`
+--
+
+CREATE TABLE `booking_utilities` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pickup_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `drop_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `booking_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'PENDING',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `utility` int(11) DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `booking_utilities`
+--
+
+INSERT INTO `booking_utilities` (`id`, `name`, `phone_number`, `message`, `pickup_location`, `drop_location`, `booking_status`, `created_at`, `updated_at`, `utility`, `address`) VALUES
+(1, 'Archit Singh1', '7002088304', 'test', NULL, NULL, 'ACCEPTED', '2020-05-29 14:28:22', '2020-05-29 14:28:22', 1, 'digboi');
 
 -- --------------------------------------------------------
 
@@ -291,7 +318,25 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (130, 11, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 19),
 (131, 11, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 20),
 (132, 11, 'subscription_belongsto_user_relationship', 'relationship', 'users', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 21),
-(133, 11, 'subscription_belongsto_product_relationship', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"product_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 22);
+(133, 11, 'subscription_belongsto_product_relationship', 'relationship', 'products', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"product_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"carts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 22),
+(134, 12, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
+(135, 12, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '{}', 2),
+(136, 12, 'image', 'image', 'Image', 0, 1, 1, 1, 1, 1, '{}', 3),
+(137, 12, 'locationRequired', 'radio_btn', 'LocationRequired', 0, 1, 1, 1, 1, 1, '{\"default\":\"0\",\"options\":{\"0\":\"No\",\"1\":\"Yes\"}}', 4),
+(138, 12, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 5),
+(139, 12, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 6),
+(140, 13, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
+(141, 13, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '{}', 2),
+(142, 13, 'phone_number', 'text', 'Phone Number', 0, 1, 1, 1, 1, 1, '{}', 3),
+(143, 13, 'message', 'text', 'Message', 0, 1, 1, 1, 1, 1, '{}', 4),
+(144, 13, 'pickup_location', 'text', 'Pickup Location', 0, 1, 1, 1, 1, 1, '{}', 5),
+(145, 13, 'drop_location', 'text', 'Drop Location', 0, 1, 1, 1, 1, 1, '{}', 6),
+(146, 13, 'booking_status', 'text', 'Booking Status', 0, 1, 1, 1, 1, 1, '{}', 7),
+(147, 13, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 8),
+(148, 13, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 9),
+(149, 13, 'booking_utility_belongsto_utility_relationship', 'relationship', 'utilities', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Utility\",\"table\":\"utilities\",\"type\":\"belongsTo\",\"column\":\"utility\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"booking_utilities\",\"pivot\":\"0\",\"taggable\":\"0\"}', 10),
+(150, 13, 'utility', 'text', 'Utility', 0, 1, 1, 1, 1, 1, '{}', 10),
+(151, 13, 'address', 'text', 'Address', 0, 1, 1, 1, 1, 1, '{}', 11);
 
 -- --------------------------------------------------------
 
@@ -332,7 +377,9 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (8, 'orders', 'orders', 'Order', 'Orders', 'voyager-rum', 'App\\Order', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-07 01:55:25', '2020-05-13 01:16:03'),
 (9, 'suborders', 'suborders', 'Suborder', 'Suborders', 'voyager-lab', 'App\\Suborder', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-07 02:23:36', '2020-05-14 13:32:47'),
 (10, 'sub_categories', 'sub-categories', 'Sub Category', 'Sub Categories', 'voyager-data', 'App\\SubCategory', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-14 10:21:15', '2020-05-14 10:23:44'),
-(11, 'subscriptions', 'subscriptions', 'Subscription', 'Subscriptions', 'voyager-treasure-open', 'App\\Subscription', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-17 04:01:49', '2020-05-17 04:03:55');
+(11, 'subscriptions', 'subscriptions', 'Subscription', 'Subscriptions', 'voyager-treasure-open', 'App\\Subscription', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-17 04:01:49', '2020-05-17 04:03:55'),
+(12, 'utilities', 'utilities', 'Utility', 'Utilities', 'voyager-list-add', 'App\\Utility', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-29 13:39:52', '2020-05-29 13:53:45'),
+(13, 'booking_utilities', 'booking-utilities', 'Booking Utility', 'Booking Utilities', 'voyager-pie-chart', 'App\\BookingUtility', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-29 13:45:47', '2020-05-29 14:30:01');
 
 -- --------------------------------------------------------
 
@@ -412,7 +459,9 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (16, 1, 'Orders', '', '_self', 'voyager-rum', NULL, NULL, 19, '2020-05-07 01:55:26', '2020-05-07 01:55:26', 'voyager.orders.index', NULL),
 (17, 1, 'Suborders', '', '_self', 'voyager-lab', NULL, NULL, 20, '2020-05-07 02:23:37', '2020-05-07 02:23:37', 'voyager.suborders.index', NULL),
 (18, 1, 'Sub Categories', '', '_self', 'voyager-data', NULL, NULL, 21, '2020-05-14 10:21:15', '2020-05-14 10:21:15', 'voyager.sub-categories.index', NULL),
-(19, 1, 'Subscriptions', '', '_self', 'voyager-treasure-open', NULL, NULL, 22, '2020-05-17 04:01:50', '2020-05-17 04:01:50', 'voyager.subscriptions.index', NULL);
+(19, 1, 'Subscriptions', '', '_self', 'voyager-treasure-open', NULL, NULL, 22, '2020-05-17 04:01:50', '2020-05-17 04:01:50', 'voyager.subscriptions.index', NULL),
+(20, 1, 'Utilities', '', '_self', NULL, NULL, NULL, 23, '2020-05-29 13:39:53', '2020-05-29 13:39:53', 'voyager.utilities.index', NULL),
+(21, 1, 'Booking Utilities', '', '_self', 'voyager-pie-chart', NULL, NULL, 24, '2020-05-29 13:45:47', '2020-05-29 13:45:47', 'voyager.booking-utilities.index', NULL);
 
 -- --------------------------------------------------------
 
@@ -570,7 +619,10 @@ INSERT INTO `otps` (`id`, `mobile`, `otp`, `status`, `created_at`, `updated_at`)
 (49, '8892793488', 585510, 1, '2020-05-13 12:24:21', '2020-05-13 12:24:21'),
 (50, '9971085036', 412075, 1, '2020-05-13 21:43:49', '2020-05-13 21:43:49'),
 (51, '6001468151', 869394, 1, '2020-05-13 21:46:37', '2020-05-13 21:46:37'),
-(52, '9435095921', 850292, 2, '2020-05-13 21:53:23', '2020-05-13 21:53:23');
+(52, '9435095921', 850292, 2, '2020-05-13 21:53:23', '2020-05-13 21:53:23'),
+(53, '7002088304', 456933, 1, '2020-05-24 13:38:15', '2020-05-24 13:38:15'),
+(54, '7002088304', 975234, 1, '2020-05-24 13:55:36', '2020-05-24 13:55:36'),
+(55, '7002088304', 771028, 1, '2020-05-24 13:57:12', '2020-05-24 13:57:12');
 
 -- --------------------------------------------------------
 
@@ -719,7 +771,17 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (63, 'read_subscriptions', 'subscriptions', '2020-05-17 04:01:50', '2020-05-17 04:01:50'),
 (64, 'edit_subscriptions', 'subscriptions', '2020-05-17 04:01:50', '2020-05-17 04:01:50'),
 (65, 'add_subscriptions', 'subscriptions', '2020-05-17 04:01:50', '2020-05-17 04:01:50'),
-(66, 'delete_subscriptions', 'subscriptions', '2020-05-17 04:01:50', '2020-05-17 04:01:50');
+(66, 'delete_subscriptions', 'subscriptions', '2020-05-17 04:01:50', '2020-05-17 04:01:50'),
+(67, 'browse_utilities', 'utilities', '2020-05-29 13:39:52', '2020-05-29 13:39:52'),
+(68, 'read_utilities', 'utilities', '2020-05-29 13:39:52', '2020-05-29 13:39:52'),
+(69, 'edit_utilities', 'utilities', '2020-05-29 13:39:52', '2020-05-29 13:39:52'),
+(70, 'add_utilities', 'utilities', '2020-05-29 13:39:52', '2020-05-29 13:39:52'),
+(71, 'delete_utilities', 'utilities', '2020-05-29 13:39:52', '2020-05-29 13:39:52'),
+(72, 'browse_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
+(73, 'read_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
+(74, 'edit_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
+(75, 'add_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
+(76, 'delete_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47');
 
 -- --------------------------------------------------------
 
@@ -802,7 +864,17 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (63, 1),
 (64, 1),
 (65, 1),
-(66, 1);
+(66, 1),
+(67, 1),
+(68, 1),
+(69, 1),
+(70, 1),
+(71, 1),
+(72, 1),
+(73, 1),
+(74, 1),
+(75, 1),
+(76, 1);
 
 -- --------------------------------------------------------
 
@@ -1151,9 +1223,37 @@ CREATE TABLE `user_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `utilities`
+--
+
+CREATE TABLE `utilities` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `locationRequired` int(11) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `utilities`
+--
+
+INSERT INTO `utilities` (`id`, `name`, `image`, `locationRequired`, `created_at`, `updated_at`) VALUES
+(1, 'www', 'utilities\\May2020\\8fnK5N60oLI3isj3sINF.png', 0, '2020-05-29 13:54:11', '2020-05-29 13:54:11');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `booking_utilities`
+--
+ALTER TABLE `booking_utilities`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `carts`
@@ -1321,8 +1421,20 @@ ALTER TABLE `user_roles`
   ADD KEY `user_roles_role_id_index` (`role_id`);
 
 --
+-- Indexes for table `utilities`
+--
+ALTER TABLE `utilities`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `booking_utilities`
+--
+ALTER TABLE `booking_utilities`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `carts`
@@ -1340,13 +1452,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1364,7 +1476,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1382,7 +1494,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `payu_payments`
@@ -1394,7 +1506,7 @@ ALTER TABLE `payu_payments`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `pincodes`
@@ -1455,6 +1567,12 @@ ALTER TABLE `translations`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+
+--
+-- AUTO_INCREMENT for table `utilities`
+--
+ALTER TABLE `utilities`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
