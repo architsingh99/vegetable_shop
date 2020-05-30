@@ -41,7 +41,7 @@
                             </h4>
                             <br>
                             <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                <input type="button" onclick="saveUtilityId({{$cat->id}})" data-toggle="modal" data-target="#{{$cat->locationRequired ? 'carModal' : 'utilModal' }}" value="View Products"
+                                <input type="button" onclick="saveUtilityId({{$cat->id}})" data-toggle="modal" data-target="#{{$cat->locationRequired ? 'carModal' : 'utilModal' }}" value="Book now"
                                     class="button" />
 
 
@@ -179,9 +179,14 @@
                         </div>
 
                         <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
+                             @if (!Auth::check())
+                                <a href="{{url('login')}}"><input type="button" name="submit" value="Login Required"
+                                        class="btn btn-primary"/></a>
+                                @else
                             <button type="submit" class="btn btn-primary">
                                 Submit
                             </button>
+                            @endif
                         </div>
                     </div>
 
@@ -256,14 +261,18 @@
                         <label style="text-align:right" class="col-md-4 col-form-label text-md-right">Messages</label>
 
                         <div class="col-md-6">
-                            <textarea class="form-control" name="" value="" required autocomplete="">
-                       </textarea>
+                            <textarea class="form-control" name="message" value="" required autocomplete=""></textarea>
                         </div>
 
                         <div style="text-align: center; margin-top: 1em;" class="col-md-12 offset-md-4">
-                            <button type="button" class="btn btn-primary">
+                             @if (!Auth::check())
+                                <a href="{{url('login')}}"><input type="button" name="submit" value="Login Required"
+                                        class="btn btn-primary" /></a>
+                                @else
+                            <button type="submit" class="btn btn-primary">
                                 Submit
                             </button>
+                            @endif
                         </div>
                     </div>
 
