@@ -80,16 +80,16 @@ class VegetableEccomerce extends Controller
 
     public function get(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::where('is_restuarnt', '0')->get();
         $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(10);
         $msg = "Welcome To Bazaar24x7";
         //dd($products[0]->categories);
-       return view('welcome')->with('categories', $categories)->with('products', $products)->with('msg', $msg);
+       return view('welcome')->with('categories', $categories)->with('categories2', $categories)->with('products', $products)->with('msg', $msg);
     }
 
     public function categoriesGet(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::where('is_restuarnt', '0')->get();
         $categoryData = Category::where('id', (int)$request->id)->get();
         $products = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->get();
         $productsSlider = Product::where('category', (int)$request->id)->orderBy('created_at', 'desc')->paginate(10);
@@ -148,7 +148,7 @@ class VegetableEccomerce extends Controller
     public function checkout(Request $request)
     {
         //$userId = Auth::user()->id;
-        $categories = Category::all();
+        $categories = Category::where('is_restuarnt', '0')->get();
         $checkout = Cart::with('product')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         //dd($checkout);
         return view('checkout')->with('checkout', $checkout)->with('categories', $categories);
@@ -336,7 +336,7 @@ class VegetableEccomerce extends Controller
             $message = "Your order has been successfully recieved. Your ORDER ID is " . $order->order_id .". Kindly pay Rs. ". $order->total_price." at the time of delivery.  Thank you for shopping with us.";
             $this->getUserNumber($order->mobile, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
-            $categories = Category::all();
+            $categories = Category::where('is_restuarnt', '0')->get();
             return view('success')->with('categories', $categories)->with('message', $message);
          }catch (\Exception $e) {
             dd($e);
@@ -349,7 +349,7 @@ class VegetableEccomerce extends Controller
             $message = "Your subscription has been successfully recieved. Your subscription ID is " . $order->order_id .". Kindly pay Rs. ". $order->total_price." at the time of delivery.  Thank you for shopping with us.";
             $this->getUserNumber($order->mobile, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
-            $categories = Category::all();
+            $categories = Category::where('is_restuarnt', '0')->get();
             return view('success')->with('categories', $categories)->with('message', $message);
          }catch (\Exception $e) {
             dd($e);
@@ -382,7 +382,7 @@ class VegetableEccomerce extends Controller
             $message = "Your order has been successfully recieved. Your ORDER ID is " . $order->order_id .".  Thank you for shopping with us.";
             $this->getUserNumber($order->mobile, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
-            $categories = Category::all();
+            $categories = Category::where('is_restuarnt', '0')->get();
             return view('success')->with('categories', $categories)->with('message', $message);
          }catch (\Exception $e) {
             dd($e);
@@ -395,7 +395,7 @@ class VegetableEccomerce extends Controller
             $message = "Your subscription has been successfully recieved. Your subscription ID is " . $order->order_id .".  Thank you for shopping with us.";
             $this->getUserNumber($order->mobile, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
-            $categories = Category::all();
+            $categories = Category::where('is_restuarnt', '0')->get();
             return view('success')->with('categories', $categories)->with('message', $message);
          }catch (\Exception $e) {
             dd($e);
@@ -477,7 +477,7 @@ class VegetableEccomerce extends Controller
     //         $message = "Your payment has been successfully recieved. Your ORDER ID is " . $request->order_id ." and TRANSACTION ID is " . $request['payment_id'] .". It will be delivered in approximately " . $deliverTime .". Thank you for shopping with us.";
     //         $this->getUserNumber($order[0]->mobile, $message);
     //         //$this->sendWhatsAppSMS($order[0]->mobile, $message);
-    //         $categories = Category::all();
+    //         $categories = Category::where('is_restuarnt', '0')->get();
     //            return view('success')->with('categories', $categories)->with('message', $message);
     //        } 
     //      }catch (\Exception $e) {
@@ -591,7 +591,7 @@ class VegetableEccomerce extends Controller
        $orders = DB::table('orders')
             ->where('user_id', auth()->user()->id)->get();
            // dd($orders);
-           $categories = Category::all();
+           $categories = Category::where('is_restuarnt', '0')->get();
     return view('myorders')->with('categories', $categories)->with('orders', $orders);
           
     }
@@ -601,7 +601,7 @@ class VegetableEccomerce extends Controller
        $orders = Suborder::with('product')
             ->where('order_id', $request->order_id)->get();
            // dd($orders);
-           $categories = Category::all();
+           $categories = Category::where('is_restuarnt', '0')->get();
     return view('suborders')->with('categories', $categories)->with('orders', $orders)->with('order_id', $request->order_id);
           
     }
@@ -831,7 +831,7 @@ class VegetableEccomerce extends Controller
     public function subscribe(Request $request)
     {
         $product = DB::table('products')->where('id', $request->id)->first();
-        $categories = Category::all();
+        $categories = Category::where('is_restuarnt', '0')->get();
         return view('details')->with('categories', $categories)->with('product', $product);   
     }
 
@@ -839,7 +839,7 @@ class VegetableEccomerce extends Controller
     {
        $utilities = Utility::all();
            // dd($orders);
-           $categories = Category::all();
+           $categories = Category::where('is_restuarnt', '0')->get();
     return view('utilities')->with('categories', $categories)->with('utilities', $utilities);
           
     }
@@ -859,7 +859,7 @@ class VegetableEccomerce extends Controller
             $message = "Your request has been recieved. Our executive will get in touch with you soon.";
             $this->getUserNumber($order->phone_number, $message);
             //$this->sendWhatsAppSMS($order->mobile, $message);
-            $categories = Category::all();
+            $categories = Category::where('is_restuarnt', '0')->get();
             return view('success')->with('categories', $categories)->with('message', $message);
     }
 
@@ -876,6 +876,17 @@ class VegetableEccomerce extends Controller
         $this->getUserNumber($utilities[0]->phone_number, $message);
         //$this->sendWhatsAppSMS($orders[0]->mobile, $message);
         return \Redirect::to(URL::previous());    
+    }
+
+    public function resturantCategories()
+    {
+        $categories = Category::where('is_restuarnt', '0')->get();
+        $categories2 = Category::where('is_restuarnt', '1')->get();
+        $products = Product::with('categories')->orderBy('created_at', 'desc')->paginate(10);
+        $msg = "RESTURANT";
+        //dd($products[0]->categories);
+       return view('welcome')->with('categories', $categories)->with('categories2', $categories2)->with('products', $products)->with('msg', $msg);
+    
     }
 
 }

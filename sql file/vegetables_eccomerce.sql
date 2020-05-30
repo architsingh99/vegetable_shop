@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2020 at 10:11 PM
+-- Generation Time: May 30, 2020 at 11:15 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -149,18 +149,19 @@ CREATE TABLE `categories` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_restuarnt` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`, `image`) VALUES
-(1, 'Fruits', '2020-05-04 10:44:00', '2020-05-10 17:19:13', 'categories/May2020/tiOmBkhsCKmI2tzacaUr.jpg'),
-(2, 'Vegetables', '2020-05-04 10:44:00', '2020-05-10 17:21:31', 'categories/May2020/LhQw60GC2JTZedHSMRnI.jpg'),
-(3, 'Bakery Products', '2020-05-10 04:53:00', '2020-05-10 17:22:37', 'categories\\May2020\\wWWckAkBidvVMVrKdenf.jpg'),
-(4, 'Grocery', '2020-05-10 04:55:00', '2020-05-10 18:12:05', 'categories/May2020/JKp6TLagRNyapbdaIqg7.jpg');
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`, `image`, `is_restuarnt`) VALUES
+(1, 'Fruits', '2020-05-04 10:44:00', '2020-05-10 17:19:13', 'categories/May2020/tiOmBkhsCKmI2tzacaUr.jpg', 0),
+(2, 'Vegetables', '2020-05-04 10:44:00', '2020-05-10 17:21:31', 'categories/May2020/LhQw60GC2JTZedHSMRnI.jpg', 0),
+(3, 'Bakery Products', '2020-05-10 04:53:00', '2020-05-10 17:22:37', 'categories\\May2020\\wWWckAkBidvVMVrKdenf.jpg', 0),
+(4, 'Grocery', '2020-05-10 04:55:00', '2020-05-10 18:12:05', 'categories/May2020/JKp6TLagRNyapbdaIqg7.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -336,7 +337,8 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (148, 13, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 9),
 (149, 13, 'booking_utility_belongsto_utility_relationship', 'relationship', 'utilities', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Utility\",\"table\":\"utilities\",\"type\":\"belongsTo\",\"column\":\"utility\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"booking_utilities\",\"pivot\":\"0\",\"taggable\":\"0\"}', 10),
 (150, 13, 'utility', 'text', 'Utility', 0, 1, 1, 1, 1, 1, '{}', 10),
-(151, 13, 'address', 'text', 'Address', 0, 1, 1, 1, 1, 1, '{}', 11);
+(151, 13, 'address', 'text', 'Address', 0, 1, 1, 1, 1, 1, '{}', 11),
+(152, 4, 'is_restuarnt', 'radio_btn', 'Is Restuarnt', 0, 1, 1, 1, 1, 1, '{\"default\":\"0\",\"options\":{\"0\":\"No\",\"1\":\"Yes\"}}', 6);
 
 -- --------------------------------------------------------
 
@@ -370,7 +372,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2020-05-02 13:23:27', '2020-05-11 18:10:27'),
 (2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2020-05-02 13:23:28', '2020-05-02 13:23:28'),
 (3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2020-05-02 13:23:28', '2020-05-02 13:23:28'),
-(4, 'categories', 'categories', 'Category', 'Categories', NULL, 'App\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:32:48', '2020-05-09 15:50:54'),
+(4, 'categories', 'categories', 'Category', 'Categories', NULL, 'App\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:32:48', '2020-05-30 15:20:09'),
 (5, 'products', 'products', 'Product', 'Products', 'voyager-logbook', 'App\\Product', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-04 10:39:31', '2020-05-16 02:12:12'),
 (6, 'carts', 'carts', 'Cart', 'Carts', 'voyager-credit-cards', 'App\\Cart', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 05:48:56', '2020-05-12 15:56:47'),
 (7, 'pincodes', 'pincodes', 'Pincode', 'Pincodes', 'voyager-hammer', 'App\\Pincode', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-05 12:01:39', '2020-05-05 12:02:19'),
@@ -1452,7 +1454,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT for table `data_types`

@@ -75,7 +75,7 @@
                   
                         <?php $done = 0; ?>
                     <?php $skip = 0; ?>
-                    @foreach($categories as $key => $cat)
+                    @foreach($categories2 as $key => $cat)
                     
                         <div class="col-md-4 men-thumb-item-sale product-men">
                             <div class="men-pro-item simpleCart_shelfItem">
@@ -117,6 +117,48 @@
                             </div>
                         </div>
                         @endforeach
+                        @if($msg != "RESTURANT")
+                        <div class="col-md-4 men-thumb-item-sale product-men">
+                            <div class="men-pro-item simpleCart_shelfItem">
+                                <div class="front-item">
+                                    <a href="{{url('resturant')}}">
+                                    <img  src=""
+                                        alt="">
+                                        </a>
+                                    <!-- <div class="men-cart-pro">
+										<div class="inner-men-cart-pro">
+											<a href="single.html" class="link-product-add-cart">Quick View</a>
+										</div>
+									</div> -->
+                                    <!-- <span class="product-new-top">New</span> -->
+                                </div>
+                                <div style="height: 100px;" class="item-info-product ">
+                                    <h4 class="h4-design">
+                                        <!-- <a href="single.html">Almonds, 100g</a> -->
+                                        RESTURANT FOODS
+                                    </h4>
+                                    <br>
+                                    <!-- <div class="info-product-price">
+                                        <span class="item_price">₹{{$cat->price_per_kg}} per kg</span>
+                                        <del>₹{{($cat->price_per_kg * 1.2)}} per kg</del>
+                                    </div> -->
+                                    <div
+                                        class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                        
+                                        <a href="{{url('resturant')}}"><input type="button"
+                                            value="View Resturants" class="button" /></a>
+<!--                                         
+                                        <a href="{{url('coming_soon')}}"><input type="button"
+                                            value="View Products" class="button" /></a> -->
+
+                                       
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
                         <div class="clearfix"></div>
                     <!-- </div> -->
                     <!-- //first section (nuts) -->
