@@ -92,3 +92,5 @@ Route::get('resturant', 'VegetableEccomerce@resturantCategories');
 Route::get('coming_soon', function () {
     return view('coming_soon');
 });
+
+Route::get('apply_coupon/{coupon}', 'VegetableEccomerce@apply_coupon');

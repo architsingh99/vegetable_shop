@@ -112,6 +112,12 @@
                         @endforeach
 
                         <tr class="rem2">
+                            <td style="text-align: right;" class="invert" colspan="4">Discount Amount</td>
+                            <td class="text-al-left invert" colspan="2" id="discountAmountText">₹0</td>
+
+                        </tr>
+
+                        <tr class="rem2">
                             <td style="text-align: right;" class="invert" colspan="4">Sub Total</td>
                             <td class="text-al-left invert" colspan="2" id="subtotalText">₹{{$total}}</td>
 
@@ -136,6 +142,18 @@
         <input type="hidden" id="finalPrice" name="finalPrice" value="0">
 
         @if(count($checkout) > 0)
+        <div class="pincode-div pincode-box ">
+
+            <input class="pincode-field" type="text" name="coupon" id="coupon"
+                placeholder="Enter coupon code" required="">
+
+            <button class="pincode-field-button" onclick="applyCoupon()" id="applyCouponButton">Apply</button>
+            <img src="{{asset('images/25.gif')}}" id="preloaderCoupon" style="display: none; height: 30px;">
+
+            <p style="color: red; display:none;" id="couponStatus"></p>
+            <input type="hidden" id="couponCodeValue" value="0">
+        </div>
+
         <div class="pincode-div pincode-box ">
             <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only (785001)</h4>
 
@@ -467,6 +485,84 @@ function getHash() {
             });
         }
     });
+}
+
+function applyCoupon() {
+    var couponCode = document.getElementById('coupon').value;
+    
+    if (couponCode == "" || couponCode == null) {
+        swal({
+            title: "Warning",
+            text: "No Coupon Code Found.",
+            icon: "warning",
+        });
+    } else {
+        document.getElementById('applyCouponButton').style.display = 'none';
+        document.getElementById('preloaderCoupon').style.display = 'block';
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8000/apply_coupon/" +
+            couponCode, // You add the id of the post and the update datetime to the url as well
+            success: function(response) {
+                document.getElementById('couponStatus').innerText = response.data.message;
+                document.getElementById('couponStatus').style.display = 'block';
+                console.log(response);
+                if (response.data.status == "success") {
+                    if(Number(response.data.in_percentage_flat) == 0)
+                    {
+                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById(
+                'subtotal').value) - ((Number(document.getElementById(
+                'subtotal').value) +  Number(document.getElementById('couponCodeValue').value)) * (Number(response.data.amount) / 100))) + Number(document.getElementById('couponCodeValue').value);
+            document.getElementById('subtotal').value = Number(document.getElementById(
+                'subtotal').value) - ((Number(document.getElementById(
+                'subtotal').value) +  Number(document.getElementById('couponCodeValue').value)) * (Number(response.data.amount) / 100)) + Number(document.getElementById('couponCodeValue').value);
+            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
+
+            document.getElementById('couponCodeValue').value = Number(document.getElementById(
+                'subtotal').value) * (Number(response.data.amount) / 100);
+                    }
+                    else 
+                    {
+                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById(
+                'subtotal').value) - Number(response.data.amount)) + Number(document.getElementById('couponCodeValue').value);
+            document.getElementById('subtotal').value = Number(document.getElementById(
+                'subtotal').value) - Number(response.data.amount) + Number(document.getElementById('couponCodeValue').value);
+            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
+
+            document.getElementById('couponCodeValue').value = Number(response.data.amount);
+                    }
+                    document.getElementById('discountAmountText').innerText = '₹' + document.getElementById('couponCodeValue').value;
+                   
+                } else {
+                    document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById(
+                'subtotal').value) - Number(document.getElementById('couponCodeValue').value));
+            document.getElementById('subtotal').value = Number(document.getElementById(
+                'subtotal').value) - Number(document.getElementById('couponCodeValue').value);
+            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
+
+            document.getElementById('couponCodeValue').value = 0;
+            document.getElementById('discountAmountText').innerText = '₹' + document.getElementById('couponCodeValue').value;
+                }
+                if (Number(document.getElementById('deliveryCharge').value) > 0) {
+                document.getElementById('finalPriceText').innerText = '₹' + ((Number(document
+                    .getElementById('subtotal').value)) + (Number(document.getElementById(
+                    'deliveryCharge').value)));
+                document.getElementById('finalPrice').value = (Number(document.getElementById('subtotal')
+                    .value)) + (Number(document.getElementById('deliveryCharge').value));
+                document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice')
+                    .value;
+                    
+            }
+                // swal({
+                //     title: response.data.status,
+                //     text: response.data.message,
+                //     icon: response.data.status,
+                // });
+            }
+        });
+        document.getElementById('applyCouponButton').style.display = 'block';
+        document.getElementById('preloaderCoupon').style.display = 'none';
+    }
 }
 
 // function launchBOLT(hasValue)

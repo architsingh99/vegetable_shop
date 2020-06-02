@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2020 at 11:15 PM
+-- Generation Time: Jun 02, 2020 at 09:51 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -136,7 +136,10 @@ INSERT INTO `carts` (`id`, `user_id`, `product_id`, `quantity`, `created_at`, `u
 (134, 60, 32, 500, '2020-05-13 10:15:48', '2020-05-13 10:15:48'),
 (135, 62, 32, 500, '2020-05-13 11:05:47', '2020-05-13 11:05:47'),
 (136, 64, 27, 1000, '2020-05-13 12:26:43', '2020-05-13 12:26:43'),
-(138, 66, 36, 1500, '2020-05-13 19:07:04', '2020-05-13 19:07:04');
+(138, 66, 36, 1500, '2020-05-13 19:07:04', '2020-05-13 19:07:04'),
+(139, 1, 36, 500, '2020-06-02 14:18:04', '2020-06-02 14:18:04'),
+(140, 1, 26, 1000, '2020-06-02 14:18:10', '2020-06-02 14:18:10'),
+(141, 1, 24, 500, '2020-06-02 14:18:23', '2020-06-02 14:18:23');
 
 -- --------------------------------------------------------
 
@@ -162,6 +165,31 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`, `image`, `is
 (2, 'Vegetables', '2020-05-04 10:44:00', '2020-05-10 17:21:31', 'categories/May2020/LhQw60GC2JTZedHSMRnI.jpg', 0),
 (3, 'Bakery Products', '2020-05-10 04:53:00', '2020-05-10 17:22:37', 'categories\\May2020\\wWWckAkBidvVMVrKdenf.jpg', 0),
 (4, 'Grocery', '2020-05-10 04:55:00', '2020-05-10 18:12:05', 'categories/May2020/JKp6TLagRNyapbdaIqg7.jpg', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `minimum_cart_value` int(11) DEFAULT NULL,
+  `in_percentage_flat` int(11) DEFAULT 0,
+  `amount` int(11) DEFAULT NULL,
+  `maximum_discount_amount` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `coupons`
+--
+
+INSERT INTO `coupons` (`id`, `name`, `minimum_cart_value`, `in_percentage_flat`, `amount`, `maximum_discount_amount`, `created_at`, `updated_at`) VALUES
+(1, 'FIRST100', 200, 0, 10, 100, '2020-06-02 13:36:58', '2020-06-02 13:36:58'),
+(2, 'FIRST10', 100, 0, 50, 50, '2020-06-02 13:37:24', '2020-06-02 13:37:24');
 
 -- --------------------------------------------------------
 
@@ -338,7 +366,15 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (149, 13, 'booking_utility_belongsto_utility_relationship', 'relationship', 'utilities', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Utility\",\"table\":\"utilities\",\"type\":\"belongsTo\",\"column\":\"utility\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"booking_utilities\",\"pivot\":\"0\",\"taggable\":\"0\"}', 10),
 (150, 13, 'utility', 'text', 'Utility', 0, 1, 1, 1, 1, 1, '{}', 10),
 (151, 13, 'address', 'text', 'Address', 0, 1, 1, 1, 1, 1, '{}', 11),
-(152, 4, 'is_restuarnt', 'radio_btn', 'Is Restuarnt', 0, 1, 1, 1, 1, 1, '{\"default\":\"0\",\"options\":{\"0\":\"No\",\"1\":\"Yes\"}}', 6);
+(152, 4, 'is_restuarnt', 'radio_btn', 'Is Restuarnt', 0, 1, 1, 1, 1, 1, '{\"default\":\"0\",\"options\":{\"0\":\"No\",\"1\":\"Yes\"}}', 6),
+(153, 14, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
+(154, 14, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '{}', 2),
+(155, 14, 'minimum_cart_value', 'number', 'Minimum Cart Value', 0, 1, 1, 1, 1, 1, '{}', 3),
+(156, 14, 'in_percentage_flat', 'radio_btn', 'Percentage/Flat', 0, 1, 1, 1, 1, 1, '{\"default\":\"0\",\"options\":{\"0\":\"Percentage\",\"1\":\"Flat\"}}', 4),
+(157, 14, 'amount', 'number', 'Amount/Percentage', 0, 1, 1, 1, 1, 1, '{}', 5),
+(158, 14, 'maximum_discount_amount', 'number', 'Maximum Discount Amount', 0, 1, 1, 1, 1, 1, '{}', 6),
+(159, 14, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 7),
+(160, 14, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 8);
 
 -- --------------------------------------------------------
 
@@ -381,7 +417,8 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (10, 'sub_categories', 'sub-categories', 'Sub Category', 'Sub Categories', 'voyager-data', 'App\\SubCategory', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-14 10:21:15', '2020-05-14 10:23:44'),
 (11, 'subscriptions', 'subscriptions', 'Subscription', 'Subscriptions', 'voyager-treasure-open', 'App\\Subscription', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-17 04:01:49', '2020-05-17 04:03:55'),
 (12, 'utilities', 'utilities', 'Utility', 'Utilities', 'voyager-list-add', 'App\\Utility', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-29 13:39:52', '2020-05-29 13:53:45'),
-(13, 'booking_utilities', 'booking-utilities', 'Booking Utility', 'Booking Utilities', 'voyager-pie-chart', 'App\\BookingUtility', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-29 13:45:47', '2020-05-29 14:30:01');
+(13, 'booking_utilities', 'booking-utilities', 'Booking Utility', 'Booking Utilities', 'voyager-pie-chart', 'App\\BookingUtility', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-05-29 13:45:47', '2020-05-29 14:30:01'),
+(14, 'coupons', 'coupons', 'Coupon', 'Coupons', 'voyager-paypal', 'App\\Coupon', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2020-06-02 13:35:35', '2020-06-02 13:35:35');
 
 -- --------------------------------------------------------
 
@@ -463,7 +500,8 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (18, 1, 'Sub Categories', '', '_self', 'voyager-data', NULL, NULL, 21, '2020-05-14 10:21:15', '2020-05-14 10:21:15', 'voyager.sub-categories.index', NULL),
 (19, 1, 'Subscriptions', '', '_self', 'voyager-treasure-open', NULL, NULL, 22, '2020-05-17 04:01:50', '2020-05-17 04:01:50', 'voyager.subscriptions.index', NULL),
 (20, 1, 'Utilities', '', '_self', NULL, NULL, NULL, 23, '2020-05-29 13:39:53', '2020-05-29 13:39:53', 'voyager.utilities.index', NULL),
-(21, 1, 'Booking Utilities', '', '_self', 'voyager-pie-chart', NULL, NULL, 24, '2020-05-29 13:45:47', '2020-05-29 13:45:47', 'voyager.booking-utilities.index', NULL);
+(21, 1, 'Booking Utilities', '', '_self', 'voyager-pie-chart', NULL, NULL, 24, '2020-05-29 13:45:47', '2020-05-29 13:45:47', 'voyager.booking-utilities.index', NULL),
+(22, 1, 'Coupons', '', '_self', 'voyager-paypal', NULL, NULL, 25, '2020-06-02 13:35:36', '2020-06-02 13:35:36', 'voyager.coupons.index', NULL);
 
 -- --------------------------------------------------------
 
@@ -783,7 +821,12 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (73, 'read_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
 (74, 'edit_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
 (75, 'add_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
-(76, 'delete_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47');
+(76, 'delete_booking_utilities', 'booking_utilities', '2020-05-29 13:45:47', '2020-05-29 13:45:47'),
+(77, 'browse_coupons', 'coupons', '2020-06-02 13:35:36', '2020-06-02 13:35:36'),
+(78, 'read_coupons', 'coupons', '2020-06-02 13:35:36', '2020-06-02 13:35:36'),
+(79, 'edit_coupons', 'coupons', '2020-06-02 13:35:36', '2020-06-02 13:35:36'),
+(80, 'add_coupons', 'coupons', '2020-06-02 13:35:36', '2020-06-02 13:35:36'),
+(81, 'delete_coupons', 'coupons', '2020-06-02 13:35:36', '2020-06-02 13:35:36');
 
 -- --------------------------------------------------------
 
@@ -876,7 +919,12 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (73, 1),
 (74, 1),
 (75, 1),
-(76, 1);
+(76, 1),
+(77, 1),
+(78, 1),
+(79, 1),
+(80, 1),
+(81, 1);
 
 -- --------------------------------------------------------
 
@@ -1270,6 +1318,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `data_rows`
 --
 ALTER TABLE `data_rows`
@@ -1442,7 +1496,7 @@ ALTER TABLE `booking_utilities`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1451,16 +1505,22 @@ ALTER TABLE `categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT for table `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1478,7 +1538,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1508,7 +1568,7 @@ ALTER TABLE `payu_payments`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `pincodes`

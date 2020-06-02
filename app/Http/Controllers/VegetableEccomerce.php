@@ -19,6 +19,7 @@ use App\User;
 use App\TempOrder;
 use App\Utility;
 use App\BookingUtility;
+use App\Coupon;
 
 use ClickSend;
 use GuzzleHttp;
@@ -887,6 +888,41 @@ class VegetableEccomerce extends Controller
         //dd($products[0]->categories);
        return view('welcome')->with('categories', $categories)->with('categories2', $categories2)->with('products', $products)->with('msg', $msg);
     
+    }
+
+    public function apply_coupon(Request $request)
+    {
+        //$userId = Auth::user()->id;
+        $coupons = Coupon::where('name', $request->coupon)->get();
+        //dd($checkout);
+        if(!$coupons->isEmpty())
+        {
+            $status = "success";
+            $minimum_cart_value = $coupons[0]->minimum_cart_value;
+            $in_percentage_flat = $coupons[0]->in_percentage_flat;
+            $amount = $coupons[0]->amount;
+            $maximum_discount_amount = $coupons[0]->maximum_discount_amount;
+            $message = "Coupon code applied successfully.";
+        }
+        else
+        {
+            $status = "error";
+            $minimum_cart_value = 0;
+            $in_percentage_flat = 0;
+            $amount = 0;
+            $maximum_discount_amount = 0;
+             $message = "Coupon code not found.";
+        }
+        $data  = [
+                'status'                     => $status,
+                'minimum_cart_value'         => $minimum_cart_value,
+                'in_percentage_flat'         => $in_percentage_flat,
+                'amount'                     => $amount,
+                'maximum_discount_amount'    => $maximum_discount_amount,
+                'message'                    => $message
+         ];
+            //dd($data);
+        return $this->sendResponse($data, "Pincode Checked");
     }
 
 }
