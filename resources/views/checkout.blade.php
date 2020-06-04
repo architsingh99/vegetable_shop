@@ -140,7 +140,7 @@
         <input type="hidden" id="subtotal" name="subtotal" value="{{$total}}">
         <input type="hidden" id="deliveryCharge" name="deliveryCharge" value="0">
         <input type="hidden" id="finalPrice" name="finalPrice" value="0">
-
+        <input type="hidden" id="subTotalForCoupon" value="{{$total}}">
         @if(count($checkout) > 0)
         <div class="container  col-md-12">
         <div class="col-md-6 cupon pincode-div pincode-box ">
@@ -149,8 +149,8 @@
                 placeholder="Enter coupon code" required="">
 
             <button class="pincode-field-button" onclick="applyCoupon()" id="applyCouponButton">Apply</button>
-            <button class="pincode-field-button" onclick="editCoupon()" id="editCouponButton"
-                style="display: none;">Edit Coupon</button>
+            <!-- <button class="pincode-field-button" onclick="editCoupon()" id="editCouponButton"
+                style="display: none;">Edit Coupon</button> -->
                 
             <img src="{{asset('images/25.gif')}}" id="preloaderCoupon" style="display: none; height: 30px;">
 
@@ -520,49 +520,39 @@ function applyCoupon() {
             success: function(response) {
                 document.getElementById('couponStatus').innerText = response.data.message;
                 document.getElementById('couponStatus').style.display = 'block';
-                document.getElementById('coupon').readOnly = true;
+                //document.getElementById('coupon').readOnly = true;
                 console.log(response);
                 if (response.data.status == "success") {
                     if(Number(response.data.in_percentage_flat) == 0)
                     {
-                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById(
-                'subtotal').value) - ((Number(document.getElementById(
-                'subtotal').value) +  Number(document.getElementById('couponCodeValue').value)) * (Number(response.data.amount) / 100))) + Number(document.getElementById('couponCodeValue').value);
-            document.getElementById('subtotal').value = Number(document.getElementById(
-                'subtotal').value) - ((Number(document.getElementById(
-                'subtotal').value) +  Number(document.getElementById('couponCodeValue').value)) * (Number(response.data.amount) / 100)) + Number(document.getElementById('couponCodeValue').value);
-            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
-
-            document.getElementById('couponCodeValue').value = Number(document.getElementById(
-                'subtotal').value) * (Number(response.data.amount) / 100);
+                        var discountValue = (Number(document.getElementById('subTotalForCoupon').value)) * (Number(response.data.amount) / 100);
+                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById('subTotalForCoupon').value) - Number(discountValue));
+                        document.getElementById('subtotalOrder').value = Number(document.getElementById('subTotalForCoupon').value) - Number(discountValue);
+                    
+                        document.getElementById('couponCodeValue').value = Number(discountValue);
                     }
                     else 
                     {
-                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById(
-                'subtotal').value) - Number(response.data.amount)) + Number(document.getElementById('couponCodeValue').value);
-            document.getElementById('subtotal').value = Number(document.getElementById(
-                'subtotal').value) - Number(response.data.amount) + Number(document.getElementById('couponCodeValue').value);
-            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
+                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById('subTotalForCoupon').value) - Number(response.data.amount));
+                        document.getElementById('subtotalOrder').value = Number(document.getElementById('subTotalForCoupon').value) - Number(response.data.amount);
 
-            document.getElementById('couponCodeValue').value = Number(response.data.amount);
+                        document.getElementById('couponCodeValue').value = Number(response.data.amount);
                     }
                     document.getElementById('discountAmountText').innerText = '₹' + document.getElementById('couponCodeValue').value;
                    
                 } else {
-                    document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById(
-                'subtotal').value) - Number(document.getElementById('couponCodeValue').value));
-            document.getElementById('subtotal').value = Number(document.getElementById(
-                'subtotal').value) - Number(document.getElementById('couponCodeValue').value);
-            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
+                    document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById('subTotalForCoupon').value));
 
-            document.getElementById('couponCodeValue').value = 0;
-            document.getElementById('discountAmountText').innerText = '₹' + document.getElementById('couponCodeValue').value;
+                    document.getElementById('subtotalOrder').value = document.getElementById('subTotalForCoupon').value;
+
+                    document.getElementById('couponCodeValue').value = 0;
+                    document.getElementById('discountAmountText').innerText = '₹' + document.getElementById('couponCodeValue').value;
                 }
                 if (Number(document.getElementById('deliveryCharge').value) > 0) {
                 document.getElementById('finalPriceText').innerText = '₹' + ((Number(document
-                    .getElementById('subtotal').value)) + (Number(document.getElementById(
+                    .getElementById('subtotalOrder').value)) + (Number(document.getElementById(
                     'deliveryCharge').value)));
-                document.getElementById('finalPrice').value = (Number(document.getElementById('subtotal')
+                document.getElementById('finalPrice').value = (Number(document.getElementById('subtotalOrder')
                     .value)) + (Number(document.getElementById('deliveryCharge').value));
                 document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice')
                     .value;
@@ -575,7 +565,7 @@ function applyCoupon() {
                 // });
             }
         });
-        document.getElementById('editCouponButton').style.display = 'block';
+        document.getElementById('applyCouponButton').style.display = 'block';
         document.getElementById('preloaderCoupon').style.display = 'none';
     }
 }
