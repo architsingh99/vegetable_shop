@@ -5007,7 +5007,7 @@ input[type="radio"], input[type="checkbox"] {
     padding: 1.5em;
     position: relative;
     /* float: right; */
-    width: 100%;
+    /* width: 100%; */
 }
 .welcome-img-banner
 {
@@ -5217,5 +5217,9 @@ color: #000;
     .pd-0{
         margin: 0px 0px 0px -2px;
         padding: 0;
+    }
+    .cupon{
+        margin-right: 15px;
+        width: 48%;
     }
 }

@@ -121,14 +121,11 @@ color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/B
                                             <a href="{{url('categories', $cat->id)}}">{{$cat->name}}</a>
                                             <!-- <a href="{{url('coming_soon')}}">{{$cat->name}}</a> -->
                                             @endforeach
-                                           
+                                            <a href="{{url('utilites')}}">Utility</a>
                                         </div>
                                     </div>
                                 </li>
                                 @endif
-                                <li>
-                                    <a class="nav-stylehead" href="{{url('utilites')}}"> Utility </a>
-                                </li>
                                 <li class="">
                                     <a class="nav-stylehead" href="#">Faqs</a>
                                 </li>

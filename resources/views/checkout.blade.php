@@ -142,19 +142,23 @@
         <input type="hidden" id="finalPrice" name="finalPrice" value="0">
 
         @if(count($checkout) > 0)
-        <div class="pincode-div pincode-box ">
+        <div class="container  col-md-12">
+        <div class="col-md-6 cupon pincode-div pincode-box ">
 
             <input class="pincode-field" type="text" name="coupon" id="coupon"
                 placeholder="Enter coupon code" required="">
 
             <button class="pincode-field-button" onclick="applyCoupon()" id="applyCouponButton">Apply</button>
+            <button class="pincode-field-button" onclick="editCoupon()" id="editCouponButton"
+                style="display: none;">Edit Coupon</button>
+                
             <img src="{{asset('images/25.gif')}}" id="preloaderCoupon" style="display: none; height: 30px;">
 
             <p style="color: red; display:none;" id="couponStatus"></p>
             <input type="hidden" id="couponCodeValue" value="0">
         </div>
 
-        <div class="pincode-div pincode-box ">
+        <div class="col-md-6 pincode-div pincode-box ">
             <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only (785001)</h4>
 
             <input class="pincode-field" type="number" name="pincode" id="pincode"
@@ -166,6 +170,8 @@
             <img src="{{asset('images/25.gif')}}" id="preloaderPincode" style="display: none; height: 30px;">
 
             <p style="color: red; display:none;" id="pincodeStatus"></p>
+        </div>
+        <div class="clearfix"></div>
         </div>
         <?php
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -309,6 +315,7 @@ function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
                     .value;
 
             }
+         
             document.getElementById(z).innerText = '₹' + newprice;
             document.getElementById(y).value = quantity;
             // swal({
@@ -338,7 +345,7 @@ function checkPincode() {
         console.log(pin);
         $.ajax({
             type: "GET",
-            url: "http://127.0.0.1:8000/check_pincode/" +
+            url: "http://localhost:8000/check_pincode/" +
                 pin, // You add the id of the post and the update datetime to the url as well
             success: function(response) {
                 document.getElementById('pincodeStatus').innerText = response.data.message;
@@ -387,6 +394,11 @@ function checkPincode() {
     }
 }
 
+function editCoupon() {
+    document.getElementById('coupon').readOnly = false;
+    document.getElementById('applyCouponButton').style.display = 'block';
+    document.getElementById('editCouponButton').style.display = 'none';
+}
 function editPincode() {
     document.getElementById('pincode').readOnly = false;
     document.getElementById('verifyPincodeButton').style.display = 'block';
@@ -497,8 +509,10 @@ function applyCoupon() {
             icon: "warning",
         });
     } else {
-        document.getElementById('applyCouponButton').style.display = 'none';
+        
         document.getElementById('preloaderCoupon').style.display = 'block';
+        document.getElementById('applyCouponButton').style.display = 'none';
+        
         $.ajax({
             type: "GET",
             url: "http://localhost:8000/apply_coupon/" +
@@ -506,6 +520,7 @@ function applyCoupon() {
             success: function(response) {
                 document.getElementById('couponStatus').innerText = response.data.message;
                 document.getElementById('couponStatus').style.display = 'block';
+                document.getElementById('coupon').readOnly = true;
                 console.log(response);
                 if (response.data.status == "success") {
                     if(Number(response.data.in_percentage_flat) == 0)
@@ -560,7 +575,7 @@ function applyCoupon() {
                 // });
             }
         });
-        document.getElementById('applyCouponButton').style.display = 'block';
+        document.getElementById('editCouponButton').style.display = 'block';
         document.getElementById('preloaderCoupon').style.display = 'none';
     }
 }
