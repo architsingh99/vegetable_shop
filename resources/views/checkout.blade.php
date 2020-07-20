@@ -56,8 +56,8 @@
 
                         @foreach($checkout as $key => $value)
                         @if($value->product->category == '2')
-                            {{$catCheck = 1}}
-                            @endif
+                        {{$catCheck = 1}}
+                        @endif
                         <tr class="rem{{($key % 2) + 1}}">
                             <td class="invert">{{$key + 1}}</td>
                             <td class="invert-image">
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                             </td>
-                            
+
 
                             <td class="text-al-left invert" id="price{{$value->id}}">
                                 ₹{{$value->product->price_per_kg * $value->quantity / $dividedBy}}</td>
@@ -143,35 +143,35 @@
         <input type="hidden" id="subTotalForCoupon" value="{{$total}}">
         @if(count($checkout) > 0)
         <div class="container  col-md-12">
-        <div class="col-md-6 cupon pincode-div pincode-box ">
+            <div class="col-md-6 cupon pincode-div pincode-box ">
 
-            <input class="pincode-field" type="text" name="coupon" id="coupon"
-                placeholder="Enter coupon code" required="">
+                <input class="pincode-field" type="text" name="coupon" id="coupon" placeholder="Enter coupon code"
+                    required="">
 
-            <button class="pincode-field-button" onclick="applyCoupon()" id="applyCouponButton">Apply</button>
-            <!-- <button class="pincode-field-button" onclick="editCoupon()" id="editCouponButton"
+                <button class="pincode-field-button" onclick="applyCoupon()" id="applyCouponButton">Apply</button>
+                <!-- <button class="pincode-field-button" onclick="editCoupon()" id="editCouponButton"
                 style="display: none;">Edit Coupon</button> -->
-                
-            <img src="{{asset('images/25.gif')}}" id="preloaderCoupon" style="display: none; height: 30px;">
 
-            <p style="color: red; display:none;" id="couponStatus"></p>
-            <input type="hidden" id="couponCodeValue" value="0">
-        </div>
+                <img src="{{asset('images/25.gif')}}" id="preloaderCoupon" style="display: none; height: 30px;">
 
-        <div class="col-md-6 pincode-div pincode-box ">
-            <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only (785001)</h4>
+                <p style="color: red; display:none;" id="couponStatus"></p>
+                <input type="hidden" id="couponCodeValue" value="0">
+            </div>
 
-            <input class="pincode-field" type="number" name="pincode" id="pincode"
-                placeholder="Enter your Jorhat area pincode" required="">
+            <div class="col-md-6 pincode-div pincode-box ">
+                <h4 style="    margin-bottom: 8px;">Currently we are available in Jorhat area only (785001)</h4>
 
-            <button class="pincode-field-button" onclick="checkPincode()" id="verifyPincodeButton">Verify</button>
-            <button class="pincode-field-button" onclick="editPincode()" id="editPincodeButton"
-                style="display: none;">Edit Pincode</button>
-            <img src="{{asset('images/25.gif')}}" id="preloaderPincode" style="display: none; height: 30px;">
+                <input class="pincode-field" type="number" name="pincode" id="pincode"
+                    placeholder="Enter your Jorhat area pincode" required="">
 
-            <p style="color: red; display:none;" id="pincodeStatus"></p>
-        </div>
-        <div class="clearfix"></div>
+                <button class="pincode-field-button" onclick="checkPincode()" id="verifyPincodeButton">Verify</button>
+                <button class="pincode-field-button" onclick="editPincode()" id="editPincodeButton"
+                    style="display: none;">Edit Pincode</button>
+                <img src="{{asset('images/25.gif')}}" id="preloaderPincode" style="display: none; height: 30px;">
+
+                <p style="color: red; display:none;" id="pincodeStatus"></p>
+            </div>
+            <div class="clearfix"></div>
         </div>
         <?php
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -238,18 +238,20 @@
                                 <div class="clear"> </div>
                                 <div class="controls">
                                     <h4>Payment Method</h4>
-                                    <h5 style="    color: #ff7600;  margin-bottom: 10px;">*Pay online to get faster processing of your order</h5>
+                                    <h5 style="    color: #ff7600;  margin-bottom: 10px;">*Pay online to get faster
+                                        processing of your order</h5>
                                     <input type="radio" style="width: auto;" name="payment_method" id="payment_method"
                                         required="" value="1" checked>Pay Now
-                                    
-                                        <br>
+
+                                    <br>
                                     @if($catCheck == 0)
-                                        <input type="radio" style="width: auto;" name="payment_method"
-                                        id="payment_method" required="" value="2">Cash On Delivery
-                                        @else
-                                        <h5 style="    color: #ff0000;    font-size: 16px;    margin-top: 10px;">#Cash on delivery is not available when you order <b>Resturant Food </b></h5>
-                                        @endif
-                                        
+                                    <input type="radio" style="width: auto;" name="payment_method" id="payment_method"
+                                        required="" value="2">Cash On Delivery
+                                    @else
+                                    <h5 style="    color: #ff0000;    font-size: 16px;    margin-top: 10px;">#Cash on
+                                        delivery is not available when you order <b>Resturant Food </b></h5>
+                                    @endif
+
                                 </div>
                             </div>
 
@@ -277,359 +279,5 @@
     </div>
 </div>
 
-<script>
-function changeQuantity(cart_id, quantity, price_per_kg, quantity_type) {
-    //alert(cart_id)
-    var y = 'old_quantity' + cart_id;
-    var old_quantity = document.getElementById(y).value;
-    var oldprice = (old_quantity * price_per_kg);
-    var newprice = (quantity * price_per_kg);
-    if (Number(quantity_type) == 1) {
-        oldprice = oldprice / 1000;
-        newprice = newprice / 1000;
-    }
-    var z = 'price' + cart_id;
-
-    $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:8000/update_cart",
-        data: {
-            _token: document.getElementById('token').value,
-            cart_id: cart_id,
-            quantity: quantity
-        },
-        success: function(response) {
-            document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById(
-                'subtotal').value) - oldprice + newprice);
-            document.getElementById('subtotal').value = Number(document.getElementById('subtotal').value) -
-                oldprice + newprice;
-            document.getElementById('subtotalOrder').value = document.getElementById('subtotal').value;
-
-            if (Number(document.getElementById('deliveryCharge').value) > 0) {
-                document.getElementById('finalPriceText').innerText = '₹' + ((Number(document
-                    .getElementById('subtotal').value)) + (Number(document.getElementById(
-                    'deliveryCharge').value)));
-                document.getElementById('finalPrice').value = (Number(document.getElementById('subtotal')
-                    .value)) + (Number(document.getElementById('deliveryCharge').value));
-                document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice')
-                    .value;
-
-            }
-         
-            document.getElementById(z).innerText = '₹' + newprice;
-            document.getElementById(y).value = quantity;
-            // swal({
-            //     title: response.data.status,
-            //     text: response.data.message,
-            //     icon: response.data.status,
-            // });
-            console.log(response);
-            console.log("oldquan=", old_quantity);
-            console.log("oldPrice=", oldprice);
-            console.log("newquan=", quantity);
-        }
-    });
-}
-
-function checkPincode() {
-    var pin = document.getElementById('pincode').value;
-    document.getElementById('verifyPincodeButton').style.display = 'none';
-    document.getElementById('preloaderPincode').style.display = 'block';
-    if (pin == "" || pin == null) {
-        swal({
-            title: "Warning",
-            text: "No Pincode Found.",
-            icon: "warning",
-        });
-    } else {
-        console.log(pin);
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8000/check_pincode/" +
-                pin, // You add the id of the post and the update datetime to the url as well
-            success: function(response) {
-                document.getElementById('pincodeStatus').innerText = response.data.message;
-                document.getElementById('pincodeStatus').style.display = 'block';
-                console.log(response);
-                if (response.data.status == "success") {
-                    document.getElementById('deliveryChargeText').innerText = '₹' + response.data
-                        .delivery_charge;
-                    document.getElementById('deliveryCharge').value = response.data.delivery_charge;
-                    document.getElementById('finalPriceText').innerText = '₹' + ((Number(document
-                        .getElementById('subtotal').value)) + (Number(document.getElementById(
-                        'deliveryCharge').value)));
-                    document.getElementById('finalPrice').value = (Number(document.getElementById(
-                        'subtotal').value)) + (Number(document.getElementById('deliveryCharge').value));
-                    document.getElementById('addressPayment').style.display = 'block';
-                    document.getElementById('pincode').readOnly = true;
-                    document.getElementById('editPincodeButton').style.display = 'block';
-                    document.getElementById('preloaderPincode').style.display = 'none';
-                    document.getElementById('deliveryPincode').value = pin;
-
-                    document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice')
-                        .value;
-                    document.getElementById('subtotalOrder').value = document.getElementById('subtotal')
-                        .value;
-                    document.getElementById('deliveryChargeOrder').value = response.data.delivery_charge;
-
-                } else {
-                    document.getElementById('deliveryChargeText').innerText = 'Enter Pincode First';
-                    document.getElementById('deliveryCharge').value = 0;
-                    document.getElementById('finalPriceText').innerText = 'Enter Pincode First';
-                    document.getElementById('finalPrice').value = 0;
-                    document.getElementById('addressPayment').style.display = 'none';
-                    document.getElementById('verifyPincodeButton').style.display = 'block';
-                    document.getElementById('preloaderPincode').style.display = 'none';
-
-                    document.getElementById('finalPriceOrder').value = 0;
-                    document.getElementById('deliveryChargeOrder').value = 0;
-                }
-                // swal({
-                //     title: response.data.status,
-                //     text: response.data.message,
-                //     icon: response.data.status,
-                // });
-            }
-        });
-    }
-}
-
-function editCoupon() {
-    document.getElementById('coupon').readOnly = false;
-    document.getElementById('applyCouponButton').style.display = 'block';
-    document.getElementById('editCouponButton').style.display = 'none';
-}
-function editPincode() {
-    document.getElementById('pincode').readOnly = false;
-    document.getElementById('verifyPincodeButton').style.display = 'block';
-    document.getElementById('editPincodeButton').style.display = 'none';
-    document.getElementById('addressPayment').style.display = 'none';
-}
-
-async function makePaymentHideButton() {
-    if ($("#name").val() && $("#mobile").val() && $("#city").val() && $("#landmark").val() && $("#address").val() &&
-        $("#email").val()) {
-
-        if (Number(document.getElementById('finalPriceOrder').value) < 220) {
-            swal({
-                title: "Your order value is too low",
-                text: "Minimum cart value should be atleast Rs.200",
-                icon: "error",
-            });
-        } else {
-            // document.getElementById('preloadermakePaymentButton').style.display = 'block';
-            // document.getElementById('makePaymentButton').style.display = 'none';
-            var paymentMethod = 2;
-            var ele = document.getElementsByName('payment_method');
-
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    paymentMethod = ele[i].value;
-            }
-            if (Number(paymentMethod) == 1) {
-                let hashValue = await getHash();
-                //this.launchBOLT(hashValue);
-            } else
-                document.getElementById('paymentForm').submit();
-        }
-    } else {
-        swal({
-            title: "Add complete address details",
-            text: "Please fill up the complete address details form",
-            icon: "error",
-        });
-    }
-}
-
-function getHash() {
-    console.log("332")
-    var s2 = ($('#txnid').val()).substr(1)
-    var token = document.getElementById('token').value
-    $.ajax({
-        url: 'http://127.0.0.1:8000/getHash',
-        type: 'post',
-        data: {
-            _token: document.getElementById('token').value,
-            key: $('#key').val(),
-            salt: $('#salt').val(),
-            txnid: $('#txnid').val(),
-            amount: $('#finalPriceOrder').val(),
-            pinfo: $('#txnid').val(),
-            fname: $('#name').val(),
-            email: $('#email').val(),
-            mobile: $('#mobile').val(),
-            address: $('#address').val(),
-            udf5: $('#udf5').val(),
-            landmark: $('#landmark').val(),
-            city: $('#city').val(),
-            deliveryPincode: $('#deliveryPincode').val(),
-            address_type: $('#address_type').val(),
-            subtotalOrder: $('#subtotalOrder').val(),
-            deliveryChargeOrder: $('#deliveryChargeOrder').val()
-        },
-        success: function(json) {
-            console.log(json)
-            document.getElementById('hash').value = json.data.message;
-            bolt.launch({
-                key: $('#key').val(),
-                txnid: $('#txnid').val(),
-                hash: json.data.message,
-                amount: $('#finalPriceOrder').val(),
-                firstname: $('#name').val(),
-                email: $('#email').val(),
-                phone: $('#mobile').val(),
-                productinfo: $('#txnid').val(),
-                udf5: $('#udf5').val(),
-                surl: 'http://127.0.0.1:8000/paymentPayU?_token=' + token,
-                furl: 'http://127.0.0.1:8000/failed_payment',
-                mode: 'dropout'
-            }, {
-                responseHandler: function(BOLT) {
-                    console.log(BOLT.response.txnStatus);
-                    if (BOLT.response.txnStatus != 'CANCEL') {
-
-                    }
-                },
-                catchException: function(BOLT) {
-                    console.log("error ", BOLT);
-                    alert(BOLT.message);
-                }
-            });
-        }
-    });
-}
-
-function applyCoupon() {
-    var couponCode = document.getElementById('coupon').value;
-    
-    if (couponCode == "" || couponCode == null) {
-        swal({
-            title: "Warning",
-            text: "No Coupon Code Found.",
-            icon: "warning",
-        });
-    } else {
-        
-        document.getElementById('preloaderCoupon').style.display = 'block';
-        document.getElementById('applyCouponButton').style.display = 'none';
-        
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8000/apply_coupon/" +
-            couponCode, // You add the id of the post and the update datetime to the url as well
-            success: function(response) {
-                document.getElementById('couponStatus').innerText = response.data.message;
-                document.getElementById('couponStatus').style.display = 'block';
-                //document.getElementById('coupon').readOnly = true;
-                console.log(response);
-                if (response.data.status == "success") {
-                    if(Number(response.data.in_percentage_flat) == 0)
-                    {
-                        var discountValue = (Number(document.getElementById('subTotalForCoupon').value)) * (Number(response.data.amount) / 100);
-                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById('subTotalForCoupon').value) - Number(discountValue));
-                        document.getElementById('subtotalOrder').value = Number(document.getElementById('subTotalForCoupon').value) - Number(discountValue);
-                    
-                        document.getElementById('couponCodeValue').value = Number(discountValue);
-                    }
-                    else 
-                    {
-                        document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById('subTotalForCoupon').value) - Number(response.data.amount));
-                        document.getElementById('subtotalOrder').value = Number(document.getElementById('subTotalForCoupon').value) - Number(response.data.amount);
-
-                        document.getElementById('couponCodeValue').value = Number(response.data.amount);
-                    }
-                    document.getElementById('discountAmountText').innerText = '₹' + document.getElementById('couponCodeValue').value;
-                   
-                } else {
-                    document.getElementById('subtotalText').innerText = '₹' + (Number(document.getElementById('subTotalForCoupon').value));
-
-                    document.getElementById('subtotalOrder').value = document.getElementById('subTotalForCoupon').value;
-
-                    document.getElementById('couponCodeValue').value = 0;
-                    document.getElementById('discountAmountText').innerText = '₹' + document.getElementById('couponCodeValue').value;
-                }
-                if (Number(document.getElementById('deliveryCharge').value) > 0) {
-                document.getElementById('finalPriceText').innerText = '₹' + ((Number(document
-                    .getElementById('subtotalOrder').value)) + (Number(document.getElementById(
-                    'deliveryCharge').value)));
-                document.getElementById('finalPrice').value = (Number(document.getElementById('subtotalOrder')
-                    .value)) + (Number(document.getElementById('deliveryCharge').value));
-                document.getElementById('finalPriceOrder').value = document.getElementById('finalPrice')
-                    .value;
-                    
-            }
-                // swal({
-                //     title: response.data.status,
-                //     text: response.data.message,
-                //     icon: response.data.status,
-                // });
-            }
-        });
-        document.getElementById('applyCouponButton').style.display = 'block';
-        document.getElementById('preloaderCoupon').style.display = 'none';
-    }
-}
-
-// function launchBOLT(hasValue)
-// {
-//     console.log("405 ", hasValue);
-// 	bolt.launch({
-// 	key: $('#key').val(),
-// 	txnid: $('#txnid').val(), 
-// 	hash: hasValue,
-// 	amount: $('#finalPriceOrder').val(),
-// 	firstname: $('#name').val(),
-// 	email: $('#email').val(),
-// 	phone: $('#mobile').val(),
-// 	productinfo: $('#txnid').val(),
-// 	udf5: $('#udf5').val(),
-// 	surl : 'http://localhost:8000/success/1',
-// 	furl: 'http://localhost:8000/getHash/1',
-// 	mode: 'dropout'	
-// },{ responseHandler: function(BOLT){
-// 	console.log( BOLT.response.txnStatus );		
-// 	if(BOLT.response.txnStatus != 'CANCEL')
-// 	{
-// 		//Salt is passd here for demo purpose only. For practical use keep salt at server side only.
-// 		console.log(BOLT.response);
-// 		var form = jQuery(fr);
-// 		// jQuery('body').append(form);								
-// 		// form.submit();
-// 	}
-// },
-// 	catchException: function(BOLT){
-//         console.log("error ", BOLT);
-//  		alert( BOLT.message );
-// 	}
-// });
-// }
-
-// $('#payment_form').bind('keyup blur', function(){
-// 	$.ajax({
-//           url: 'http://localhost:8000/getHash',
-//           type: 'post',
-//           data: JSON.stringify({ 
-//             key: $('#key').val(),
-// 			salt: $('#salt').val(),
-// 			txnid: $('#txnid').val(),
-// 			amount: $('#amount').val(),
-// 		    pinfo: $('#pinfo').val(),
-//             fname: $('#fname').val(),
-// 			email: $('#email').val(),
-// 			mobile: $('#mobile').val(),
-// 			udf5: $('#udf5').val()
-//           }),
-// 		  contentType: "application/json",
-//           dataType: 'json',
-//           success: function(json) {
-//             if (json['error']) {
-// 			 $('#alertinfo').html('<i class="fa fa-info-circle"></i>'+json['error']);
-//             }
-// 			else if (json['success']) {	
-// 				$('#hash').val(json['success']);
-//             }
-//           }
-//         }); 
-// });
-</script>
+<script src="{{ asset('js/searching.js') }}"></script>
 @include('footer')

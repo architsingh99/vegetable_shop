@@ -311,7 +311,7 @@
 	<!-- //smooth-scrolling-of-move-up -->
 
 	<!-- for bootstrap working -->
-	<script src="{{ asset('js/bootstrap.js') }}"></script>
+	<script src="{{ asset('js/bootstrap.js') }}"></script>	
 	<!-- //for bootstrap working -->
 	<!-- //js-files -->
 
