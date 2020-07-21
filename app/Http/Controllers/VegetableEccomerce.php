@@ -733,7 +733,7 @@ class VegetableEccomerce extends Controller
         {
             $data = [
                 'status'                     => 201,
-                'message'                    => "Minimum ccart value is 200",
+                'message'                    => "Minimum Cart value is 200",
                 'amount'                     => 0
          ];
         }
@@ -755,6 +755,7 @@ class VegetableEccomerce extends Controller
               $order->address_type = $request->input('address_type'); 
               $order->total_items = DB::table('carts')->where('user_id', auth()->user()->id)->count();  
               $order->sub_total = $subtotal; 
+              $order->order_id = $order_id; 
               $order->delivery_charge = $pincode[0]->delivery_charge; 
               $order->total_price = $subtotal + (int)($pincode[0]->delivery_charge); 
               $order->payment_status = $payment_status; 

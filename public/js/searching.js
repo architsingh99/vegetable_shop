@@ -132,7 +132,7 @@ async function makePaymentHideButton() {
     if ($("#name").val() && $("#mobile").val() && $("#city").val() && $("#landmark").val() && $("#address").val() &&
         $("#email").val()) {
 
-        if (Number(document.getElementById('finalPriceOrder').value) < 220) {
+        if (Number(document.getElementById('finalPriceOrder').value) < 120) {
             swal({
                 title: "Your order value is too low",
                 text: "Minimum cart value should be atleast Rs.200",
