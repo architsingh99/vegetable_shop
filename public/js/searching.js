@@ -204,13 +204,24 @@ function getHash() {
             deliveryChargeOrder: $('#deliveryChargeOrder').val()
         },
         success: function(json) {
+            console.log("207", json.data)
+            if(json.data.status == 201)
+            {
+                swal({
+                    title: "Warning",
+                    text: json.data.message,
+                    icon: "error",
+                });
+            }
+            else
+            {
             console.log(json)
             document.getElementById('hash').value = json.data.message;
             bolt.launch({
                 key: $('#key').val(),
                 txnid: $('#txnid').val(),
                 hash: json.data.message,
-                amount: $('#finalPriceOrder').val(),
+                amount: Number(json.data.amount),
                 firstname: $('#name').val(),
                 email: $('#email').val(),
                 phone: $('#mobile').val(),
@@ -232,6 +243,7 @@ function getHash() {
                 }
             });
         }
+    }
     });
 }
 

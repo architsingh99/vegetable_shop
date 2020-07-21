@@ -213,6 +213,23 @@ class VegetableEccomerce extends Controller
         try{
             // $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             // $order_id = '#' . substr(str_shuffle($str_result), 0, 9);
+            $cartData = Cart::with('product')->where('user_id', auth()->user()->id)->get();
+        $subtotal = 0;
+        foreach($cartData as $key => $value)
+        {
+            //$product = Product::find($value->product_id);
+            $dividedBy = 1; 
+            if($value->product->quantity_in_grams == 1)
+                $dividedBy = 1000;
+            $subtotal = $subtotal + (int)($value->product->price_per_kg * $value->quantity / $dividedBy);
+        }
+        if($subtotal < 200)
+        {
+            return redirect('check_out');
+        }
+        else
+        {
+            $pincode = Pincode::where('pincode', $request->input('deliveryPincode'))->get();
             $order_id =$request->input('txnid');
             $payment_status = 'Successfull';
             $payment_method = "Online Payment";
@@ -234,9 +251,9 @@ class VegetableEccomerce extends Controller
               $order->address_type = $request->input('address_type'); 
               $order->total_items = DB::table('carts')->where('user_id', auth()->user()->id)->count();  
               $order->order_id = $order_id; 
-              $order->sub_total = $request->input('subtotalOrder'); 
-              $order->delivery_charge = $request->input('deliveryChargeOrder'); 
-              $order->total_price = $request->input('finalPriceOrder'); 
+              $order->sub_total = $subtotal; 
+              $order->delivery_charge = $pincode[0]->delivery_charge; 
+              $order->total_price = $subtotal + (int)($pincode[0]->delivery_charge); 
               $order->payment_status = $payment_status; 
               $order->payment_method = $payment_method; 
               $order->save();
@@ -251,6 +268,7 @@ class VegetableEccomerce extends Controller
                return redirect('payment_success/' . $order->id);
                //app('App\Http\Controllers\PaymentController')->payment($order);
               }
+            }
     }
     catch(Exception $e) {
         dd($e);
@@ -701,6 +719,27 @@ class VegetableEccomerce extends Controller
 
     public function getHash(Request $request)
     {
+        $cartData = Cart::with('product')->where('user_id', auth()->user()->id)->get();
+        $subtotal = 0;
+        foreach($cartData as $key => $value)
+        {
+            //$product = Product::find($value->product_id);
+            $dividedBy = 1; 
+            if($value->product->quantity_in_grams == 1)
+                $dividedBy = 1000;
+            $subtotal = $subtotal + (int)($value->product->price_per_kg * $value->quantity / $dividedBy);
+        }
+        if($subtotal < 200)
+        {
+            $data = [
+                'status'                     => 201,
+                'message'                    => "Minimum ccart value is 200",
+                'amount'                     => 0
+         ];
+        }
+        else
+        {
+            $pincode = Pincode::where('pincode', $request->input('deliveryPincode'))->get();
         $order_id =$request->input('txnid');
             $payment_status = 'PENDING';
             $payment_method = "Online Payment";
@@ -715,10 +754,9 @@ class VegetableEccomerce extends Controller
               $order->pincode = $request->input('deliveryPincode');  
               $order->address_type = $request->input('address_type'); 
               $order->total_items = DB::table('carts')->where('user_id', auth()->user()->id)->count();  
-              $order->order_id = $order_id; 
-              $order->sub_total = $request->input('subtotalOrder'); 
-              $order->delivery_charge = $request->input('deliveryChargeOrder'); 
-              $order->total_price = $request->input('amount'); 
+              $order->sub_total = $subtotal; 
+              $order->delivery_charge = $pincode[0]->delivery_charge; 
+              $order->total_price = $subtotal + (int)($pincode[0]->delivery_charge); 
               $order->payment_status = $payment_status; 
               $order->payment_method = $payment_method; 
               $order->save();
@@ -727,15 +765,38 @@ class VegetableEccomerce extends Controller
         $hash=hash('sha512', $request->input('key').'|'.$request->input('txnid').'|'.$request->input('amount').'|'.$request->input('pinfo').'|'.$request->input('fname').'|'.$request->input('email').'|||||'.$request->input('udf5').'||||||'.$request->input('salt'));
 		$data = [
             'status'                     => 200,
-            'message'                    => $hash
+            'message'                    => $hash,
+            'amount'                     => $subtotal + (int)($pincode[0]->delivery_charge)
      ];
         //dd($data);
+    }
     return $this->sendResponse($data, "hash value");
           
     }
 
     public function getHash2(Request $request)
     {
+        $cartData = Cart::with('product')->where('user_id', auth()->user()->id)->get();
+        $subtotal = 0;
+        foreach($cartData as $key => $value)
+        {
+            //$product = Product::find($value->product_id);
+            $dividedBy = 1; 
+            if($value->product->quantity_in_grams == 1)
+                $dividedBy = 1000;
+            $subtotal = $subtotal + (int)($value->product->price_per_kg * $value->quantity / $dividedBy);
+        }
+        if($subtotal < 200)
+        {
+            $data = [
+                'status'                     => 201,
+                'message'                    => "Minimum ccart value is 200",
+                'amount'                     => 0
+         ];
+        }
+        else
+        {
+        $pincode = Pincode::where('pincode', $request->input('deliveryPincode'))->get();
         $order_id =$request->input('txnid');
             $payment_status = 'PENDING';
             $payment_method = "Online Payment";
@@ -753,9 +814,9 @@ class VegetableEccomerce extends Controller
               $order->address = $request->input('address'); 
               $order->quantity = $request->input('quantity'); 
               $order->product_id = $request->input('product_id'); 
-              $order->sub_total = $request->input('subtotalOrder'); 
-              $order->delivery_charge = $request->input('deliveryChargeOrder'); 
-              $order->total_price = $request->input('amount'); 
+              $order->sub_total = $subtotal; 
+              $order->delivery_charge = $pincode[0]->delivery_charge; 
+              $order->total_price = $subtotal + (int)($pincode[0]->delivery_charge); 
               $order->payment_status = $payment_status; 
               $order->payment_method = $payment_method; 
               $order->save();
@@ -764,8 +825,10 @@ class VegetableEccomerce extends Controller
         $hash=hash('sha512', $request->input('key').'|'.$request->input('txnid').'|'.$request->input('amount').'|'.$request->input('pinfo').'|'.$request->input('fname').'|'.$request->input('email').'|||||'.$request->input('udf5').'||||||'.$request->input('salt'));
 		$data = [
             'status'                     => 200,
-            'message'                    => $hash
+            'message'                    => $hash,
+            'amount'                     => $subtotal + (int)($pincode[0]->delivery_charge)
      ];
+    }
         //dd($data);
     return $this->sendResponse($data, "hash value");
           
