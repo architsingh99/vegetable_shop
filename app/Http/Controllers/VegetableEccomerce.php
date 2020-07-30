@@ -154,7 +154,7 @@ class VegetableEccomerce extends Controller
         //dd($checkout);
         foreach($checkout as $key => $value)
         {
-            if($value->product->out_of_stock == 1)
+            if( $value->product == NULL || $value->product->out_of_stock == 1)
             {
                 Cart::find($value->id)->delete();
             }
