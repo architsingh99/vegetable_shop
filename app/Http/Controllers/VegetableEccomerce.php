@@ -152,6 +152,14 @@ class VegetableEccomerce extends Controller
         $categories = Category::where('is_restuarnt', '0')->get();
         $checkout = Cart::with('product')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         //dd($checkout);
+        foreach($checkout as $key => $value)
+        {
+            if($value->product->out_of_stock == 1)
+            {
+                Cart::find($value->id)->delete();
+            }
+        }
+        $checkout = Cart::with('product')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return view('checkout')->with('checkout', $checkout)->with('categories', $categories);
     }
 
